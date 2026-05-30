@@ -1,10 +1,37 @@
-import Anthropic from '@anthropic-ai/sdk'
 import type {
   TravelerProfile, HotelOffer, Restaurant, WeatherDay,
   LocalEvent, PointOfInterest, ItineraryDay, TravelProposal,
 } from './types'
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+const BASE_URL = (process.env.ANTHROPIC_BASE_URL ?? 'https://api.anthropic.com').replace(/\/$/, '')
+
+function buildAuthHeaders(): Record<string, string> {
+  const key = process.env.ANTHROPIC_API_KEY ?? ''
+  // Session ingress tokens (sk-ant-si-*) use Authorization: Bearer
+  if (key.startsWith('sk-ant-si')) {
+    return { 'Authorization': `Bearer ${key}` }
+  }
+  return { 'x-api-key': key }
+}
+
+async function claudeMessages(body: Record<string, unknown>): Promise<{ content: Array<{ type: string; text?: string }> }> {
+  const res = await fetch(`${BASE_URL}/v1/messages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'anthropic-version': '2023-06-01',
+      ...buildAuthHeaders(),
+    },
+    body: JSON.stringify(body),
+  })
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(`Anthropic API ${res.status}: ${JSON.stringify(err)}`)
+  }
+
+  return res.json()
+}
 
 const SYSTEM_PROMPT = `Eres Luxy, el curador de viajes premium más sofisticado del mundo. Tu rol es diseñar propuestas de viaje únicas, poéticas y profundamente personalizadas que conecten con el estado emocional del viajero.
 
@@ -133,14 +160,14 @@ export async function generateProposalNarrative(ctx: GenerationContext): Promise
 }> {
   const userPrompt = buildUserPrompt(ctx)
 
-  const message = await client.messages.create({
+  const message = await claudeMessages({
     model:      'claude-sonnet-4-20250514',
     max_tokens: 4096,
     system:     SYSTEM_PROMPT,
     messages:   [{ role: 'user', content: userPrompt }],
   })
 
-  const raw = message.content[0].type === 'text' ? message.content[0].text : ''
+  const raw = message.content[0].type === 'text' ? message.content[0].text ?? '' : ''
 
   // Extract JSON even if wrapped in markdown code fences
   const jsonMatch = raw.match(/```(?:json)?\s*([\s\S]*?)```/) ?? raw.match(/(\{[\s\S]*\})/)
