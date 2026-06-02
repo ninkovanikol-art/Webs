@@ -10,10 +10,22 @@ import { enrichHotelWithPricing, buildBudgetBreakdown, inferDestination } from '
 import { cacheSet, proposalCacheKey } from '@/lib/cache'
 import { logProposal } from '@/lib/logger'
 
-const TIMEOUT_MS = parseInt(process.env.API_TIMEOUT_MS ?? '8000', 10)
+// Netlify / Vercel: allow up to 60s for Claude generation
+export const maxDuration = 60
+
+const TIMEOUT_MS = parseInt(process.env.API_TIMEOUT_MS ?? '55000', 10)
 
 export async function POST(req: NextRequest) {
   const startTime = Date.now()
+
+  // Fast-fail if API key missing
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.error('[Generate] ANTHROPIC_API_KEY is not set')
+    return NextResponse.json(
+      { error: 'Configuración incompleta: falta ANTHROPIC_API_KEY en las variables de entorno del servidor.' },
+      { status: 503 }
+    )
+  }
 
   let profile: TravelerProfile
   try {
@@ -139,18 +151,21 @@ export async function POST(req: NextRequest) {
     })
 
   } catch (err) {
-    console.error('[Generate] Fatal error:', err)
+    const elapsed = Date.now() - startTime
+    const message = err instanceof Error ? err.message : String(err)
+    console.error(`[Generate] Fatal error after ${elapsed}ms:`, message)
 
-    // Check for timeout
-    if (Date.now() - startTime > TIMEOUT_MS) {
+    if (elapsed > TIMEOUT_MS) {
       return NextResponse.json(
-        { error: 'El tiempo de respuesta ha excedido el límite. Por favor inténtalo de nuevo.' },
+        { error: 'La generación tardó demasiado. Inténtalo de nuevo.' },
         { status: 504 }
       )
     }
 
+    // Expose the real error in development; generic message in production
+    const isDev = process.env.NODE_ENV === 'development'
     return NextResponse.json(
-      { error: 'Error generando la propuesta. Por favor inténtalo de nuevo.' },
+      { error: isDev ? message : 'Error generando la propuesta. Por favor inténtalo de nuevo.', details: isDev ? message : undefined },
       { status: 500 }
     )
   }
