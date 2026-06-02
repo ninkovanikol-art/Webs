@@ -1,7 +1,7 @@
 [build]
   base    = "luxy"
   command = "npm run build"
-  publish = ".next"
+  publish = "luxy/.next"
 
 [build.environment]
   NODE_VERSION = "20"
