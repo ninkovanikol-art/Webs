@@ -9,6 +9,15 @@ const nextConfig = {
       { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
     ],
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: [
+        'localhost:3000',
+        'agenteluxy.netlify.app',
+        '*.netlify.app',
+      ],
+    },
+  },
 }
 
 module.exports = nextConfig
