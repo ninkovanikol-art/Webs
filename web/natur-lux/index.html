@@ -416,7 +416,7 @@
         <span>Entorno natural mediterráneo</span>
       </div>
     </div>
-    <form id="contactForm" class="reveal">
+    <form id="contactForm" class="reveal" action="https://formspree.io/info@natur-lux-hideaway.com" method="POST">
       <input type="text" name="nombre" placeholder="Nombre completo" required>
       <input type="email" name="email" placeholder="Correo electrónico" required>
       <select name="experiencia">
@@ -636,8 +636,8 @@
         throw new Error();
       }
     }).catch(function(){
-      formMsg.textContent='Hubo un error. Inténtalo de nuevo o escríbenos directamente.';
-      formMsg.style.color='#d98989';
+      formMsg.textContent='Enviando…';
+      contactForm.submit();
     });
   });
 
