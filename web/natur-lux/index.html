@@ -621,7 +621,9 @@
     formMsg.textContent='Enviando...';
     formMsg.style.color='rgba(255,255,255,0.75)';
     var data=new FormData(contactForm);
-    fetch('https://formspree.io/f/your-form-id',{
+    data.append('_replyto',contactForm.querySelector('input[name="email"]').value);
+    data.append('_subject','Nueva solicitud de información — Natur-Lux Hideaway');
+    fetch('https://formspree.io/info@natur-lux-hideaway.com',{
       method:'POST',
       headers:{'Accept':'application/json'},
       body:data
