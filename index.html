@@ -1,651 +1,650 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LUXY — Agente IA · TravelTech Premium Europe · Business Plan 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Natur-Lux Hideaway | Eco-resort premium entre olivos y lavanda</title>
+<meta name="description" content="Natur-Lux Hideaway — domos geodésicos, burbujas transparentes y villas de diseño en plena naturaleza. Apertura próximamente." />
+<meta property="og:title" content="Natur-Lux Hideaway" />
+<meta property="og:description" content="Domos geodésicos, burbujas transparentes y villas de diseño integradas en un paisaje de olivos y lavanda. Apertura próximamente." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ═══════════════════════════════════════════════
+     VARIABLES & RESET
+  ═══════════════════════════════════════════════ */
+  :root{
+    --bg-base:#f4f1ea;
+    --bg-warm:#ece6d8;
+    --bg-stone:#d9d2bd;
+    --bg-deep:#3d4332;
+    --text-dark:#1e2117;
+    --text-mid:#4a5240;
+    --text-soft:#7c8268;
+    --gold:#8a9a5b;
+    --gold-light:#a7b87a;
+    --gold-dim:rgba(138,154,91,0.2);
+    --white-warm:#fbf9f3;
+    --ease-luxury:cubic-bezier(0.76,0,0.24,1);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;font-size:16px;}
+  body{
+    background:var(--bg-base);
+    color:var(--text-dark);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+    cursor:none;
+  }
+  @media (pointer:coarse){ body{cursor:auto;} }
+  h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:500;letter-spacing:0.01em;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
 
-  :root {
-    --bg: #0a0a0a;
-    --bg2: #111111;
-    --bg3: #161616;
-    --amber: #f59e0b;
-    --amber-light: #fbbf24;
-    --amber-dark: #d97706;
-    --white: #ffffff;
-    --gray: #9ca3af;
-    --gray-dim: #6b7280;
-    --card-bg: rgba(255,255,255,0.04);
-    --card-border: rgba(255,255,255,0.08);
-    --radius: 1.25rem;
+  /* GRAIN */
+  .grain{position:relative;}
+  .grain::before{
+    content:'';position:absolute;inset:0;pointer-events:none;opacity:0.045;z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat:repeat;background-size:128px 128px;
   }
 
-  html { scroll-behavior: smooth; }
+  /* LOADER */
+  #loader{position:fixed;inset:0;background:var(--bg-deep);z-index:9990;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;transition:opacity .6s var(--ease-luxury),visibility .6s;}
+  #loader.hidden{opacity:0;visibility:hidden;}
+  .loader-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:0.25em;color:var(--white-warm);text-transform:uppercase;opacity:0;animation:loaderFade .6s .3s var(--ease-luxury) forwards;}
+  .loader-logo span{color:var(--gold-light);font-style:italic;}
+  @keyframes loaderFade{to{opacity:1;}}
+  .loader-bar-wrap{width:200px;height:1px;background:rgba(255,255,255,0.18);overflow:hidden;}
+  .loader-bar{height:100%;width:0;background:var(--gold-light);animation:loaderBar 1.4s .4s var(--ease-luxury) forwards;}
+  @keyframes loaderBar{to{width:100%;}}
 
-  body {
-    background: var(--bg);
-    color: var(--white);
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+  /* CURSOR */
+  #cursor-dot{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);}
+  #cursor-ring{position:fixed;width:34px;height:34px;border:1px solid var(--gold-light);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:width .3s var(--ease-luxury),height .3s var(--ease-luxury),border-color .3s;}
+  #cursor-ring.hovered{width:58px;height:58px;border-color:var(--gold);}
+  @media (pointer:coarse){ #cursor-dot,#cursor-ring{display:none;} }
 
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--amber-dark); border-radius: 3px; }
+  /* NAVBAR */
+  #navbar{position:fixed;top:0;left:0;right:0;z-index:500;padding:26px 5%;display:flex;justify-content:space-between;align-items:center;transition:background .4s var(--ease-luxury),padding .4s var(--ease-luxury),box-shadow .4s;}
+  #navbar.scrolled{background:rgba(244,241,234,0.92);backdrop-filter:blur(10px);padding:16px 5%;box-shadow:0 4px 24px rgba(0,0,0,0.06);}
+  .logo{font-family:Georgia,'Georgia Pro','Times New Roman',serif;font-size:22px;font-weight:400;letter-spacing:0.06em;color:#ffffff;text-shadow:0 2px 14px rgba(0,0,0,0.55);transition:color .4s,text-shadow .4s;}
+  #navbar.scrolled .logo{color:var(--text-dark);text-shadow:none;}
+  .logo span{color:var(--gold-light);font-style:italic;}
+  nav ul{display:flex;gap:42px;list-style:none;}
+  nav a{font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;text-shadow:0 2px 10px rgba(0,0,0,0.5);position:relative;padding-bottom:4px;transition:color .3s;}
+  #navbar.scrolled nav a{color:var(--text-mid);text-shadow:none;}
+  nav a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .4s var(--ease-luxury);}
+  nav a:hover::after{width:100%;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+  .burger span{width:26px;height:1px;background:#fff;transition:transform .4s var(--ease-luxury),opacity .4s;}
+  #navbar.scrolled .burger span{background:var(--text-dark);}
+  @media (max-width:900px){ nav{display:none;} .burger{display:flex;} }
 
-  h1, h2, h3, h4 { line-height: 1.15; font-weight: 800; letter-spacing: -0.02em; }
-  h1 { font-size: clamp(2.4rem, 6vw, 5rem); }
-  h2 { font-size: clamp(1.8rem, 4vw, 3rem); }
-  h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 700; }
+  #mobile-menu{position:fixed;inset:0;background:var(--bg-deep);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;opacity:0;visibility:hidden;transition:opacity .5s var(--ease-luxury),visibility .5s;}
+  #mobile-menu.open{opacity:1;visibility:visible;}
+  #mobile-menu a{color:var(--white-warm);font-family:'Cormorant Garamond',serif;font-size:32px;opacity:0;transform:translateY(20px);transition:opacity .5s var(--ease-luxury),transform .5s var(--ease-luxury),color .3s;}
+  #mobile-menu.open a{opacity:1;transform:none;}
+  #mobile-menu.open a:nth-child(2){transition-delay:.08s;}
+  #mobile-menu.open a:nth-child(3){transition-delay:.16s;}
+  #mobile-menu.open a:nth-child(4){transition-delay:.24s;}
+  #mobile-menu a:hover{color:var(--gold-light);}
+  .mobile-close{position:absolute;top:30px;right:30px;color:var(--white-warm);font-size:28px;cursor:pointer;background:none;border:none;}
 
-  .gradient-text {
-    background: linear-gradient(135deg, var(--amber-light) 0%, var(--amber) 50%, var(--amber-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(50px);transition:opacity 1s var(--ease-luxury),transform 1s var(--ease-luxury);}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+  .reveal-scale{opacity:0;transform:scale(0.92);transition:opacity 1s var(--ease-luxury),transform 1s var(--ease-luxury);}
+  .reveal-scale.in-view{opacity:1;transform:scale(1);}
+  .word{display:inline-block;opacity:0;transform:translateY(40px) rotateX(15deg);transition:opacity .7s var(--ease-luxury) calc(var(--i,0)*.08s),transform .7s var(--ease-luxury) calc(var(--i,0)*.08s);}
+  .split-visible .word{opacity:1;transform:translateY(0) rotateX(0);}
 
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-  section { padding: 6rem 0; position: relative; }
-  section:nth-child(even) { background: var(--bg2); }
+  /* HERO */
+  .hero{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-start;}
+  .hero-video-wrap{position:absolute;inset:0;z-index:1;}
+  .hero-video-wrap video{width:100%;height:100%;object-fit:cover;backface-visibility:hidden;image-rendering:auto;}
+  .hero-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(20,22,15,0.38) 0%,rgba(20,22,15,0.08) 35%,rgba(20,22,15,0.1) 55%,rgba(20,22,15,0.58) 100%);}
+  .hero-grain{position:absolute;inset:0;z-index:3;pointer-events:none;}
+  .hero-grain::before{content:'';position:absolute;inset:0;opacity:0.045;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat;background-size:128px 128px;}
+  .hero-content{position:relative;z-index:5;width:100%;padding:0 5% 14px 5%;display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  .hero-title{font-family:'Jost',sans-serif;font-size:11px;font-weight:400;font-style:normal;letter-spacing:0.18em;line-height:1;margin:0;opacity:0;animation:fadeUp 1s var(--ease-luxury) 0.4s forwards;color:rgba(255,255,255,0.6);text-transform:uppercase;}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:400;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-light);opacity:0;animation:fadeUp 1s var(--ease-luxury) 1s forwards;}
+  .hero-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold-light);}
+  .hero-meta{font-size:11px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin:0;opacity:0;animation:fadeUp 1s var(--ease-luxury) 0.2s forwards;}
+  .hero-sep{color:rgba(255,255,255,0.3);font-size:11px;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);}}
+  .scroll-hint{position:absolute;bottom:36px;right:5%;z-index:5;color:var(--white-warm);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.85;}
+  .scroll-line{width:1px;height:40px;background:linear-gradient(180deg,rgba(255,255,255,0.9),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+  @keyframes scrollPulse{0%,100%{opacity:0.3;}50%{opacity:1;}}
 
-  .pill {
-    display: inline-block;
-    background: rgba(245,158,11,0.12);
-    color: var(--amber);
-    border: 1px solid rgba(245,158,11,0.3);
-    padding: 0.3rem 1rem;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-bottom: 1.25rem;
-  }
+  section{position:relative;padding:130px 5%;}
+  .section-head{text-align:center;max-width:680px;margin:0 auto 70px;}
+  .section-tag{font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .section-title{font-size:clamp(30px,4vw,52px);color:var(--text-dark);}
+  .section-desc{margin-top:18px;font-size:16px;line-height:1.8;color:var(--text-soft);font-weight:300;}
 
-  .section-header { text-align: center; margin-bottom: 3.5rem; }
-  .section-header p { color: var(--gray); max-width: 600px; margin: 1rem auto 0; font-size: 1.05rem; }
+  /* SOBRE NOSOTROS */
+  .about{background:var(--bg-warm);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto;}
+  .about-img{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:4/5;}
+  .about-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease-luxury);}
+  .about-img:hover img{transform:scale(1.04);}
+  .about-quote{position:absolute;bottom:28px;left:8%;right:8%;backdrop-filter:blur(12px);background:rgba(244,241,234,0.78);border:1px solid rgba(138,154,91,0.25);padding:18px 22px;}
+  .about-quote p{font-size:13px;font-style:italic;color:var(--text-mid);line-height:1.6;}
+  .about-text .section-tag{text-align:left;}
+  .about-text h2{font-size:clamp(28px,3.6vw,44px);margin-bottom:22px;color:var(--text-dark);}
+  .about-text p{font-size:16px;line-height:1.85;color:var(--text-mid);font-weight:300;margin-bottom:18px;}
+  .counters{display:flex;gap:50px;margin-top:40px;}
+  .counter h3{font-size:42px;color:var(--gold);font-weight:500;}
+  .counter span{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-soft);}
+  @media (max-width:900px){.about-grid{grid-template-columns:1fr;gap:40px;}}
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 1rem 0;
-    transition: all 0.3s;
-  }
-  .nav-inner {
-    display: flex; align-items: center; justify-content: space-between;
-    max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
-  }
-  .nav-logo {
-    font-size: 1.5rem; font-weight: 900; letter-spacing: -0.03em;
-    background: linear-gradient(135deg, var(--amber-light), var(--amber));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--white); }
-  .nav-cta {
-    background: var(--amber); color: #000; padding: 0.5rem 1.25rem;
-    border-radius: 999px; font-size: 0.875rem; font-weight: 700;
-    text-decoration: none; transition: all 0.2s; white-space: nowrap;
-  }
-  .nav-cta:hover { background: var(--amber-light); transform: translateY(-1px); }
+  /* EXPERIENCIAS */
+  .experiences{background:var(--bg-base);}
+  .exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1280px;margin:0 auto;}
+  .exp-card{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;transform-style:preserve-3d;}
+  .exp-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-luxury);}
+  .exp-card:hover img{transform:scale(1.08);}
+  .exp-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(15,17,11,0.88) 100%);}
+  .exp-info{position:absolute;left:0;bottom:0;width:100%;padding:32px;color:var(--white-warm);}
+  .exp-info .num{font-size:12px;letter-spacing:0.2em;color:var(--gold-light);margin-bottom:8px;}
+  .exp-info h3{font-size:26px;margin-bottom:10px;}
+  .exp-info p{font-size:14px;line-height:1.6;font-weight:300;color:rgba(255,255,255,0.85);}
+  .exp-cta{display:block;margin-top:14px;font-size:11px;letter-spacing:0.2em;color:var(--gold-light);text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease-luxury),transform .4s var(--ease-luxury);}
+  .exp-card:hover .exp-cta{opacity:1;transform:translateY(0);}
+  @media (max-width:900px){.exp-grid{grid-template-columns:1fr;}}
 
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .mobile-menu {
-    display: none; position: fixed; top: 65px; left: 0; right: 0;
-    background: rgba(10,10,10,0.97); backdrop-filter: blur(20px);
-    padding: 1.5rem; z-index: 99; border-bottom: 1px solid var(--card-border);
-  }
-  .mobile-menu.open { display: block; }
-  .mobile-menu a { display: block; color: var(--gray); text-decoration: none; padding: 0.75rem 0; font-size: 1rem; border-bottom: 1px solid var(--card-border); transition: color 0.2s; }
-  .mobile-menu a:hover { color: var(--amber); }
+  /* VILLAS */
+  .villas{background:var(--bg-warm);}
+  .villa-feature{display:grid;grid-template-columns:1.1fr 0.9fr;gap:0;max-width:1280px;margin:0 auto;border-radius:8px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,0.12);}
+  .villa-img{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;}
+  .villa-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease-luxury);}
+  .villa-feature:hover .villa-img img{transform:scale(1.05);}
+  .villa-text{background:var(--white-warm);padding:60px;display:flex;flex-direction:column;justify-content:center;}
+  .villa-text .section-tag{text-align:left;}
+  .villa-text h3{font-size:clamp(26px,3.2vw,38px);margin-bottom:18px;color:var(--text-dark);}
+  .villa-text p{font-size:15px;line-height:1.8;color:var(--text-mid);font-weight:300;margin-bottom:26px;}
+  .villa-list{display:flex;flex-direction:column;gap:12px;margin-bottom:30px;}
+  .villa-list li{list-style:none;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-mid);}
+  .villa-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  @media (max-width:900px){.villa-feature{grid-template-columns:1fr;}.villa-text{padding:40px 28px;}}
 
-  #hero {
-    min-height: 100vh; display: flex; align-items: center;
-    position: relative; overflow: hidden; padding-top: 80px;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%), var(--bg);
-  }
-  .hero-glow {
-    position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
-    width: 600px; height: 600px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%);
-    animation: pulse-glow 4s ease-in-out infinite;
-    pointer-events: none;
-  }
-  @keyframes pulse-glow {
-    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-  }
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
-  }
-  .hero-content { position: relative; z-index: 1; text-align: center; padding: 2rem 0; }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25);
-    color: var(--amber); padding: 0.4rem 1.1rem; border-radius: 999px;
-    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
-  .hero-eyebrow::before { content: '●'; font-size: 0.5rem; animation: blink 2s infinite; }
-  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-  .hero-title { margin-bottom: 1.5rem; }
-  .hero-title em { font-style: normal; color: var(--amber); }
-  .hero-sub { color: var(--gray); font-size: clamp(1rem, 2vw, 1.25rem); max-width: 600px; margin: 0 auto 2.5rem; }
-  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: linear-gradient(135deg, var(--amber), var(--amber-dark));
-    color: #000; padding: 0.9rem 2rem; border-radius: 999px;
-    font-weight: 800; font-size: 1rem; text-decoration: none;
-    transition: all 0.3s; box-shadow: 0 0 30px rgba(245,158,11,0.3);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(245,158,11,0.5); }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: transparent; color: var(--white);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 0.9rem 2rem; border-radius: 999px;
-    font-weight: 600; font-size: 1rem; text-decoration: none;
-    transition: all 0.3s;
-  }
-  .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
-  .hero-tags { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
-  .hero-tag {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-    color: var(--gray); padding: 0.3rem 0.8rem; border-radius: 999px;
-    font-size: 0.78rem; font-weight: 500;
-  }
+  /* LIGHTBOX */
+  #lightbox{position:fixed;inset:0;background:rgba(30,33,23,0.96);z-index:800;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s var(--ease-luxury),visibility .4s;}
+  #lightbox.open{opacity:1;visibility:visible;}
+  #lightbox img{max-width:88vw;max-height:86vh;object-fit:contain;transform:scale(0.92);opacity:0;transition:transform .4s var(--ease-luxury),opacity .4s var(--ease-luxury);}
+  #lightbox.open img{transform:scale(1);opacity:1;}
+  .lb-close{position:absolute;top:24px;right:32px;font-size:32px;line-height:1;color:var(--white-warm);background:none;border:none;cursor:pointer;transition:color .3s;}
+  .lb-close:hover{color:var(--gold-light);}
+  .lb-caption{position:absolute;bottom:30px;left:0;right:0;text-align:center;color:var(--white-warm);font-size:14px;letter-spacing:0.1em;text-transform:uppercase;}
 
-  .stats-strip { background: var(--bg3); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); padding: 2.5rem 0; }
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; text-align: center; }
-  .stat-num { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -0.03em; background: linear-gradient(135deg, var(--amber-light), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .stat-label { color: var(--gray); font-size: 0.82rem; margin-top: 0.25rem; font-weight: 500; }
+  /* SERVICIOS / EXPERIENCIA */
+  .services{background:var(--bg-deep);color:var(--white-warm);}
+  .services .section-tag{color:var(--gold-light);}
+  .services .section-title{color:var(--white-warm);}
+  .services .section-desc{color:rgba(255,255,255,0.7);}
+  .serv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;max-width:1280px;margin:0 auto;}
+  .serv-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:40px 28px;transition:transform .4s,border-color .4s;}
+  .serv-card:hover{border-color:var(--gold-light);}
+  .serv-card .icon{font-size:30px;margin-bottom:20px;color:var(--gold-light);}
+  .serv-card h4{font-size:20px;margin-bottom:12px;}
+  .serv-card p{font-size:14px;line-height:1.7;font-weight:300;color:rgba(255,255,255,0.65);}
+  @media (max-width:900px){.serv-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.serv-grid{grid-template-columns:1fr;}}
 
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius);
-    padding: 2rem;
-    transition: all 0.3s;
-  }
-  .card:hover { border-color: rgba(245,158,11,0.3); background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+  /* CONTACT */
+  .contact{background:#23271c;color:var(--white-warm);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;max-width:1100px;margin:0 auto;}
+  .contact .section-tag{color:var(--gold-light);text-align:left;}
+  .contact h2{font-size:clamp(28px,3.6vw,44px);color:var(--white-warm);margin-bottom:20px;}
+  .contact-info-text{color:rgba(255,255,255,0.75);font-size:15px;line-height:1.8;font-weight:300;margin-bottom:30px;}
+  .contact-item{display:flex;align-items:center;gap:14px;margin-bottom:20px;color:rgba(255,255,255,0.92);font-weight:500;}
+  .contact-item .ic{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .contact-item .ic svg{width:18px;height:18px;color:var(--gold-light);}
+  form{display:flex;flex-direction:column;gap:18px;}
+  input,select,textarea{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:15px 18px;color:var(--white-warm);font-family:'Jost',sans-serif;font-size:14px;transition:border-color .3s,background .3s;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold-light);background:rgba(255,255,255,0.1);}
+  input::placeholder,textarea::placeholder{color:rgba(255,255,255,0.45);}
+  select option{background:var(--bg-deep);color:var(--white-warm);}
+  textarea{resize:none;height:110px;}
+  .btn-submit{background:var(--gold);color:#16180f;border:none;padding:16px;border-radius:6px;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:background .3s;font-weight:600;}
+  .btn-submit:hover{background:var(--gold-light);}
+  .form-msg{font-size:13px;margin-top:6px;color:rgba(255,255,255,0.75);}
+  @media (max-width:900px){.contact-grid{grid-template-columns:1fr;}}
 
-  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
-  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  footer{background:#181b12;color:rgba(255,255,255,0.6);padding:60px 5% 30px;}
+  .footer-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;max-width:1280px;margin:0 auto 40px;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--white-warm);margin-bottom:14px;}
+  .footer-col h5{font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:18px;}
+  .footer-col a{display:block;font-size:14px;margin-bottom:10px;color:rgba(255,255,255,0.6);transition:color .3s;}
+  .footer-col a:hover{color:var(--gold-light);}
+  .footer-bottom{text-align:center;font-size:13px;color:rgba(255,255,255,0.4);border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;max-width:1280px;margin:0 auto;}
 
-  .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--card-border); }
-  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-  thead { background: rgba(245,158,11,0.08); }
-  th { padding: 1rem 1.25rem; text-align: left; color: var(--amber); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
-  td { padding: 0.9rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.04); color: var(--gray); }
-  tr:hover td { background: rgba(255,255,255,0.03); }
-  td:first-child { color: var(--white); font-weight: 600; }
-  .check { color: var(--amber); font-size: 1.1rem; }
-  .cross { color: #ef4444; }
+  .coming-soon-badge{display:inline-block;margin-top:24px;padding:8px 20px;border:1px solid var(--gold);border-radius:30px;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
 
-  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; align-items: start; }
-  .pricing-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 2.5rem 2rem; transition: all 0.3s; position: relative; }
-  .pricing-card:hover { transform: translateY(-3px); }
-  .pricing-card.featured { border-color: var(--amber); background: rgba(245,158,11,0.05); box-shadow: 0 0 40px rgba(245,158,11,0.12); }
-  .featured-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--amber); color: #000; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 1rem; border-radius: 0 0 0.75rem 0.75rem; }
-  .price-amount { font-size: 2.8rem; font-weight: 900; color: var(--amber); letter-spacing: -0.04em; }
-  .price-unit { color: var(--gray); font-size: 0.875rem; }
-  .pricing-list { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
-  .pricing-list li { display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-size: 0.9rem; }
-  .pricing-list li::before { content: '✓'; color: var(--amber); font-weight: 700; flex-shrink: 0; }
-
-  .layer-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 2rem; position: relative; overflow: hidden; transition: all 0.3s; }
-  .layer-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--amber), var(--amber-dark)); border-radius: 3px 0 0 3px; }
-  .layer-card:hover { border-color: rgba(245,158,11,0.3); transform: translateX(4px); }
-  .layer-num { font-size: 3rem; font-weight: 900; color: rgba(245,158,11,0.15); line-height: 1; margin-bottom: 0.5rem; }
-  .layer-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
-  .badge { background: rgba(245,158,11,0.1); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); padding: 0.2rem 0.65rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
-  .badge-blue { background: rgba(59,130,246,0.1); color: #60a5fa; border-color: rgba(59,130,246,0.2); }
-  .badge-green { background: rgba(34,197,94,0.1); color: #4ade80; border-color: rgba(34,197,94,0.2); }
-
-  .roadmap { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-  .phase { flex: 1; min-width: 220px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 2rem; position: relative; }
-  .phase-label { color: var(--amber); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .phase-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
-  .phase-time { color: var(--gray-dim); font-size: 0.8rem; margin-bottom: 1rem; }
-  .phase-items { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-  .phase-items li { color: var(--gray); font-size: 0.875rem; padding-left: 1rem; position: relative; }
-  .phase-items li::before { content: '→'; position: absolute; left: 0; color: var(--amber); }
-  .phase-connector { display: flex; align-items: center; align-self: center; color: rgba(245,158,11,0.4); font-size: 1.5rem; flex-shrink: 0; }
-
-  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
-  .team-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 2rem; text-align: center; transition: all 0.3s; }
-  .team-card:hover { border-color: rgba(245,158,11,0.3); }
-  .team-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--amber), var(--amber-dark)); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 900; color: #000; margin: 0 auto 1rem; }
-  .team-role { color: var(--amber); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.25rem; }
-  .team-desc { color: var(--gray); font-size: 0.875rem; margin-top: 0.75rem; }
-
-  .milestone-list { display: flex; flex-direction: column; gap: 1rem; }
-  .milestone { display: flex; align-items: center; gap: 1.5rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 1rem; padding: 1.25rem 1.5rem; transition: all 0.3s; }
-  .milestone:hover { border-color: rgba(245,158,11,0.3); }
-  .milestone-dot { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--amber), var(--amber-dark)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: #000; }
-  .milestone-content h4 { font-size: 1rem; font-weight: 700; }
-  .milestone-content p { color: var(--gray); font-size: 0.875rem; }
-
-  #cta { background: var(--bg); border-top: 1px solid var(--card-border); text-align: center; padding: 6rem 0 4rem; position: relative; overflow: hidden; }
-  .cta-glow { position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%); width: 500px; height: 300px; border-radius: 50%; background: radial-gradient(ellipse, rgba(245,158,11,0.08) 0%, transparent 70%); pointer-events: none; }
-  blockquote { font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 300; color: var(--gray); max-width: 760px; margin: 2rem auto; line-height: 1.7; font-style: italic; }
-  blockquote strong { color: var(--white); font-weight: 700; font-style: normal; }
-  .quote-attr { color: var(--amber); font-size: 0.9rem; font-weight: 600; margin-top: 1.5rem; }
-
-  .luxy-col { color: var(--amber) !important; }
-
-  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-  .fade-up-delay-1 { transition-delay: 0.1s; }
-  .fade-up-delay-2 { transition-delay: 0.2s; }
-  .fade-up-delay-3 { transition-delay: 0.3s; }
-  .fade-up-delay-4 { transition-delay: 0.4s; }
-
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 2rem 0; }
-  .kpi-card { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2); border-radius: 1rem; padding: 1.5rem; text-align: center; }
-  .kpi-val { font-size: 2rem; font-weight: 900; color: var(--amber); letter-spacing: -0.03em; }
-  .kpi-lbl { color: var(--gray); font-size: 0.78rem; margin-top: 0.25rem; font-weight: 500; }
-
-  .divider { border: none; border-top: 1px solid var(--card-border); margin: 3rem 0; }
-
-  .demo-box { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2); border-radius: var(--radius); padding: 2.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; margin-top: 2.5rem; }
-  .demo-item { text-align: center; }
-  .demo-num { font-size: 3rem; font-weight: 900; color: var(--amber); line-height: 1; }
-  .demo-lbl { color: var(--gray); font-size: 0.9rem; margin-top: 0.4rem; }
-
-  .revenue-highlight { color: var(--amber) !important; font-weight: 700 !important; }
-
-  @media (max-width: 768px) {
-    section { padding: 4rem 0; }
-    .nav-links, .nav-cta { display: none; }
-    .hamburger { display: flex; }
-    .roadmap { flex-direction: column; }
-    .phase-connector { display: none; }
-    h1 { font-size: 2.2rem; }
-    h2 { font-size: 1.6rem; }
-    .hero-content { padding: 1rem 0; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .demo-box { grid-template-columns: repeat(2, 1fr); }
-    th, td { padding: 0.7rem 0.85rem; font-size: 0.82rem; }
-    .milestone { flex-direction: column; text-align: center; }
-  }
-  @media (max-width: 480px) {
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .kpi-grid { grid-template-columns: 1fr 1fr; }
-    .hero-actions { flex-direction: column; align-items: center; }
-    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;animation-iteration-count:1 !important;}
   }
 </style>
 </head>
 <body>
 
-<nav id="navbar">
-  <div class="nav-inner">
-    <a href="#hero" class="nav-logo">LUXY</a>
-    <ul class="nav-links">
-      <li><a href="#problema">Problema</a></li>
-      <li><a href="#producto">Producto</a></li>
-      <li><a href="#revenue">Revenue</a></li>
-      <li><a href="#equipo">Equipo</a></li>
-      <li><a href="#inversion">Inversión</a></li>
+<div id="loader" role="status" aria-label="Cargando">
+  <div class="loader-logo">Natur<span>Lux</span></div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<div id="mobile-menu" role="navigation" aria-label="Menú principal">
+  <button class="mobile-close" id="mobileClose" aria-label="Cerrar menú">&times;</button>
+  <a href="#sobre">Sobre Nosotros</a>
+  <a href="#experiencias">Experiencias</a>
+  <a href="#villas">Villas</a>
+  <a href="#contacto">Contacto</a>
+</div>
+
+<header id="navbar" aria-label="Navegación principal">
+  <div class="logo">Natur<span>Lux</span> Hideaway</div>
+  <nav>
+    <ul>
+      <li><a href="#sobre">Sobre Nosotros</a></li>
+      <li><a href="#experiencias">Experiencias</a></li>
+      <li><a href="#villas">Villas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
     </ul>
-    <a href="https://agentluxy.netlify.app" target="_blank" rel="noopener" class="nav-cta">Ver Demo →</a>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+  </nav>
+  <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<section class="hero" aria-label="Portada">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="images/hero-video.mp4" type="video/mp4">
+    </video>
   </div>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#problema" onclick="closeMobile()">Problema</a>
-  <a href="#producto" onclick="closeMobile()">Producto</a>
-  <a href="#pricing" onclick="closeMobile()">Pricing SaaS</a>
-  <a href="#resort" onclick="closeMobile()">Natur-Lux</a>
-  <a href="#revenue" onclick="closeMobile()">Revenue</a>
-  <a href="#competencia" onclick="closeMobile()">Competencia</a>
-  <a href="#roadmap" onclick="closeMobile()">Roadmap</a>
-  <a href="#equipo" onclick="closeMobile()">Equipo</a>
-  <a href="#inversion" onclick="closeMobile()">Inversión</a>
-  <a href="https://agentluxy.netlify.app" target="_blank">Ver Demo →</a>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="hero-meta">Only Adults · Costa Blanca, Alicante</p>
+    <span class="hero-sep">·</span>
+    <h1 class="hero-title">Donde el silencio encuentra la calma.</h1>
+    <span class="hero-sep">·</span>
+    <div class="hero-badge">Apertura próximamente…</div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><span>Descubre</span><div class="scroll-line"></div></div>
+</section>
+
+<section class="about grain" id="sobre" aria-labelledby="sobre-title">
+  <div class="about-grid">
+    <div class="about-img reveal-scale">
+      <img src="images/domos.webp" alt="Domos geodésicos de Natur-Lux Hideaway integrados entre olivos al atardecer">
+      <div class="about-quote"><p>Un refugio mediterráneo de diseño donde la naturaleza es la experiencia. Burbujas panorámicas, domos geodésicos y villas con infinity pool.</p></div>
+    </div>
+    <div class="about-text reveal">
+      <div class="section-tag">Nuestra Filosofía</div>
+      <h2 id="sobre-title">La naturaleza no es el telón.<br>Es la experiencia.</h2>
+      <p>Natur-Lux Hideaway nace de la idea de reconectar con la naturaleza sin renunciar al confort y al diseño. Cada alojamiento ha sido pensado para integrarse en el paisaje: terrazas de madera y piedra, olivos centenarios y campos de lavanda como telón de fondo.</p>
+      <p>Un refugio íntimo donde el silencio, la luz y los materiales naturales se combinan para crear una experiencia sensorial única, alejada del ruido cotidiano.</p>
+      <div class="counters">
+        <div class="counter"><h3 id="c1" data-target="3">0</h3><span>Tipos de alojamiento</span></div>
+        <div class="counter"><h3 id="c2" data-target="6">0</h3><span>Hectáreas de naturaleza</span></div>
+        <div class="counter"><h3 id="c3" data-target="80" data-suffix="%">0</h3><span>Materiales sostenibles</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="experiences" id="experiencias" aria-labelledby="exp-title">
+  <div class="section-head reveal">
+    <div class="section-tag">Experiencias</div>
+    <h2 id="exp-title" class="section-title">Tres formas de habitar la naturaleza</h2>
+    <p class="section-desc">Cada espacio ofrece una manera distinta de vivir el entorno: transparencia, geometría orgánica o diseño contemporáneo.</p>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-card reveal" data-tilt data-src="images/burbujas.jpg" tabindex="0" role="button" aria-label="Ver Burbujas">
+      <img src="images/burbujas.jpg" alt="Burbuja transparente de Natur-Lux Hideaway con vistas al bosque">
+      <div class="exp-overlay" aria-hidden="true"></div>
+      <div class="exp-info">
+        <div class="num">01</div>
+        <h3>Burbujas</h3>
+        <p>Cúpulas transparentes entre los árboles para dormir bajo las estrellas, con todas las comodidades de un alojamiento premium.</p>
+        <span class="exp-cta">Ver detalle →</span>
+      </div>
+    </div>
+    <div class="exp-card reveal" data-tilt data-src="images/domos.webp" tabindex="0" role="button" aria-label="Ver Domos" style="transition-delay:.1s">
+      <img src="images/domos.webp" alt="Domos geodésicos de Natur-Lux Hideaway entre terrazas de olivos">
+      <div class="exp-overlay" aria-hidden="true"></div>
+      <div class="exp-info">
+        <div class="num">02</div>
+        <h3>Domos</h3>
+        <p>Domos geodésicos integrados en terrazas de piedra, rodeados de olivos y lavanda, pensados para el descanso y la introspección.</p>
+        <span class="exp-cta">Ver detalle →</span>
+      </div>
+    </div>
+    <div class="exp-card reveal" data-tilt data-src="images/villa.jpg" tabindex="0" role="button" aria-label="Ver Villas" style="transition-delay:.2s">
+      <img src="images/villa.jpg" alt="Villa de diseño contemporáneo con piscina de Natur-Lux Hideaway">
+      <div class="exp-overlay" aria-hidden="true"></div>
+      <div class="exp-info">
+        <div class="num">03</div>
+        <h3>Villas</h3>
+        <p>Villas contemporáneas de líneas minimalistas con piscina privada, integradas en el paisaje de campos de lavanda.</p>
+        <span class="exp-cta">Ver detalle →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="villas" id="villas" aria-labelledby="villas-title">
+  <div class="section-head reveal">
+    <div class="section-tag">Alojamiento Exclusivo</div>
+    <h2 id="villas-title" class="section-title">Villas de diseño</h2>
+  </div>
+  <div class="villa-feature reveal-scale">
+    <div class="villa-img" data-src="images/villa.jpg" tabindex="0" role="button" aria-label="Ver Villa Afrodita">
+      <img src="images/villa.jpg" alt="Villa Afrodita, arquitectura moderna con piscina infinita rodeada de campos de lavanda">
+    </div>
+    <div class="villa-text">
+      <div class="section-tag">Villa Afrodita</div>
+      <h3>Arquitectura moderna diseñada para el confort</h3>
+      <p>Una villa de líneas puras y amplios ventanales que se abren al paisaje natural. Piscina privada, terrazas exteriores y un interior cálido donde cada detalle ha sido cuidado al máximo.</p>
+      <ul class="villa-list">
+        <li>Piscina privada</li>
+        <li>Vistas panorámicas</li>
+        <li>Interiores de diseño contemporáneo</li>
+        <li>Terrazas exteriores integradas en el paisaje</li>
+      </ul>
+      <span class="coming-soon-badge">Apertura próximamente</span>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de imágenes">
+  <button class="lb-close" id="lbClose" aria-label="Cerrar visor">&times;</button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-caption" id="lbCaption"></div>
 </div>
 
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="container">
-    <div class="hero-content fade-up">
-      <div class="hero-eyebrow">TravelTech Premium Europe · Lanzadera 2026</div>
-      <h1 class="hero-title">Tu próximo viaje premium,<br>diseñado por <em>IA</em>,<br>en un minuto.</h1>
-      <p class="hero-sub">LUXY es el primer agente de inteligencia artificial especializado en turismo de lujo experiencial. Planificación hiperpersonalizada, reservas instantáneas y memoria de viajero.</p>
-      <div class="hero-actions">
-        <a href="https://agentluxy.netlify.app" target="_blank" rel="noopener" class="btn-primary">Probar Agente IA ↗</a>
-        <a href="#producto" class="btn-secondary">Ver Business Plan ↓</a>
-      </div>
-      <div class="hero-tags">
-        <span class="hero-tag">Nikol Ninkova · CEO</span>
-        <span class="hero-tag">Juan Ramón Amador · COO</span>
-        <span class="hero-tag">Pre-seed 100K–300K€</span>
-        <span class="hero-tag">agentluxy.netlify.app</span>
-      </div>
+<section class="services grain" id="servicios" aria-labelledby="serv-title">
+  <div class="section-head reveal">
+    <div class="section-tag">La Experiencia</div>
+    <h2 id="serv-title" class="section-title">Pensado en cada detalle</h2>
+    <p class="section-desc">Un concepto de hospitalidad donde la naturaleza, el diseño y el descanso se encuentran.</p>
+  </div>
+  <div class="serv-grid">
+    <div class="serv-card reveal" data-tilt>
+      <div class="icon">✦</div>
+      <h4>Naturaleza integrada</h4>
+      <p>Alojamientos diseñados para fundirse con olivos, lavanda y piedra natural del entorno.</p>
+    </div>
+    <div class="serv-card reveal" data-tilt style="transition-delay:.1s">
+      <div class="icon">✦</div>
+      <h4>Diseño exclusivo</h4>
+      <p>Espacios contemporáneos con materiales nobles y atención al detalle en cada rincón.</p>
+    </div>
+    <div class="serv-card reveal" data-tilt style="transition-delay:.2s">
+      <div class="icon">✦</div>
+      <h4>Privacidad total</h4>
+      <p>Cada alojamiento está pensado como un refugio íntimo, alejado del bullicio.</p>
+    </div>
+    <div class="serv-card reveal" data-tilt style="transition-delay:.3s">
+      <div class="icon">✦</div>
+      <h4>Bienestar sereno</h4>
+      <p>Hidromasaje exterior, terrazas y vistas pensadas para desconectar de verdad.</p>
     </div>
   </div>
 </section>
 
-<div class="stats-strip">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="fade-up"><div class="stat-num">1,49T€</div><div class="stat-label">Mercado turismo premium global</div></div>
-      <div class="fade-up fade-up-delay-1"><div class="stat-num">6,2%</div><div class="stat-label">CAGR turismo premium</div></div>
-      <div class="fade-up fade-up-delay-2"><div class="stat-num">28,7%</div><div class="stat-label">CAGR HotelTech IA</div></div>
-      <div class="fade-up fade-up-delay-3"><div class="stat-num">89%</div><div class="stat-label">Viajeros que quieren IA</div></div>
-      <div class="fade-up fade-up-delay-4"><div class="stat-num">50%</div><div class="stat-label">Hoteles que usan IA</div></div>
-    </div>
-  </div>
-</div>
-
-<section id="problema">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">02 · Problema</div>
-      <h2>El turismo premium está<br><span class="gradient-text">roto por diseño</span></h2>
-      <p>Las OTAs masifican, las agencias tradicionales no escalan, y ninguna recuerda quién eres.</p>
-    </div>
-    <div class="table-wrap fade-up">
-      <table>
-        <thead><tr><th>Dimensión</th><th>OTAs</th><th>Agencias Tradicionales</th><th class="luxy-col">✦ LUXY</th></tr></thead>
-        <tbody>
-          <tr><td>Escala</td><td>Alta, masificada</td><td>Baja, manual</td><td class="luxy-col">Alta + hiperpersonalizada</td></tr>
-          <tr><td>Personalización</td><td>Algoritmo genérico</td><td>Alta pero lenta</td><td class="luxy-col">IA adaptativa en tiempo real</td></tr>
-          <tr><td>Velocidad</td><td>Rápida, sin contexto</td><td>3-7 días</td><td class="luxy-col">&lt;60 segundos</td></tr>
-          <tr><td>Memoria de viajero</td><td>No existe</td><td>Parcial</td><td class="luxy-col">Persistente y acumulativa</td></tr>
-          <tr><td>Gestión in-situ</td><td>Sin soporte real</td><td>Teléfono / email</td><td class="luxy-col">Mayordomo Virtual 24/7</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="grid-4" style="margin-top:2.5rem;">
-      <div class="card fade-up"><div class="stat-num">1,49T€</div><div style="color:var(--gray);font-size:0.9rem;margin-top:0.5rem;">Turismo premium global CAGR 6,2%</div></div>
-      <div class="card fade-up fade-up-delay-1"><div class="stat-num">28,7%</div><div style="color:var(--gray);font-size:0.9rem;margin-top:0.5rem;">CAGR HotelTech IA</div></div>
-      <div class="card fade-up fade-up-delay-2"><div class="stat-num">89%</div><div style="color:var(--gray);font-size:0.9rem;margin-top:0.5rem;">Viajeros premium quieren IA</div></div>
-      <div class="card fade-up fade-up-delay-3"><div class="stat-num">50%</div><div style="color:var(--gray);font-size:0.9rem;margin-top:0.5rem;">Hoteles usan IA sin OS integrado</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="producto">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">03 · Producto</div>
-      <h2>Tres capas.<br><span class="gradient-text">Un ecosistema.</span></h2>
-      <p>Una stack completa que cubre el ciclo de vida del viajero premium: antes, durante y después del viaje.</p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:1.25rem;">
-      <div class="layer-card fade-up"><div class="layer-num">01</div><h3>Agente IA Global</h3><p style="color:var(--gray);margin-top:0.5rem;">Motor de recomendación y planificación hiperpersonalizada. Diseña itinerarios premium en menos de 60 segundos. Gestiona reservas, pagos y comunicación con alojamientos.</p><div class="layer-badges"><span class="badge">B2C</span><span class="badge">Comisión 15–20%</span><span class="badge badge-blue">Antes del viaje</span></div></div>
-      <div class="layer-card fade-up fade-up-delay-1"><div class="layer-num">02</div><h3>Guest OS — Sistema Operativo del Huésped</h3><p style="color:var(--gray);margin-top:0.5rem;">Plataforma SaaS licenciable para hoteles boutique. Digitaliza la experiencia in-situ: check-in inteligente, upselling contextual y comunicación multicanal.</p><div class="layer-badges"><span class="badge">B2B</span><span class="badge">Licencia mensual</span><span class="badge badge-green">Durante el viaje</span></div></div>
-      <div class="layer-card fade-up fade-up-delay-2"><div class="layer-num">03</div><h3>Mayordomo Virtual</h3><p style="color:var(--gray);margin-top:0.5rem;">IA conversacional 24/7 por habitación con memoria persistente. Gestiona desde el minibar hasta excursiones privadas en tiempo real.</p><div class="layer-badges"><span class="badge">B2B SaaS</span><span class="badge">Por habitación/mes</span><span class="badge badge-green">Durante y después</span></div></div>
-    </div>
-    <div class="demo-box fade-up">
-      <div class="demo-item"><div class="demo-num">7</div><div class="demo-lbl">Preguntas para generar tu plan</div></div>
-      <div class="demo-item"><div class="demo-num">18</div><div class="demo-lbl">Paquetes signature activos</div></div>
-      <div class="demo-item"><div class="demo-num">3</div><div class="demo-lbl">Tipologías de alojamiento</div></div>
-      <div class="demo-item"><div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:0.5rem;"><span class="badge">Burbuja</span><span class="badge">Domo</span><span class="badge">Villa</span></div><div class="demo-lbl" style="margin-top:0.5rem;">Tipologías Natur-Lux</div></div>
-    </div>
-    <div style="text-align:center;margin-top:2.5rem;" class="fade-up"><a href="https://agentluxy.netlify.app" target="_blank" rel="noopener" class="btn-primary">Probar el Agente IA en vivo ↗</a></div>
-  </div>
-</section>
-
-<section id="pricing">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">04 · SaaS Pricing</div>
-      <h2>Modelo de ingresos<br><span class="gradient-text">predecible y escalable</span></h2>
-      <p>Guest OS + Mayordomo Virtual en tres planes. Facturación por unidad/habitación al mes.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="pricing-card fade-up">
-        <div style="margin-bottom:0.25rem;color:var(--gray);font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Starter</div>
-        <div class="price-amount">150€</div><div class="price-unit">/ unidad / mes</div>
-        <hr class="divider" style="margin:1.25rem 0;">
-        <div style="color:var(--gray);font-size:0.85rem;margin-bottom:0.75rem;">Glamping · 5–15 unidades</div>
-        <div style="font-size:1.4rem;font-weight:800;color:var(--amber);">ARR 90.000€</div>
-        <ul class="pricing-list"><li>Guest OS básico</li><li>Mayordomo Virtual</li><li>Check-in digital</li><li>Dashboard analytics</li></ul>
+<section class="contact grain" id="contacto" aria-labelledby="contact-title">
+  <div class="contact-grid">
+    <div class="reveal">
+      <div class="section-tag">Contacto</div>
+      <h2 id="contact-title">Sé el primero en descubrirlo</h2>
+      <p class="contact-info-text">Natur-Lux Hideaway abrirá sus puertas próximamente. Déjanos tus datos y serás de los primeros en recibir todas las novedades sobre nuestra apertura.</p>
+      <div class="contact-item">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <span>info@natur-lux-hideaway.com</span>
       </div>
-      <div class="pricing-card featured fade-up fade-up-delay-1">
-        <div class="featured-badge">Más popular</div>
-        <div style="margin-bottom:0.25rem;color:var(--amber);font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Professional</div>
-        <div class="price-amount">300€</div><div class="price-unit">/ unidad / mes</div>
-        <hr class="divider" style="margin:1.25rem 0;border-color:rgba(245,158,11,0.2);">
-        <div style="color:var(--gray);font-size:0.85rem;margin-bottom:0.75rem;">Hotel Boutique · 15–50 unidades</div>
-        <div style="font-size:1.4rem;font-weight:800;color:var(--amber);">ARR 180.000€</div>
-        <ul class="pricing-list"><li>Todo Starter</li><li>Upselling IA contextual</li><li>Integración PMS/POS</li><li>Soporte prioritario 24/7</li><li>Memoria viajero avanzada</li></ul>
+      <div class="contact-item">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+        <span>Próximamente disponible</span>
       </div>
-      <div class="pricing-card fade-up fade-up-delay-2">
-        <div style="margin-bottom:0.25rem;color:var(--gray);font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">Enterprise</div>
-        <div class="price-amount">500€</div><div class="price-unit">/ unidad / mes</div>
-        <hr class="divider" style="margin:1.25rem 0;">
-        <div style="color:var(--gray);font-size:0.85rem;margin-bottom:0.75rem;">Resort · 50+ unidades</div>
-        <div style="font-size:1.4rem;font-weight:800;color:var(--amber);">ARR 300.000€</div>
-        <ul class="pricing-list"><li>Todo Professional</li><li>Modelo fine-tuned propio</li><li>Onboarding dedicado</li><li>SLA 99,9% uptime</li><li>White-label disponible</li></ul>
+      <div class="contact-item">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <span>Entorno natural mediterráneo</span>
       </div>
     </div>
+    <form id="contactForm" class="reveal" action="https://formsubmit.co/info@natur-lux-hideaway.com" method="POST">
+      <input type="hidden" name="_subject" value="Nueva solicitud de información — Natur-Lux Hideaway">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="text" name="nombre" placeholder="Nombre completo" required>
+      <input type="email" name="email" placeholder="Correo electrónico" required>
+      <select name="experiencia">
+        <option value="" disabled selected>¿Qué experiencia te interesa?</option>
+        <option>Burbujas</option>
+        <option>Domos</option>
+        <option>Villas</option>
+        <option>Aún no lo sé</option>
+      </select>
+      <textarea name="mensaje" placeholder="Cuéntanos qué experiencia te interesa..."></textarea>
+      <button type="submit" class="btn-submit">Quiero saber más</button>
+      <div class="form-msg" id="formMsg"></div>
+    </form>
   </div>
 </section>
 
-<section id="resort">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">05 · Natur-Lux Hideaway</div>
-      <h2>El primer activo propio.<br><span class="gradient-text">Donde probamos la stack.</span></h2>
-      <p>Eco-resort Only Adults en Finestrat, Alicante. 12 unidades donde LUXY opera, aprende y genera datos propietarios.</p>
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Natur-Lux Hideaway</div>
+      <p style="max-width:280px;font-size:14px;line-height:1.7;">Eco-resort premium entre olivos y lavanda. Apertura próximamente.</p>
     </div>
-    <div class="kpi-grid fade-up">
-      <div class="kpi-card"><div class="kpi-val">26,28%</div><div class="kpi-lbl">TIR del proyecto</div></div>
-      <div class="kpi-card"><div class="kpi-val">2,78M€</div><div class="kpi-lbl">VAN estimado</div></div>
-      <div class="kpi-card"><div class="kpi-val">9,33x</div><div class="kpi-lbl">DSCR cobertura deuda</div></div>
-      <div class="kpi-card"><div class="kpi-val">21,4%</div><div class="kpi-lbl">Ocupación break-even</div></div>
+    <div class="footer-col">
+      <h5>Navegación</h5>
+      <a href="#sobre">Sobre Nosotros</a>
+      <a href="#experiencias">Experiencias</a>
+      <a href="#villas">Villas</a>
+      <a href="#contacto">Contacto</a>
     </div>
-    <div class="grid-3" style="margin-top:2rem;">
-      <div class="card fade-up" style="border-color:rgba(245,158,11,0.2);">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem;">🫧</div>
-        <h3>Burbuja Panorámica</h3>
-        <div style="color:var(--amber);font-size:1.3rem;font-weight:800;margin:0.5rem 0;">220–300€<span style="font-size:0.8rem;color:var(--gray);font-weight:400;">/noche</span></div>
-        <p style="color:var(--gray);font-size:0.875rem;">5 unidades · Vistas 360° al mediterráneo.</p>
-        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--card-border);"><div style="color:var(--amber);font-weight:800;font-size:1.1rem;">320.744€</div><div style="color:var(--gray-dim);font-size:0.78rem;">Revenue anual estimado</div></div>
-      </div>
-      <div class="card fade-up fade-up-delay-1" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.04);">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem;">⬡</div>
-        <h3>Domo Geodésico</h3>
-        <div style="color:var(--amber);font-size:1.3rem;font-weight:800;margin:0.5rem 0;">300–400€<span style="font-size:0.8rem;color:var(--gray);font-weight:400;">/noche</span></div>
-        <p style="color:var(--gray);font-size:0.875rem;">4 unidades · Terraza privada, jacuzzi exterior.</p>
-        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--card-border);"><div style="color:var(--amber);font-weight:800;font-size:1.1rem;">359.233€</div><div style="color:var(--gray-dim);font-size:0.78rem;">Revenue anual estimado</div></div>
-      </div>
-      <div class="card fade-up fade-up-delay-2" style="border-color:rgba(245,158,11,0.2);">
-        <div style="font-size:2.5rem;margin-bottom:0.75rem;">🏊</div>
-        <h3>Villa + Infinity Pool</h3>
-        <div style="color:var(--amber);font-size:1.3rem;font-weight:800;margin:0.5rem 0;">450–600€<span style="font-size:0.8rem;color:var(--gray);font-weight:400;">/noche</span></div>
-        <p style="color:var(--gray);font-size:0.875rem;">3 unidades · Villa privada, piscina infinita.</p>
-        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--card-border);"><div style="color:var(--amber);font-weight:800;font-size:1.1rem;">384.893€</div><div style="color:var(--gray-dim);font-size:0.78rem;">Revenue anual estimado</div></div>
-      </div>
+    <div class="footer-col">
+      <h5>Contacto</h5>
+      <a href="mailto:info@natur-lux-hideaway.com">info@natur-lux-hideaway.com</a>
     </div>
   </div>
-</section>
-
-<section id="revenue">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">06 · Revenue Proyectado</div>
-      <h2>Tres fuentes.<br><span class="gradient-text">Crecimiento compuesto.</span></h2>
-    </div>
-    <div class="table-wrap fade-up">
-      <table>
-        <thead><tr><th>Fuente de Ingresos</th><th>Año 1</th><th>Año 2</th><th>Año 3</th></tr></thead>
-        <tbody>
-          <tr><td>🏨 Natur-Lux Hideaway</td><td>1.064.869€</td><td>1.118.113€</td><td>1.174.018€</td></tr>
-          <tr><td>🤖 Agente IA B2C</td><td>10–24K€</td><td>51–102K€</td><td>163–272K€</td></tr>
-          <tr><td>💼 SaaS B2B</td><td>43.200€</td><td>121–324K€</td><td>495K–990K€</td></tr>
-          <tr style="background:rgba(245,158,11,0.06);"><td style="color:var(--amber);font-weight:800;">TOTAL CONSOLIDADO</td><td class="revenue-highlight">1,1M–1,13M€</td><td class="revenue-highlight">1,34M–1,59M€</td><td class="revenue-highlight">1,93M–2,54M€</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section id="competencia">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">07 · Ventaja Competitiva</div>
-      <h2>Nadie tiene<br><span class="gradient-text">todo lo que tiene LUXY</span></h2>
-    </div>
-    <div class="table-wrap fade-up">
-      <table>
-        <thead><tr><th>Capacidad</th><th class="luxy-col">✦ LUXY</th><th>Black Tomato</th><th>Booking</th><th>Journy</th><th>Cloudbeds</th></tr></thead>
-        <tbody>
-          <tr><td>IA en tiempo real</td><td class="check luxy-col">✓</td><td class="cross">✗</td><td>~</td><td>~</td><td class="cross">✗</td></tr>
-          <tr><td>Activo físico propio</td><td class="check luxy-col">✓</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td></tr>
-          <tr><td>Guest OS licenciable</td><td class="check luxy-col">✓</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td>~</td></tr>
-          <tr><td>Memoria de viajero</td><td class="check luxy-col">✓</td><td>~</td><td class="cross">✗</td><td>~</td><td class="cross">✗</td></tr>
-          <tr><td>SaaS B2B hotelero</td><td class="check luxy-col">✓</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓</td></tr>
-          <tr><td>Datos propios para entrenar</td><td class="check luxy-col">✓</td><td class="cross">✗</td><td class="check">✓</td><td class="cross">✗</td><td class="cross">✗</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section id="roadmap">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">08 · Roadmap</div>
-      <h2>De demo a escala<br><span class="gradient-text">en 36 meses</span></h2>
-    </div>
-    <div class="roadmap fade-up">
-      <div class="phase"><div class="phase-label">Fase 1</div><div class="phase-title">MVP</div><div class="phase-time">Mes 1–3</div><ul class="phase-items"><li>Agente IA en producción</li><li>Integración Natur-Lux</li><li>18 paquetes signature</li><li>Primeras reservas beta</li></ul></div>
-      <div class="phase-connector">→</div>
-      <div class="phase"><div class="phase-label">Fase 2</div><div class="phase-title">Validación</div><div class="phase-time">Mes 4–9</div><ul class="phase-items"><li>10 reservas B2C activas</li><li>Primer cliente SaaS B2B</li><li>ARR &gt; 50.000€</li></ul></div>
-      <div class="phase-connector">→</div>
-      <div class="phase"><div class="phase-label">Fase 3</div><div class="phase-title">Escala V1</div><div class="phase-time">Mes 10–18</div><ul class="phase-items"><li>10 hoteles boutique SaaS</li><li>Modelo IA fine-tuned</li><li>Serie A preparation</li></ul></div>
-      <div class="phase-connector">→</div>
-      <div class="phase"><div class="phase-label">Fase 4</div><div class="phase-title">Crecimiento V2</div><div class="phase-time">Año 2–3</div><ul class="phase-items"><li>50+ propiedades SaaS</li><li>Expansión Europa</li><li>ARR &gt; 500.000€</li></ul></div>
-    </div>
-  </div>
-</section>
-
-<section id="equipo">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">09 · Equipo</div>
-      <h2>Los que van<br><span class="gradient-text">a construirlo</span></h2>
-      <p>Sweat equity de 152.308€ — el 7% del CapEx total comprometido.</p>
-    </div>
-    <div class="team-grid fade-up">
-      <div class="team-card"><div class="team-avatar">N</div><h3>Nikol Ninkova</h3><div class="team-role">CEO & Co-Founder</div><p class="team-desc">Visión de producto, estrategia de negocio y relaciones con inversores. Arquitecta de la propuesta de valor de LUXY.</p></div>
-      <div class="team-card"><div class="team-avatar">J</div><h3>Juan Ramón Amador</h3><div class="team-role">COO & Co-Founder</div><p class="team-desc">Operaciones, finanzas y desarrollo del activo físico Natur-Lux. Motor de ejecución del proyecto.</p></div>
-      <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#374151,#1f2937);color:var(--amber);">?</div><h3>CTO</h3><div class="team-role">Confirmado · En proceso</div><p class="team-desc">Perfil técnico confirmado para liderar IA, Guest OS y arquitectura de datos. Incorporación vinculada al cierre pre-seed.</p></div>
-    </div>
-    <div class="card fade-up" style="margin-top:2rem;background:rgba(245,158,11,0.04);border-color:rgba(245,158,11,0.2);text-align:center;"><div style="font-size:2rem;font-weight:900;color:var(--amber);">152.308€</div><div style="color:var(--gray);margin-top:0.5rem;">Sweat equity comprometido · 7% del CapEx total</div></div>
-  </div>
-</section>
-
-<section id="inversion">
-  <div class="container">
-    <div class="section-header fade-up">
-      <div class="pill">10 · Inversión</div>
-      <h2>Pre-seed<br><span class="gradient-text">100K–300K€</span></h2>
-      <p>Capital para ejecutar el MVP, validar el modelo y alcanzar los primeros hitos antes de la Serie A.</p>
-    </div>
-    <div class="grid-2" style="gap:2.5rem;align-items:start;">
-      <div class="fade-up">
-        <h3 style="margin-bottom:1.5rem;color:var(--amber);">Presupuesto Pre-seed</h3>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Partida</th><th>%</th><th>Uso</th></tr></thead>
-            <tbody>
-              <tr><td>Desarrollo IA & Tech</td><td style="color:var(--amber);font-weight:700;">35%</td><td>Agente IA, Guest OS, infra cloud</td></tr>
-              <tr><td>Equipo (CTO + dev)</td><td style="color:var(--amber);font-weight:700;">30%</td><td>Salarios primeros 8 meses</td></tr>
-              <tr><td>Marketing & Growth</td><td style="color:var(--amber);font-weight:700;">15%</td><td>Primeros clientes B2C/B2B</td></tr>
-              <tr><td>Legal & Compliance</td><td style="color:var(--amber);font-weight:700;">10%</td><td>Constitución, contratos, IP</td></tr>
-              <tr><td>Operaciones Natur-Lux</td><td style="color:var(--amber);font-weight:700;">7%</td><td>Prototipo resort, instalación OS</td></tr>
-              <tr><td>Contingencia</td><td style="color:var(--amber);font-weight:700;">3%</td><td>Buffer operativo</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="fade-up fade-up-delay-1">
-        <h3 style="margin-bottom:1.5rem;color:var(--amber);">Hitos a 8 meses</h3>
-        <div class="milestone-list">
-          <div class="milestone"><div class="milestone-dot">M3</div><div class="milestone-content"><h4>Agente IA en producción</h4><p>Demo público funcional, primeras reservas reales</p></div></div>
-          <div class="milestone"><div class="milestone-dot">M6</div><div class="milestone-content"><h4>10 reservas B2C activas</h4><p>Validación de conversión, NPS &gt; 70</p></div></div>
-          <div class="milestone"><div class="milestone-dot">M9</div><div class="milestone-content"><h4>Primer cliente SaaS B2B</h4><p>MRR recurrente confirmado</p></div></div>
-          <div class="milestone"><div class="milestone-dot">M12</div><div class="milestone-content"><h4>ARR &gt; 50.000€</h4><p>Base para levantar Serie A</p></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="cta" style="padding:7rem 0 5rem;background:var(--bg);">
-  <div class="cta-glow"></div>
-  <div class="container" style="position:relative;z-index:1;text-align:center;">
-    <div class="pill fade-up" style="display:inline-block;">LUXY · Lanzadera 2026</div>
-    <h2 class="fade-up">El sistema operativo del<br><span class="gradient-text">turismo experiencial premium</span></h2>
-    <blockquote class="fade-up">"Construimos el <strong>sistema operativo del turismo experiencial premium</strong>. Natur-Lux es donde lo probamos. <strong>El mundo es donde lo escalamos.</strong>"</blockquote>
-    <div class="quote-attr fade-up">— Nikol Ninkova, CEO & Co-Founder, LUXY</div>
-    <div style="margin-top:3rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;" class="fade-up">
-      <a href="https://agentluxy.netlify.app" target="_blank" rel="noopener" class="btn-primary" style="font-size:1.05rem;padding:1rem 2.25rem;">Probar Agente IA ↗</a>
-      <a href="mailto:ninkovanikol@gmail.com" class="btn-secondary" style="font-size:1.05rem;padding:1rem 2.25rem;">Contactar Fundadores</a>
-    </div>
-    <div style="margin-top:4rem;padding-top:2rem;border-top:1px solid var(--card-border);">
-      <div style="display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;color:var(--gray-dim);font-size:0.82rem;">
-        <span>LUXY TravelTech SL · España</span><span>·</span><span>agentluxy.netlify.app</span><span>·</span><span>Nikol Ninkova · Juan Ramón Amador</span><span>·</span><span>Business Plan Lanzadera 2026</span>
-      </div>
-      <div style="margin-top:1rem;color:var(--gray-dim);font-size:0.75rem;">© 2026 LUXY. Documento confidencial para inversores.</div>
-    </div>
-  </div>
-</section>
+  <div class="footer-bottom">© Natur-Lux Hideaway · Apertura próximamente</div>
+</footer>
 
 <script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => { navbar.style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,0.5)' : 'none'; });
+(function(){
+  'use strict';
 
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
-  function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
-  document.addEventListener('click', (e) => { if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile(); });
+  /* LOADER */
+  window.addEventListener('load',function(){
+    setTimeout(function(){ document.getElementById('loader').classList.add('hidden'); },1200);
+  });
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  /* CURSOR */
+  var isTouch=('ontouchstart' in window);
+  if(!isTouch){
+    var dot=document.getElementById('cursor-dot');
+    var ring=document.getElementById('cursor-ring');
+    var mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',function(e){
+      mx=e.clientX;my=e.clientY;
+      dot.style.left=mx+'px';dot.style.top=my+'px';
+    });
+    (function animRing(){
+      rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;
+      ring.style.left=rx+'px';ring.style.top=ry+'px';
+      requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a,button,[data-tilt],.villa-img').forEach(function(el){
+      el.addEventListener('mouseenter',function(){ ring.classList.add('hovered'); });
+      el.addEventListener('mouseleave',function(){ ring.classList.remove('hovered'); });
+    });
+  }
 
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) { const id = entry.target.getAttribute('id'); navLinks.forEach(link => { link.style.color = link.getAttribute('href') === '#' + id ? 'var(--amber)' : ''; }); } });
-  }, { threshold: 0.4 });
-  sections.forEach(s => sectionObserver.observe(s));
+  /* NAVBAR */
+  var navbar=document.getElementById('navbar');
+  window.addEventListener('scroll',function(){
+    navbar.classList.toggle('scrolled',window.scrollY>60);
+  },{passive:true});
+
+  /* MOBILE MENU */
+  var burger=document.getElementById('burger');
+  var mobileMenu=document.getElementById('mobile-menu');
+  var mobileClose=document.getElementById('mobileClose');
+  var menuOpen=false;
+  function toggleMenu(open){
+    menuOpen=open;
+    mobileMenu.classList.toggle('open',menuOpen);
+    burger.setAttribute('aria-expanded',menuOpen);
+    var spans=burger.querySelectorAll('span');
+    if(menuOpen){
+      spans[0].style.transform='translateY(6px) rotate(45deg)';
+      spans[1].style.opacity='0';
+      spans[2].style.transform='translateY(-6px) rotate(-45deg)';
+    }else{
+      spans[0].style.transform='';spans[1].style.opacity='';spans[2].style.transform='';
+    }
+  }
+  burger.addEventListener('click',function(){ toggleMenu(!menuOpen); });
+  mobileClose.addEventListener('click',function(){ toggleMenu(false); });
+  mobileMenu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){ toggleMenu(false); });
+  });
+
+  /* PARALLAX HERO */
+  if(!isTouch && window.innerWidth>=768){
+    var layers=document.querySelectorAll('[data-depth]');
+    var scrollTarget=0,scrollCurrent=0;
+    window.addEventListener('scroll',function(){ scrollTarget=window.scrollY; },{passive:true});
+    (function animParallax(){
+      scrollCurrent+=(scrollTarget-scrollCurrent)*0.08;
+      layers.forEach(function(layer){
+        var depth=parseFloat(layer.dataset.depth);
+        layer.style.transform='translate3d(0,'+(scrollCurrent*depth)+'px,0)';
+      });
+      requestAnimationFrame(animParallax);
+    })();
+  }
+
+  /* SPLIT TITLE */
+  document.querySelectorAll('.split-title').forEach(function(el){
+    var words=el.textContent.trim().split(/\s+/);
+    el.innerHTML=words.map(function(w,i){ return '<span class="word" style="--i:'+i+'">'+w+'&nbsp;</span>'; }).join('');
+    el.classList.add('split-visible');
+  });
+
+  /* REVEAL OBSERVER */
+  var revealObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in-view'); } });
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal,.reveal-scale').forEach(function(el){ revealObs.observe(el); });
+
+  /* COUNTERS */
+  function animateCounter(el){
+    var target=parseInt(el.dataset.target,10);
+    var suffix=el.dataset.suffix||'';
+    var cur=0;var step=Math.max(1,Math.ceil(target/60));
+    var interval=setInterval(function(){
+      cur+=step;
+      if(cur>=target){cur=target;clearInterval(interval);}
+      el.textContent=cur+suffix;
+    },25);
+  }
+  var counterObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        document.querySelectorAll('.counter h3').forEach(animateCounter);
+        counterObserver.disconnect();
+      }
+    });
+  },{threshold:0.4});
+  var countersEl=document.querySelector('.counters');
+  if(countersEl) counterObserver.observe(countersEl);
+
+  /* 3D TILT */
+  if(!isTouch){
+    document.querySelectorAll('[data-tilt]').forEach(function(card){
+      card.addEventListener('mousemove',function(e){
+        var rect=card.getBoundingClientRect();
+        var x=e.clientX-rect.left;var y=e.clientY-rect.top;
+        var centerX=rect.width/2;var centerY=rect.height/2;
+        var rotateX=((y-centerY)/centerY)*-6;
+        var rotateY=((x-centerX)/centerX)*6;
+        card.style.transform='perspective(1000px) rotateX('+rotateX+'deg) rotateY('+rotateY+'deg) scale(1.02)';
+      });
+      card.addEventListener('mouseleave',function(){
+        card.style.transform='perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+      });
+    });
+  }
+
+  /* LIGHTBOX */
+  var lightbox=document.getElementById('lightbox');
+  var lbImg=document.getElementById('lbImg');
+  var lbCaption=document.getElementById('lbCaption');
+  var lbClose=document.getElementById('lbClose');
+  function openLB(src,alt,caption){
+    lbImg.src=src;lbImg.alt=alt;
+    lbCaption.textContent=caption||'';
+    lightbox.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeLB(){
+    lightbox.classList.remove('open');
+    document.body.style.overflow='';
+  }
+  document.querySelectorAll('[data-src]').forEach(function(el){
+    el.addEventListener('click',function(){
+      var img=el.querySelector('img');
+      openLB(el.dataset.src,img?img.alt:'',img?img.alt:'');
+    });
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){
+        e.preventDefault();
+        var img=el.querySelector('img');
+        openLB(el.dataset.src,img?img.alt:'',img?img.alt:'');
+      }
+    });
+  });
+  lbClose.addEventListener('click',closeLB);
+  lightbox.addEventListener('click',function(e){ if(e.target===lightbox) closeLB(); });
+  document.addEventListener('keydown',function(e){ if(lightbox.classList.contains('open') && e.key==='Escape') closeLB(); });
+
+  /* CONTACT FORM */
+  var contactForm=document.getElementById('contactForm');
+  var formMsg=document.getElementById('formMsg');
+  contactForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    formMsg.textContent='Enviando...';
+    formMsg.style.color='rgba(255,255,255,0.75)';
+    var data=new FormData(contactForm);
+    data.append('_replyto',contactForm.querySelector('input[name="email"]').value);
+    fetch('https://formsubmit.co/ajax/info@natur-lux-hideaway.com',{
+      method:'POST',
+      headers:{'Accept':'application/json'},
+      body:data
+    }).then(function(res){
+      if(res.ok){
+        formMsg.textContent='¡Gracias! Te avisaremos en cuanto abramos.';
+        formMsg.style.color='var(--gold-light)';
+        contactForm.reset();
+      }else{
+        throw new Error();
+      }
+    }).catch(function(){
+      formMsg.textContent='Enviando…';
+      contactForm.submit();
+    });
+  });
+
+})();
 </script>
 </body>
 </html>
