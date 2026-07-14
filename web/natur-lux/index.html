@@ -406,7 +406,7 @@
       <p class="contact-info-text">Natur-Lux Hideaway abrirá sus puertas próximamente. Déjanos tus datos y serás de los primeros en recibir todas las novedades sobre nuestra apertura.</p>
       <div class="contact-item">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-        <span>info@natur-luxhideaway.com</span>
+        <span>info@natur-lux-hideaway.com</span>
       </div>
       <div class="contact-item">
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
@@ -417,7 +417,10 @@
         <span>Entorno natural mediterráneo</span>
       </div>
     </div>
-    <form id="contactForm" class="reveal" action="https://formspree.io/info@natur-lux-hideaway.com" method="POST">
+    <form id="contactForm" class="reveal" action="https://formsubmit.co/info@natur-lux-hideaway.com" method="POST">
+      <input type="hidden" name="_subject" value="Nueva solicitud de información — Natur-Lux Hideaway">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <input type="text" name="nombre" placeholder="Nombre completo" required>
       <input type="email" name="email" placeholder="Correo electrónico" required>
       <select name="experiencia">
@@ -449,7 +452,7 @@
     </div>
     <div class="footer-col">
       <h5>Contacto</h5>
-      <a href="mailto:info@natur-luxhideaway.com">info@natur-luxhideaway.com</a>
+      <a href="mailto:info@natur-lux-hideaway.com">info@natur-lux-hideaway.com</a>
     </div>
   </div>
   <div class="footer-bottom">© Natur-Lux Hideaway · Apertura próximamente</div>
@@ -623,8 +626,7 @@
     formMsg.style.color='rgba(255,255,255,0.75)';
     var data=new FormData(contactForm);
     data.append('_replyto',contactForm.querySelector('input[name="email"]').value);
-    data.append('_subject','Nueva solicitud de información — Natur-Lux Hideaway');
-    fetch('https://formspree.io/info@natur-lux-hideaway.com',{
+    fetch('https://formsubmit.co/ajax/info@natur-lux-hideaway.com',{
       method:'POST',
       headers:{'Accept':'application/json'},
       body:data
