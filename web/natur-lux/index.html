@@ -626,7 +626,7 @@
     formMsg.textContent='Enviando...';
     formMsg.style.color='rgba(255,255,255,0.75)';
     var data=new URLSearchParams(new FormData(contactForm)).toString();
-    fetch('/',{
+    fetch(window.location.pathname,{
       method:'POST',
       headers:{'Content-Type':'application/x-www-form-urlencoded'},
       body:data
@@ -639,8 +639,8 @@
         throw new Error();
       }
     }).catch(function(){
-      formMsg.textContent='No se pudo enviar. Inténtalo de nuevo o escríbenos a info@natur-lux-hideaway.com.';
-      formMsg.style.color='#e08a8a';
+      formMsg.textContent='Enviando…';
+      contactForm.submit();
     });
   });
 
