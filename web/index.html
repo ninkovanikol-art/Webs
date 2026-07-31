@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Construcciones y Reformas Costa Blanca | Alicante</title>
-  <meta name="description" content="Empresa líder de construcción y reformas integrales en la Costa Blanca, Alicante. Más de 30 años levantando hogares de lujo mediterráneo." />
+  <meta name="description" content="Empresa líder de construcción y reformas integrales en la Costa Blanca, Alicante. Más de 30 años levantando hogares de lujo mediterráneo y arquitectura contemporánea." />
   <meta property="og:title" content="Construcciones y Reformas Costa Blanca" />
-  <meta property="og:description" content="Tres décadas levantando hogares en la Costa Blanca. Obra nueva, reforma integral y proyectos de lujo mediterráneo." />
+  <meta property="og:description" content="Tres décadas levantando hogares en la Costa Blanca. Obra nueva, reforma integral, arquitectura contemporánea y proyectos de lujo mediterráneo." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
@@ -666,6 +666,152 @@
     .card-service:hover .card-cta { opacity: 1; transform: translateY(0); }
 
     /* ═══════════════════════════════════════════════
+       SECTION 3B — ARQUITECTURA CONTEMPORÁNEA
+    ═══════════════════════════════════════════════ */
+    #arquitectura { position: relative; }
+    .arq-header {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 100px 8% 72px;
+      text-align: center;
+    }
+    .arq-header .section-label { justify-content: center; }
+    .arq-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(32px, 4.2vw, 56px);
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 22px;
+    }
+    .arq-sub {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.85;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .showcase-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+    }
+    .showcase-row:nth-child(odd)  { background: var(--bg-base); }
+    .showcase-row:nth-child(even) { background: var(--bg-warm); }
+    .showcase-media { order: 2; position: relative; overflow: hidden; }
+    .showcase-row.reverse .showcase-media { order: 1; }
+    .showcase-row.reverse .showcase-text  { order: 2; }
+    .showcase-media img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 1.4s var(--ease-luxury);
+    }
+    .showcase-row:hover .showcase-media img { transform: scale(1.08); }
+    .showcase-text {
+      order: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 72px 8%;
+    }
+    .showcase-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 15px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .showcase-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(28px, 3.4vw, 46px);
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 22px;
+      max-width: 440px;
+    }
+    .showcase-text p.sobre-text { margin-bottom: 0; }
+    @media (max-width: 900px) {
+      .showcase-row, .showcase-row.reverse { grid-template-columns: 1fr; min-height: auto; }
+      .showcase-media, .showcase-row.reverse .showcase-media { order: 1; height: 340px; }
+      .showcase-text, .showcase-row.reverse .showcase-text { order: 2; padding: 56px 6%; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       SECTION 3C — NUESTRO PROCESO
+    ═══════════════════════════════════════════════ */
+    #proceso {
+      position: relative;
+      background: var(--bg-stone);
+      padding: 96px 8%;
+    }
+    .proceso-header {
+      max-width: 620px;
+      margin: 0 auto 64px;
+      text-align: center;
+    }
+    .proceso-header .section-label { justify-content: center; }
+    .proceso-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(30px, 3.8vw, 50px);
+      color: var(--text-dark);
+    }
+    .proceso-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .proceso-item { position: relative; padding-top: 8px; }
+    .proceso-item::before {
+      content: '';
+      display: block;
+      width: 36px; height: 1px;
+      background: var(--gold);
+      margin-bottom: 24px;
+    }
+    .proceso-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 48px;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 18px;
+      opacity: 0.75;
+    }
+    .proceso-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: 22px;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+    .proceso-item p {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+    @media (max-width: 900px) {
+      .proceso-grid { grid-template-columns: 1fr 1fr; row-gap: 48px; }
+    }
+    @media (max-width: 480px) {
+      .proceso-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════
        SECTION 4 — GALERÍA DE PROYECTOS (UNIFICADA)
     ═══════════════════════════════════════════════ */
     #galeria {
@@ -1078,6 +1224,7 @@
 <div id="mobile-menu" role="navigation" aria-label="Menú principal">
   <a href="#sobre">Nosotros</a>
   <a href="#servicios">Servicios</a>
+  <a href="#arquitectura">Arquitectura</a>
   <a href="#galeria">Proyectos</a>
   <a href="#contacto">Contacto</a>
 </div>
@@ -1091,6 +1238,7 @@
   <ul class="nav-links">
     <li><a href="#sobre">Nosotros</a></li>
     <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#arquitectura">Arquitectura</a></li>
     <li><a href="#galeria">Proyectos</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
@@ -1204,6 +1352,89 @@
         <p class="card-desc">Desarrollo y valorización de activos inmobiliarios</p>
         <span class="card-cta" aria-hidden="true">Ver proyectos →</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARQUITECTURA CONTEMPORÁNEA -->
+<section id="arquitectura" aria-labelledby="arquitectura-title">
+  <div class="arq-header">
+    <p class="section-label reveal">Arquitectura & Diseño Contemporáneo</p>
+    <h2 id="arquitectura-title" class="arq-title split-title">Dos almas, una misma pasión por construir</h2>
+    <p class="arq-sub reveal">Junto a la reforma de estilo mediterráneo que nos define desde 2001, desarrollamos proyectos de arquitectura contemporánea: líneas limpias, cristaleras al mar y piscinas infinity para quienes buscan un lujo más minimalista.</p>
+  </div>
+
+  <div class="showcase-row">
+    <div class="showcase-text">
+      <p class="showcase-num reveal">01 — Arquitectura</p>
+      <h3 class="showcase-title reveal">Villas de líneas puras y luz mediterránea</h3>
+      <p class="sobre-text reveal">Trabajamos con estudios de arquitectura para levantar volúmenes limpios en blanco, grandes cristaleras y cubiertas planas que dialogan con el paisaje de la Costa Blanca sin perder su carácter mediterráneo.</p>
+    </div>
+    <div class="showcase-media reveal-scale">
+      <img src="images/salon-moderno-vistas-mar.jpg" alt="Salón contemporáneo con grandes cristaleras y vistas al Mediterráneo" loading="lazy" />
+    </div>
+  </div>
+
+  <div class="showcase-row reverse">
+    <div class="showcase-media reveal-scale">
+      <img src="images/cocina-moderna-vistas-mar.jpg" alt="Cocina de diseño contemporáneo con isla de mármol y vistas al mar" loading="lazy" />
+    </div>
+    <div class="showcase-text">
+      <p class="showcase-num reveal">02 — Interiorismo</p>
+      <h3 class="showcase-title reveal">Espacios que respiran calma</h3>
+      <p class="sobre-text reveal">Materiales nobles, luz natural y carpintería a medida. Cuidamos cada acabado interior para que la funcionalidad conviva con una estética serena y atemporal.</p>
+    </div>
+  </div>
+
+  <div class="showcase-row">
+    <div class="showcase-text">
+      <p class="showcase-num reveal">03 — Exteriores</p>
+      <h3 class="showcase-title reveal">El Mediterráneo como jardín</h3>
+      <p class="sobre-text reveal">Piscinas infinity, terrazas de gran formato y paisajismo mediterráneo pensado para vivir al aire libre doce meses al año.</p>
+    </div>
+    <div class="showcase-media reveal-scale">
+      <img src="images/terraza-piscina-infinity-atardecer.jpg" alt="Terraza con piscina infinity y vistas a la costa al atardecer" loading="lazy" />
+    </div>
+  </div>
+
+  <div class="showcase-row reverse">
+    <div class="showcase-media reveal-scale">
+      <img src="images/bano-spa-vistas-mar.jpg" alt="Suite de baño spa con bañera exenta y vistas al mar" loading="lazy" />
+    </div>
+    <div class="showcase-text">
+      <p class="showcase-num reveal">04 — Bienestar</p>
+      <h3 class="showcase-title reveal">Suites que invitan a la calma</h3>
+      <p class="sobre-text reveal">Baños convertidos en pequeños spas: piedra natural, grifería en latón cepillado y bañeras exentas frente al mar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NUESTRO PROCESO -->
+<section id="proceso" aria-labelledby="proceso-title">
+  <div class="proceso-header">
+    <p class="section-label reveal">Cómo Trabajamos</p>
+    <h2 id="proceso-title" class="proceso-title split-title">Nuestro proceso</h2>
+  </div>
+  <div class="proceso-grid">
+    <div class="proceso-item reveal">
+      <p class="proceso-num">01</p>
+      <h3>Consulta &amp; Diseño</h3>
+      <p>Escuchamos tu visión, visitamos el espacio y diseñamos el proyecto a medida.</p>
+    </div>
+    <div class="proceso-item reveal">
+      <p class="proceso-num">02</p>
+      <h3>Presupuesto Detallado</h3>
+      <p>Presupuesto cerrado, transparente y sin sorpresas, partida por partida.</p>
+    </div>
+    <div class="proceso-item reveal">
+      <p class="proceso-num">03</p>
+      <h3>Ejecución de Obra</h3>
+      <p>Equipo propio de oficios y seguimiento semanal para cumplir plazos y calidad.</p>
+    </div>
+    <div class="proceso-item reveal">
+      <p class="proceso-num">04</p>
+      <h3>Entrega Llave en Mano</h3>
+      <p>Revisión final contigo y entrega con garantía por escrito.</p>
     </div>
   </div>
 </section>
@@ -1445,6 +1676,7 @@
     <ul class="footer-links">
       <li><a href="#sobre">Nosotros</a></li>
       <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#arquitectura">Arquitectura</a></li>
       <li><a href="#galeria">Proyectos</a></li>
       <li><a href="#contacto">Contacto</a></li>
       <li><a href="#">Privacidad</a></li>
