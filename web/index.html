@@ -9,7 +9,7 @@
   <meta property="og:description" content="+30 años levantando hogares en la Costa Blanca. Obra nueva, reforma integral, arquitectura contemporánea y proyectos de lujo mediterráneo." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@200;300;400&family=Inter:wght@200;300;700;800&display=swap" rel="stylesheet" />
   <style>
     /* ═══════════════════════════════════════════════
        VARIABLES & RESET
@@ -26,6 +26,7 @@
       --gold-light:   #d4ae7a;
       --gold-dim:     rgba(184,148,90,0.2);
       --white-warm:   #faf8f3;
+      --contacto-bg:  #443923;
       --ease-luxury:  cubic-bezier(0.76, 0, 0.24, 1);
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,7 +34,7 @@
     body {
       background: var(--bg-base);
       color: var(--text-dark);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
       cursor: none;
@@ -110,9 +111,9 @@
     .loader-logo {
       position: relative;
       z-index: 1;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: 22px;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: 0.25em;
       color: var(--gold);
       text-transform: uppercase;
@@ -166,7 +167,7 @@
       text-decoration: none;
     }
     .nav-logo-top {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 700;
       font-size: 11px;
       letter-spacing: 0.22em;
@@ -175,8 +176,8 @@
       text-shadow: 0 1px 8px rgba(250,248,243,0.6);
     }
     .nav-logo-bottom {
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
       font-size: 20px;
       color: var(--gold);
       letter-spacing: 0.05em;
@@ -187,7 +188,7 @@
       list-style: none;
     }
     .nav-links a {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 11px;
       letter-spacing: 0.22em;
@@ -239,8 +240,8 @@
     }
     #mobile-menu.open { opacity: 1; visibility: visible; }
     #mobile-menu a {
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: 48px;
       color: var(--text-dark);
       text-decoration: none;
@@ -355,7 +356,7 @@
       width: 100%;
     }
     .hero-eyebrow {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 10px;
       letter-spacing: 0.45em;
@@ -366,14 +367,14 @@
       animation: fadeUp 0.8s 2s var(--ease-luxury) forwards;
     }
     .hero-title {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Cormorant Garamond', serif;
       font-size: clamp(34px, 5vw, 72px);
       line-height: 0.95;
       margin-bottom: 28px;
     }
-    .hero-title .line1 { font-weight: 800; color: var(--white-warm); display: block; opacity: 0; transform: translateY(40px); animation: fadeUp 0.8s 1.9s var(--ease-luxury) forwards; }
-    .hero-title .line2 { font-weight: 500; color: var(--white-warm); display: block; opacity: 0; transform: translateY(40px); animation: fadeUp 0.8s 2.05s var(--ease-luxury) forwards; }
-    .hero-title .line3 { font-weight: 700; color: var(--gold-light); display: block; opacity: 0; transform: translateY(40px); animation: fadeUp 0.8s 2.2s var(--ease-luxury) forwards; }
+    .hero-title .line1 { font-weight: 700; font-style: italic; color: var(--white-warm); display: block; opacity: 0; transform: translateY(40px); animation: fadeUp 0.8s 1.9s var(--ease-luxury) forwards; }
+    .hero-title .line2 { font-weight: 300; color: var(--white-warm); display: block; opacity: 0; transform: translateY(40px); animation: fadeUp 0.8s 2.05s var(--ease-luxury) forwards; }
+    .hero-title .line3 { font-weight: 500; color: var(--gold-light); display: block; opacity: 0; transform: translateY(40px); animation: fadeUp 0.8s 2.2s var(--ease-luxury) forwards; }
     .hero-divider {
       width: 0;
       height: 1px;
@@ -383,7 +384,7 @@
     }
     @keyframes lineGrow { to { width: 80px; } }
     .hero-sub {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 15px;
       color: rgba(250,248,243,0.75);
@@ -398,8 +399,8 @@
     }
     .section-num {
       position: absolute;
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: 140px;
       line-height: 1;
       color: var(--text-dark);
@@ -419,7 +420,7 @@
       gap: 10px;
     }
     .scroll-indicator span {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 9px;
       letter-spacing: 0.4em;
@@ -459,7 +460,7 @@
       justify-content: center;
     }
     .section-label {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 10px;
       letter-spacing: 0.4em;
@@ -468,8 +469,8 @@
       margin-bottom: 28px;
     }
     .sobre-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: clamp(32px, 4vw, 58px);
       color: var(--text-dark);
       line-height: 1.1;
@@ -484,7 +485,7 @@
     }
     .gold-line.in-view { width: 72px; }
     .sobre-text {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 15px;
       color: var(--text-mid);
@@ -511,11 +512,12 @@
       max-width: 280px;
     }
     .sobre-card p {
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
       font-size: 13px;
       color: var(--text-mid);
       line-height: 1.6;
+      font-style: italic;
     }
     .counters {
       position: relative;
@@ -539,15 +541,15 @@
     }
     .counter-item:last-child::after { display: none; }
     .counter-num {
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
       font-size: clamp(52px, 6vw, 72px);
       color: var(--gold);
       line-height: 1;
       margin-bottom: 10px;
     }
     .counter-label {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 11px;
       letter-spacing: 0.25em;
@@ -573,13 +575,13 @@
       gap: 20px;
     }
     .servicios-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: clamp(36px, 4.5vw, 64px);
       color: var(--text-dark);
     }
     .servicios-sub {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 13px;
       color: var(--text-soft);
@@ -621,8 +623,8 @@
     .card-num {
       position: absolute;
       top: 24px; left: 28px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: 80px;
       color: var(--gold);
       opacity: 0.5;
@@ -636,14 +638,14 @@
       padding: 32px 32px 36px;
     }
     .card-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
       font-size: clamp(24px, 3vw, 36px);
       color: var(--white-warm);
       margin-bottom: 8px;
     }
     .card-desc {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 13px;
       letter-spacing: 0.1em;
@@ -652,7 +654,7 @@
     .card-cta {
       display: block;
       margin-top: 16px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 12px;
       letter-spacing: 0.2em;
@@ -678,15 +680,15 @@
     }
     .arq-header .section-label { justify-content: center; }
     .arq-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: clamp(32px, 4.2vw, 56px);
       color: var(--text-dark);
       line-height: 1.15;
       margin-bottom: 22px;
     }
     .arq-sub {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 15px;
       color: var(--text-soft);
@@ -722,16 +724,16 @@
       padding: 72px 8%;
     }
     .showcase-num {
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: 15px;
       letter-spacing: 0.3em;
       color: var(--gold);
       margin-bottom: 20px;
     }
     .showcase-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: clamp(28px, 3.4vw, 46px);
       color: var(--text-dark);
       line-height: 1.15;
@@ -760,8 +762,8 @@
     }
     .proceso-header .section-label { justify-content: center; }
     .proceso-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: clamp(30px, 3.8vw, 50px);
       color: var(--text-dark);
     }
@@ -781,8 +783,8 @@
       margin-bottom: 24px;
     }
     .proceso-num {
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: 48px;
       color: var(--gold);
       line-height: 1;
@@ -790,14 +792,14 @@
       opacity: 0.75;
     }
     .proceso-item h3 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
       font-size: 22px;
       color: var(--text-dark);
       margin-bottom: 10px;
     }
     .proceso-item p {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 13px;
       color: var(--text-mid);
@@ -829,13 +831,13 @@
       gap: 24px;
     }
     .galeria-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
       font-size: clamp(36px, 4.5vw, 64px);
       color: var(--text-dark);
     }
     .galeria-sub {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 13px;
       color: var(--text-soft);
@@ -903,7 +905,7 @@
       background: var(--white-warm);
     }
     .proj-card-num {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 10px;
       letter-spacing: 0.35em;
@@ -911,15 +913,15 @@
       margin-bottom: 6px;
     }
     .proj-card-name {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
       font-size: clamp(18px, 2vw, 24px);
       color: var(--text-dark);
       margin-bottom: 10px;
       line-height: 1.15;
     }
     .proj-card-meta {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 11px;
       letter-spacing: 0.18em;
@@ -959,16 +961,16 @@
       transition: color 0.3s;
     }
     .lb-close:hover, .lb-prev:hover, .lb-next:hover { color: var(--gold); }
-    .lb-close { top: 24px; right: 32px; font-size: 32px; line-height: 1; font-family: 'Inter', sans-serif; font-weight: 200; }
-    .lb-prev  { left: 24px;  top: 50%; transform: translateY(-50%); font-size: 40px; font-family: 'Inter', sans-serif; font-weight: 200; }
-    .lb-next  { right: 24px; top: 50%; transform: translateY(-50%); font-size: 40px; font-family: 'Inter', sans-serif; font-weight: 200; }
+    .lb-close { top: 24px; right: 32px; font-size: 32px; line-height: 1; font-family: 'Jost', sans-serif; font-weight: 200; }
+    .lb-prev  { left: 24px;  top: 50%; transform: translateY(-50%); font-size: 40px; font-family: 'Jost', sans-serif; font-weight: 200; }
+    .lb-next  { right: 24px; top: 50%; transform: translateY(-50%); font-size: 40px; font-family: 'Jost', sans-serif; font-weight: 200; }
 
     /* ═══════════════════════════════════════════════
        SECTION 6 — CONTACTO
     ═══════════════════════════════════════════════ */
     #contacto {
       position: relative;
-      background: var(--bg-deep);
+      background: var(--contacto-bg);
       overflow: hidden;
     }
     .contacto-inner {
@@ -997,7 +999,7 @@
       font-family: 'Inter', sans-serif;
       font-weight: 700;
       font-size: clamp(28px, 3.5vw, 48px);
-      color: #0d0b09;
+      color: var(--white-warm);
       line-height: 1.15;
       margin-bottom: 48px;
     }
@@ -1009,7 +1011,7 @@
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 14px;
-      color: #1a1714;
+      color: rgba(250,248,243,0.9);
       line-height: 1.5;
     }
     .contact-detail-label {
@@ -1030,7 +1032,7 @@
       font-weight: 200;
       font-size: 11px;
       letter-spacing: 0.2em;
-      color: #1a1714;
+      color: rgba(250,248,243,0.9);
       text-transform: uppercase;
       transition: color 0.3s;
     }
@@ -1056,9 +1058,9 @@
     .field {
       background: transparent;
       border: none;
-      border-bottom: 1px solid rgba(26,23,20,0.3);
+      border-bottom: 1px solid rgba(250,248,243,0.3);
       padding: 12px 0;
-      color: #0d0b09;
+      color: var(--white-warm);
       font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 14px;
@@ -1070,7 +1072,7 @@
       appearance: none;
     }
     .field:focus { border-bottom-color: var(--gold); }
-    .field::placeholder { color: #4a4438; opacity: 0.7; }
+    .field::placeholder { color: rgba(250,248,243,0.55); opacity: 1; }
     .field option { background: var(--bg-warm); color: var(--text-dark); }
     .btn-submit {
       padding: 14px 40px;
@@ -1088,7 +1090,7 @@
       align-items: center;
       gap: 10px;
     }
-    .btn-submit:hover { background: var(--gold); color: var(--bg-base); }
+    .btn-submit:hover { background: var(--gold); color: var(--contacto-bg); }
 
     /* ═══════════════════════════════════════════════
        FOOTER
@@ -1107,8 +1109,8 @@
       gap: 24px;
     }
     .footer-logo {
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
       font-size: 22px;
       color: var(--gold);
       letter-spacing: 0.05em;
@@ -1121,7 +1123,7 @@
       flex-wrap: wrap;
     }
     .footer-links a {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 11px;
       letter-spacing: 0.22em;
@@ -1133,7 +1135,7 @@
     }
     .footer-links a:hover { color: var(--gold); }
     .footer-cta {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 12px;
       letter-spacing: 0.22em;
@@ -1156,7 +1158,7 @@
       border-top: 1px solid var(--gold-dim);
     }
     .footer-copy {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Jost', sans-serif;
       font-weight: 200;
       font-size: 11px;
       color: var(--text-soft);
@@ -1852,7 +1854,7 @@
       if (res.ok) {
         btn.innerHTML = 'Solicitud enviada ✓';
         btn.style.background = 'var(--gold)';
-        btn.style.color = 'var(--bg-base)';
+        btn.style.color = 'var(--contacto-bg)';
         form.reset();
         setTimeout(function () {
           btn.innerHTML = 'Solicitar presupuesto <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
