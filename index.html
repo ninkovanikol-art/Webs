@@ -286,6 +286,18 @@ textarea:focus{border-color:var(--gold);}
 .nltitle{font-family:'Playfair Display',serif;font-size:18px;color:var(--cream);margin-bottom:5px;}
 .nltxt{font-size:11.5px;color:var(--sand);line-height:1.65;}
 .ctas{display:flex;gap:11px;flex-wrap:wrap;}
+.modal-overlay{position:fixed;inset:0;background:rgba(10,18,12,.82);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-box{background:var(--dark);border:1px solid var(--creamd);border-radius:20px;padding:42px 38px;max-width:420px;width:100%;position:relative;}
+.modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--mid);font-size:16px;cursor:pointer;line-height:1;}
+.modal-ic{font-size:22px;color:var(--gold);margin-bottom:12px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin-bottom:8px;}
+.modal-sub{font-size:12px;color:var(--sand);line-height:1.6;margin-bottom:24px;}
+.modal-input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--creamd);border-radius:10px;padding:12px 16px;color:var(--cream);font-family:'Jost',sans-serif;font-size:13px;margin-bottom:11px;box-sizing:border-box;}
+.modal-input::placeholder{color:var(--mid);}
+.modal-input:focus{outline:none;border-color:var(--gold);}
+.modal-submit{width:100%;margin-top:6px;}
+.modal-note{font-size:11.5px;color:var(--gold);margin-top:10px;min-height:18px;}
+.modal-legal{font-size:10px;color:var(--mid);margin-top:14px;line-height:1.5;}
 .btn-res{background:var(--gold);color:var(--forest);border:none;padding:14px 34px;border-radius:100px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;box-shadow:0 5px 22px rgba(184,149,58,.28);}
 .btn-res:hover{transform:translateY(-2px);}
 .btn-rst{background:none;border:1.5px solid var(--creamd);color:var(--mid);padding:14px 34px;border-radius:100px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .22s;}
@@ -419,6 +431,22 @@ textarea:focus{border-color:var(--gold);}
       <button class="btn-res" id="btn-res">Reserve this experience</button>
       <button class="btn-rst" onclick="restart()" id="btn-red">Redesign with Luxy</button>
     </div>
+  </div>
+</div>
+
+<!-- Lead capture modal -->
+<div id="modal-reserve" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('modal-reserve').hidden=true">✕</button>
+    <div class="modal-ic">✦</div>
+    <div class="modal-title" id="modal-title">Reserve this experience</div>
+    <div class="modal-sub" id="modal-sub">A Luxy curator will contact you within 24 hours to finalize every detail — at no cost to you.</div>
+    <input class="modal-input" id="modal-name" type="text" placeholder="Your name" autocomplete="name">
+    <input class="modal-input" id="modal-email" type="email" placeholder="Your email" autocomplete="email">
+    <input class="modal-input" id="modal-phone" type="tel" placeholder="WhatsApp / phone (optional)" autocomplete="tel">
+    <button class="btn-res modal-submit" id="modal-submit" onclick="submitReservation()">Send request →</button>
+    <div class="modal-note" id="modal-note"></div>
+    <div class="modal-legal">Your information is used only to process your request. Never shared. You can also reach us at <strong>hello@ask-luxy.com</strong></div>
   </div>
 </div>
 
@@ -1106,6 +1134,66 @@ async function callAI(){
   renderResult(window._R);
 }
 
+function openReserveModal(r){
+  const isES=LANG==='es';
+  document.getElementById('modal-title').textContent=isES?'Solicitar esta experiencia':'Reserve this experience';
+  document.getElementById('modal-sub').textContent=isES
+    ?`Un curador de Luxy te contactará en menos de 24 horas para confirmar cada detalle de tu estancia en ${r.hotel_name||r.destination_name}. Sin compromiso.`
+    :`A Luxy curator will contact you within 24 hours to finalize every detail of your stay at ${r.hotel_name||r.destination_name}. No commitment required.`;
+  document.getElementById('modal-note').textContent='';
+  document.getElementById('modal-name').value='';
+  document.getElementById('modal-email').value='';
+  document.getElementById('modal-phone').value='';
+  // Store context for submission
+  window._reserveCtx=r;
+  document.getElementById('modal-reserve').hidden=false;
+}
+
+async function submitReservation(){
+  const isES=LANG==='es';
+  const name=document.getElementById('modal-name').value.trim();
+  const email=document.getElementById('modal-email').value.trim();
+  const phone=document.getElementById('modal-phone').value.trim();
+  const note=document.getElementById('modal-note');
+  const btn=document.getElementById('modal-submit');
+  if(!name){note.textContent=isES?'Por favor introduce tu nombre.':'Please enter your name.';return;}
+  if(!email||!email.includes('@')){note.textContent=isES?'Email inválido.':'Please enter a valid email.';return;}
+  const r=window._reserveCtx||{};
+  btn.textContent=isES?'Enviando...':'Sending...';
+  btn.disabled=true;
+  note.textContent='';
+  try{
+    // Use Netlify form submission or mailto fallback
+    const subject=encodeURIComponent(`Luxy Request — ${r.hotel_name||r.destination_name}`);
+    const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nDestination: ${r.hotel_name} (${r.destination_location})\nNights: ${ans.nights||4}\nBudget: ${ans.budget}\nTrip type: ${ans.tripType}\nSpecial: ${ans.special||'-'}`);
+    // Attempt to send via Netlify function (if available), else mailto
+    let sent=false;
+    try{
+      const res=await fetch('/.netlify/functions/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,phone,destination:r.hotel_name,location:r.destination_location,nights:ans.nights,budget:ans.budget,tripType:ans.tripType,special:ans.special,score:r._scoring_score})});
+      if(res.ok)sent=true;
+    }catch(_){}
+    if(!sent){
+      // Fallback: open mailto
+      window.location.href=`mailto:hello@ask-luxy.com?subject=${subject}&body=${body}`;
+    }
+    note.style.color='var(--gold)';
+    note.textContent=isES?'✓ Solicitud enviada. Te contactamos pronto.':'✓ Request sent. We\'ll be in touch shortly.';
+    btn.textContent=isES?'Enviado ✓':'Sent ✓';
+    // After 3s redirect to hotel URL
+    setTimeout(()=>{
+      document.getElementById('modal-reserve').hidden=true;
+      if(r.book_url&&r.book_url!=='#')window.open(r.book_url,'_blank');
+      btn.disabled=false;
+      btn.textContent=isES?'Solicitar esta experiencia':'Reserve this experience';
+    },3000);
+  }catch(e){
+    note.style.color='#e57373';
+    note.textContent=isES?'Error. Escríbenos a hello@ask-luxy.com':'Error. Email us at hello@ask-luxy.com';
+    btn.textContent=isES?'Reservar esta experiencia':'Reserve this experience';
+    btn.disabled=false;
+  }
+}
+
 function renderResult(r){
   const isES=LANG==='es',n=r.nights||ans.nights||4,total=r.total||(r.price_per_night*n);
   const t=TX[LANG];
@@ -1126,7 +1214,7 @@ function renderResult(r){
   document.getElementById('r-sub').textContent=r.subtitle;
   document.getElementById('btn-res').textContent=t.btnRes;
   document.getElementById('btn-red').textContent=t.btnRed;
-  document.getElementById('btn-res').onclick=()=>window.open(r.book_url||'#','_blank');
+  document.getElementById('btn-res').onclick=()=>openReserveModal(r);
 
   document.getElementById('r-nl').innerHTML=r.is_natur_lux?`<div class="nlbox"><div class="nlbdg">✦ NATUR-LUX HIDEAWAY · LUXY SIGNATURE PROPERTY · FINESTRAT, ALICANTE, SPAIN</div><div class="nltitle">The first AI-powered Mediterranean eco-resort — trained by Luxy</div><div class="nltxt">Natur-Lux Hideaway is our own property and the laboratory where Luxy was trained on real guest data. Geodesic domes, panoramic sky bubbles and private infinity pool villas. Only Adults. Powered by Luxy.</div></div>`:'';
 
