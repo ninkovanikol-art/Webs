@@ -299,6 +299,33 @@ textarea:focus{border-color:var(--gold);}
 .modal-submit{width:100%;margin-top:6px;}
 .modal-note{font-size:11.5px;color:var(--gold);margin-top:10px;min-height:18px;}
 .modal-legal{font-size:10px;color:var(--mid);margin-top:14px;line-height:1.5;}
+.modal-wide{max-width:520px;}
+.modal-steps{display:flex;align-items:center;margin-bottom:24px;gap:0;}
+.mstep{display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);transition:color .3s;}
+.mstep span{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--creamd);display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .3s;}
+.mstep.on{color:var(--gold);}
+.mstep.on span{background:var(--gold);color:var(--forest);border-color:var(--gold);}
+.mstep.done span{background:var(--forest);color:var(--gold);border-color:var(--gold);}
+.mstep-line{flex:1;height:1px;background:var(--creamd);margin:0 8px;}
+.modal-date-row{display:flex;gap:12px;}
+.modal-date-col{flex:1;display:flex;flex-direction:column;gap:4px;}
+.modal-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);}
+.modal-addons{margin-top:14px;}
+.modal-addon-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--creamd);border-radius:10px;cursor:pointer;margin-bottom:8px;transition:border-color .2s;}
+.modal-addon-item:hover,.modal-addon-item.on{border-color:var(--gold);}
+.modal-addon-chk{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--creamd);flex-shrink:0;margin-top:2px;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:11px;}
+.modal-addon-item.on .modal-addon-chk{background:var(--gold);border-color:var(--gold);color:var(--forest);}
+.modal-addon-name{font-size:12px;color:var(--cream);font-weight:500;}
+.modal-addon-desc{font-size:11px;color:var(--mid);margin-top:2px;}
+.modal-addon-price{font-size:12px;color:var(--gold);margin-left:auto;white-space:nowrap;flex-shrink:0;}
+.modal-price-preview{background:rgba(255,255,255,.04);border:1px solid var(--creamd);border-radius:12px;padding:14px 16px;margin-top:14px;}
+.modal-price-row{display:flex;justify-content:space-between;font-size:12px;color:var(--sand);margin-bottom:6px;}
+.modal-price-total{display:flex;justify-content:space-between;font-size:15px;color:var(--cream);font-weight:500;border-top:1px solid var(--creamd);padding-top:10px;margin-top:6px;}
+.modal-amount-box{background:linear-gradient(135deg,var(--forest),#243824);border-radius:14px;padding:18px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
+.modal-amount-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sand);}
+.modal-amount-num{font-size:28px;color:var(--gold);font-family:'Playfair Display',serif;}
+#payment-element{background:rgba(255,255,255,.04);border:1px solid var(--creamd);border-radius:12px;padding:16px;min-height:60px;}
+@media(max-width:600px){.modal-date-row{flex-direction:column;}.modal-wide{padding:28px 20px;}}
 .btn-res{background:var(--gold);color:var(--forest);border:none;padding:14px 34px;border-radius:100px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;box-shadow:0 5px 22px rgba(184,149,58,.28);}
 .btn-res:hover{transform:translateY(-2px);}
 .btn-rst{background:none;border:1.5px solid var(--creamd);color:var(--mid);padding:14px 34px;border-radius:100px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .22s;}
@@ -435,24 +462,100 @@ textarea:focus{border-color:var(--gold);}
   </div>
 </div>
 
-<!-- Lead capture modal -->
+<!-- Full booking modal — 3 steps -->
 <div id="modal-reserve" class="modal-overlay" hidden>
-  <div class="modal-box">
-    <button class="modal-close" onclick="document.getElementById('modal-reserve').hidden=true">✕</button>
-    <div class="modal-ic">✦</div>
-    <div class="modal-title" id="modal-title">Reserve this experience</div>
-    <div class="modal-sub" id="modal-sub">A Luxy curator will contact you within 24 hours to finalize every detail — at no cost to you.</div>
-    <input class="modal-input" id="modal-name" type="text" placeholder="Your name" autocomplete="name">
-    <input class="modal-input" id="modal-email" type="email" placeholder="Your email" autocomplete="email">
-    <input class="modal-input" id="modal-phone" type="tel" placeholder="WhatsApp / phone (optional)" autocomplete="tel">
-    <button class="btn-res modal-submit" id="modal-submit" onclick="submitReservation()">Send request →</button>
-    <div class="modal-note" id="modal-note"></div>
-    <div class="modal-legal">Your information is used only to process your request. Never shared. You can also reach us at <strong>hello@ask-luxy.com</strong></div>
+  <div class="modal-box modal-wide">
+    <button class="modal-close" onclick="closeReserveModal()">✕</button>
+
+    <!-- Step indicator -->
+    <div class="modal-steps" id="modal-steps">
+      <div class="mstep on" id="mstep1"><span>1</span> Detalles</div>
+      <div class="mstep-line"></div>
+      <div class="mstep" id="mstep2"><span>2</span> Fechas</div>
+      <div class="mstep-line"></div>
+      <div class="mstep" id="mstep3"><span>3</span> Pago</div>
+    </div>
+
+    <!-- Step 1: Contact details -->
+    <div id="mview-1">
+      <div class="modal-ic">✦</div>
+      <div class="modal-title" id="modal-title">Reserve this experience</div>
+      <div class="modal-sub" id="modal-sub">A Luxy curator confirms every detail within 24h. Pay only a refundable deposit now.</div>
+      <input class="modal-input" id="modal-name" type="text" placeholder="Full name *" autocomplete="name">
+      <input class="modal-input" id="modal-email" type="email" placeholder="Email *" autocomplete="email">
+      <input class="modal-input" id="modal-phone" type="tel" placeholder="WhatsApp / phone" autocomplete="tel">
+      <textarea class="modal-input" id="modal-special-note" rows="2" placeholder="Any special requests or notes..."></textarea>
+      <button class="btn-res modal-submit" onclick="bookingStep2()">Continue to dates →</button>
+      <div class="modal-note" id="modal-note-1"></div>
+    </div>
+
+    <!-- Step 2: Dates + options -->
+    <div id="mview-2" hidden>
+      <div class="modal-title" id="modal-dest-title">Select your dates</div>
+      <div class="modal-sub" id="modal-dest-sub"></div>
+      <div class="modal-date-row">
+        <div class="modal-date-col">
+          <label class="modal-label">Check-in</label>
+          <input class="modal-input" id="modal-checkin" type="date">
+        </div>
+        <div class="modal-date-col">
+          <label class="modal-label">Check-out</label>
+          <input class="modal-input" id="modal-checkout" type="date">
+        </div>
+      </div>
+      <div class="modal-label" style="margin-top:14px;margin-bottom:6px;">Travelers</div>
+      <select class="modal-input" id="modal-travelers">
+        <option value="1">1 traveler</option>
+        <option value="2" selected>2 travelers</option>
+        <option value="3">3 travelers</option>
+        <option value="4">4 travelers</option>
+        <option value="5">5+ travelers</option>
+      </select>
+      <div class="modal-addons" id="modal-addons"></div>
+      <div class="modal-price-preview" id="modal-price-preview"></div>
+      <div style="display:flex;gap:10px;margin-top:18px;">
+        <button class="btn-rst" style="flex:1" onclick="bookingGoStep(1)">← Back</button>
+        <button class="btn-res" style="flex:2" onclick="bookingStep3()">Pay deposit →</button>
+      </div>
+      <div class="modal-note" id="modal-note-2"></div>
+    </div>
+
+    <!-- Step 3: Payment -->
+    <div id="mview-3" hidden>
+      <div class="modal-title">Secure payment</div>
+      <div class="modal-sub" id="modal-payment-sub">Refundable deposit to confirm your reservation. Your curator contacts you within 24h.</div>
+      <div class="modal-amount-box" id="modal-amount-box"></div>
+      <div id="stripe-element-wrap">
+        <div id="payment-element"></div>
+        <div id="payment-message" class="modal-note" style="margin-top:10px;"></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:18px;">
+        <button class="btn-rst" style="flex:1" onclick="bookingGoStep(2)">← Back</button>
+        <button class="btn-res" style="flex:2" id="btn-pay" onclick="confirmPayment()">Pay & confirm →</button>
+      </div>
+      <div class="modal-legal">🔒 Pagos procesados por Stripe. Depósito 100% reembolsable si cancelas 72h antes. <strong>hello@ask-luxy.com</strong></div>
+    </div>
+
+    <!-- Step 4: Confirmation -->
+    <div id="mview-4" hidden style="text-align:center;padding:20px 0;">
+      <div style="font-size:42px;margin-bottom:16px;">✦</div>
+      <div class="modal-title" id="modal-confirm-title">Reservation confirmed</div>
+      <div class="modal-sub" id="modal-confirm-sub">Check your email for confirmation. Your Luxy curator will contact you within 24 hours to finalize every detail.</div>
+      <div id="modal-booking-ref" style="font-size:11px;color:var(--mid);margin-top:12px;"></div>
+      <button class="btn-res" style="margin-top:24px;width:100%;" onclick="closeReserveModal()">Close</button>
+    </div>
   </div>
 </div>
 
+<!-- Stripe JS (loaded only when booking opens) -->
+<script id="stripe-js-placeholder"></script>
+
 <script>
 // ══ LANGUAGE ══
+// Load public config (Stripe publishable key) from backend
+window._STRIPE_PK = '';
+fetch('/.netlify/functions/config').then(r=>r.json()).then(d=>{if(d.stripePk)window._STRIPE_PK=d.stripePk;}).catch(()=>{});
+
 let LANG='en';
 const TX={
   en:{
@@ -1135,63 +1238,242 @@ async function callAI(){
   renderResult(window._R);
 }
 
+// ── Booking flow state ──────────────────────────────────────────────────────
+let _stripe=null,_stripeElements=null,_stripePaymentEl=null;
+let _bookingStep=1,_selectedAddOns=new Set();
+
+function closeReserveModal(){
+  document.getElementById('modal-reserve').hidden=true;
+  _bookingStep=1;_selectedAddOns=new Set();
+  bookingGoStep(1);
+}
+
 function openReserveModal(r){
   const isES=LANG==='es';
-  document.getElementById('modal-title').textContent=isES?'Solicitar esta experiencia':'Reserve this experience';
-  document.getElementById('modal-sub').textContent=isES
-    ?`Un curador de Luxy te contactará en menos de 24 horas para confirmar cada detalle de tu estancia en ${r.hotel_name||r.destination_name}. Sin compromiso.`
-    :`A Luxy curator will contact you within 24 hours to finalize every detail of your stay at ${r.hotel_name||r.destination_name}. No commitment required.`;
-  document.getElementById('modal-note').textContent='';
+  window._reserveCtx=r;
+  _selectedAddOns=new Set();
+  // Reset steps
   document.getElementById('modal-name').value='';
   document.getElementById('modal-email').value='';
   document.getElementById('modal-phone').value='';
-  // Store context for submission
-  window._reserveCtx=r;
+  document.getElementById('modal-special-note').value='';
+  document.getElementById('modal-note-1').textContent='';
+  // Localise step labels
+  ['mstep1','mstep2','mstep3'].forEach((id,i)=>{
+    const labels=isES?['Contacto','Fechas','Pago']:['Details','Dates','Payment'];
+    document.getElementById(id).innerHTML=`<span>${i+1}</span> ${labels[i]}`;
+  });
+  document.getElementById('modal-title').textContent=isES?'Reservar esta experiencia':'Reserve this experience';
+  document.getElementById('modal-sub').textContent=isES
+    ?`Tu curador Luxy confirma cada detalle en 24h. Deposita ahora para asegurar tu fecha en ${r.hotel_name}.`
+    :`Your Luxy curator confirms every detail within 24h. Pay a refundable deposit now to secure your date at ${r.hotel_name}.`;
+  bookingGoStep(1);
   document.getElementById('modal-reserve').hidden=false;
 }
 
-async function submitReservation(){
+function bookingGoStep(n){
+  _bookingStep=n;
+  [1,2,3,4].forEach(i=>{
+    const v=document.getElementById('mview-'+i);
+    if(v)v.hidden=(i!==n);
+  });
+  [1,2,3].forEach(i=>{
+    const s=document.getElementById('mstep'+i);
+    if(!s)return;
+    s.className='mstep'+(i===n?' on':i<n?' done':'');
+  });
+}
+
+function bookingStep2(){
   const isES=LANG==='es';
   const name=document.getElementById('modal-name').value.trim();
   const email=document.getElementById('modal-email').value.trim();
-  const phone=document.getElementById('modal-phone').value.trim();
-  const note=document.getElementById('modal-note');
-  const btn=document.getElementById('modal-submit');
-  if(!name){note.textContent=isES?'Por favor introduce tu nombre.':'Please enter your name.';return;}
+  const note=document.getElementById('modal-note-1');
+  if(!name){note.textContent=isES?'Introduce tu nombre.':'Please enter your name.';return;}
   if(!email||!email.includes('@')){note.textContent=isES?'Email inválido.':'Please enter a valid email.';return;}
-  const r=window._reserveCtx||{};
-  btn.textContent=isES?'Enviando...':'Sending...';
-  btn.disabled=true;
   note.textContent='';
+
+  const r=window._reserveCtx||{};
+  const isES2=LANG==='es';
+
+  // Set default dates (today + tomorrow for check-in, +nights for check-out)
+  const today=new Date();
+  const ci=new Date(today);ci.setDate(ci.getDate()+14);
+  const co=new Date(ci);co.setDate(co.getDate()+(ans.nights||4));
+  const fmt=d=>d.toISOString().slice(0,10);
+  document.getElementById('modal-checkin').value=fmt(ci);
+  document.getElementById('modal-checkout').value=fmt(co);
+  document.getElementById('modal-checkin').min=fmt(today);
+  document.getElementById('modal-checkout').min=fmt(ci);
+
+  // Destination info
+  document.getElementById('modal-dest-title').textContent=r.hotel_name||r.destination_name;
+  document.getElementById('modal-dest-sub').textContent=`📍 ${r.destination_location||r.dest?.loc||''} · ${r.price_per_night?.toLocaleString()}€/${isES2?'noche':'night'}`;
+
+  // Add-ons from result
+  const addOns=r.add_ons||[];
+  const addonPrices=[250,180,320,400,150];
+  document.getElementById('modal-addons').innerHTML=addOns.length?`<div class="modal-label" style="margin-bottom:8px;">${isES2?'Añadir a tu estancia (opcional):':'Add to your stay (optional):'}</div>`+addOns.map((a,i)=>{
+    const price=addonPrices[i]||200;
+    return `<div class="modal-addon-item" id="addon-${i}" onclick="toggleAddon(${i},${price},'${a.replace(/'/g,'')}')">
+      <div class="modal-addon-chk" id="addonchk-${i}"></div>
+      <div><div class="modal-addon-name">${a}</div></div>
+      <div class="modal-addon-price">+${price}€</div>
+    </div>`;
+  }).join(''):'';
+
+  updatePricePreview();
+  bookingGoStep(2);
+}
+
+function toggleAddon(i,price,name){
+  const key=`${i}:${price}:${name}`;
+  const el=document.getElementById('addon-'+i);
+  const chk=document.getElementById('addonchk-'+i);
+  if(_selectedAddOns.has(key)){_selectedAddOns.delete(key);el.classList.remove('on');chk.textContent='';}
+  else{_selectedAddOns.add(key);el.classList.add('on');chk.textContent='✓';}
+  updatePricePreview();
+}
+
+function updatePricePreview(){
+  const r=window._reserveCtx||{};
+  const isES=LANG==='es';
+  const checkin=document.getElementById('modal-checkin')?.value;
+  const checkout=document.getElementById('modal-checkout')?.value;
+  let nights=ans.nights||4;
+  if(checkin&&checkout){
+    const diff=Math.round((new Date(checkout)-new Date(checkin))/(1000*60*60*24));
+    if(diff>0)nights=diff;
+  }
+  const priceNight=r.price_per_night||0;
+  const baseTotal=priceNight*nights;
+  let addonsTotal=0;
+  _selectedAddOns.forEach(k=>{const price=parseInt(k.split(':')[1]);addonsTotal+=price;});
+  const deposit=Math.max(200,Math.round(baseTotal*0.15+addonsTotal*0.5));
+  window._depositAmount=deposit;
+
+  document.getElementById('modal-price-preview').innerHTML=`
+    <div class="modal-price-row"><span>${priceNight.toLocaleString()}€ × ${nights} ${isES?'noches':'nights'}</span><span>${baseTotal.toLocaleString()}€</span></div>
+    ${addonsTotal?`<div class="modal-price-row"><span>${isES?'Add-ons seleccionados':'Selected add-ons'}</span><span>${addonsTotal.toLocaleString()}€</span></div>`:''}
+    <div class="modal-price-total"><span>${isES?'Total estimado':'Estimated total'}</span><span>${(baseTotal+addonsTotal).toLocaleString()}€</span></div>
+    <div class="modal-price-row" style="margin-top:10px;color:var(--gold)"><span>✦ ${isES?'Depósito a pagar ahora (reembolsable)':'Deposit to pay now (refundable)'}</span><span><strong>${deposit.toLocaleString()}€</strong></span></div>`;
+}
+
+async function bookingStep3(){
+  const isES=LANG==='es';
+  const note=document.getElementById('modal-note-2');
+  const ci=document.getElementById('modal-checkin').value;
+  const co=document.getElementById('modal-checkout').value;
+  if(!ci||!co||new Date(co)<=new Date(ci)){note.textContent=isES?'Selecciona fechas válidas.':'Please select valid dates.';return;}
+  note.textContent='';
+  updatePricePreview();
+
+  const deposit=window._depositAmount||200;
+  const r=window._reserveCtx||{};
+
+  document.getElementById('modal-payment-sub').textContent=isES
+    ?`Depósito reembolsable para confirmar tu reserva en ${r.hotel_name}. Tu curador te contacta en 24h.`
+    :`Refundable deposit to confirm your booking at ${r.hotel_name}. Your curator contacts you within 24h.`;
+
+  document.getElementById('modal-amount-box').innerHTML=`
+    <div><div class="modal-amount-label">${isES?'Depósito de reserva':'Booking deposit'}</div><div style="font-size:11px;color:var(--sand);margin-top:3px;">${isES?'100% reembolsable · 72h de cancelación':'100% refundable · 72h cancellation'}</div></div>
+    <div class="modal-amount-num">${deposit.toLocaleString()}€</div>`;
+
+  bookingGoStep(3);
+  await initStripe(deposit,r);
+}
+
+async function initStripe(depositEur,r){
+  const isES=LANG==='es';
+  const msg=document.getElementById('payment-message');
+  const payEl=document.getElementById('payment-element');
+  payEl.innerHTML='<div style="color:var(--mid);font-size:12px;padding:10px;">Loading payment form...</div>';
+
+  // Load Stripe.js dynamically only when needed
+  if(!window.Stripe){
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://js.stripe.com/v3/';
+      s.onload=res;s.onerror=rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  const pk=window._STRIPE_PK||'';
+  if(!pk){
+    payEl.innerHTML=`<div style="color:var(--mid);font-size:12px;padding:10px;">${isES?'Pago temporalmente no disponible. Escríbenos a hello@ask-luxy.com':'Payment temporarily unavailable. Email hello@ask-luxy.com'}</div>`;
+    return;
+  }
+
   try{
-    // Use Netlify form submission or mailto fallback
-    const subject=encodeURIComponent(`Luxy Request — ${r.hotel_name||r.destination_name}`);
-    const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nDestination: ${r.hotel_name} (${r.destination_location})\nNights: ${ans.nights||4}\nBudget: ${ans.budget}\nTrip type: ${ans.tripType}\nSpecial: ${ans.special||'-'}`);
-    // Attempt to send via Netlify function (if available), else mailto
-    let sent=false;
-    try{
-      const res=await fetch('/.netlify/functions/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,phone,destination:r.hotel_name,location:r.destination_location,nights:ans.nights,budget:ans.budget,tripType:ans.tripType,special:ans.special,score:r._scoring_score})});
-      if(res.ok)sent=true;
-    }catch(_){}
-    if(!sent){
-      // Fallback: open mailto
-      window.location.href=`mailto:hello@ask-luxy.com?subject=${subject}&body=${body}`;
-    }
-    note.style.color='var(--gold)';
-    note.textContent=isES?'✓ Solicitud enviada. Te contactamos pronto.':'✓ Request sent. We\'ll be in touch shortly.';
-    btn.textContent=isES?'Enviado ✓':'Sent ✓';
-    // After 3s redirect to hotel URL
-    setTimeout(()=>{
-      document.getElementById('modal-reserve').hidden=true;
-      if(r.book_url&&r.book_url!=='#')window.open(r.book_url,'_blank');
-      btn.disabled=false;
-      btn.textContent=isES?'Solicitar esta experiencia':'Reserve this experience';
-    },3000);
+    // Create payment intent
+    const name=document.getElementById('modal-name').value.trim();
+    const email=document.getElementById('modal-email').value.trim();
+    const phone=document.getElementById('modal-phone').value.trim();
+    const special=document.getElementById('modal-special-note').value.trim();
+    const ci=document.getElementById('modal-checkin').value;
+    const co=document.getElementById('modal-checkout').value;
+    const travelers=document.getElementById('modal-travelers').value;
+    const selectedAddOnNames=[..._selectedAddOns].map(k=>k.split(':').slice(2).join(':'));
+
+    const res=await fetch('/.netlify/functions/booking',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name,email,phone,special,
+        destination:r.destination_name,hotel:r.hotel_name,location:r.destination_location,
+        checkIn:ci,checkOut:co,travelers,
+        nights:Math.round((new Date(co)-new Date(ci))/(1000*60*60*24)),
+        budget:ans.budget,tripType:ans.tripType,
+        addOns:selectedAddOnNames,
+        depositAmount:depositEur*100,lang:LANG,
+      }),
+    });
+    const data=await res.json();
+    if(!res.ok||data.error)throw new Error(data.error||'Payment setup failed');
+
+    _stripe=Stripe(pk);
+    _stripeElements=_stripe.elements({clientSecret:data.clientSecret,appearance:{theme:'night',variables:{colorPrimary:'#b8953a',colorBackground:'#0f1a10',colorText:'#f5f0e8',borderRadius:'10px'}}});
+    _stripePaymentEl=_stripeElements.create('payment');
+    payEl.innerHTML='';
+    _stripePaymentEl.mount('#payment-element');
+    window._clientSecret=data.clientSecret;
+    window._intentId=data.intentId;
   }catch(e){
-    note.style.color='#e57373';
-    note.textContent=isES?'Error. Escríbenos a hello@ask-luxy.com':'Error. Email us at hello@ask-luxy.com';
-    btn.textContent=isES?'Reservar esta experiencia':'Reserve this experience';
-    btn.disabled=false;
+    payEl.innerHTML=`<div style="color:#e57373;font-size:12px;padding:10px;">${e.message}</div>`;
+  }
+}
+
+async function confirmPayment(){
+  const isES=LANG==='es';
+  if(!_stripe||!_stripePaymentEl){
+    document.getElementById('payment-message').textContent=isES?'Formulario de pago no disponible.':'Payment form not available.';
+    return;
+  }
+  const btn=document.getElementById('btn-pay');
+  btn.disabled=true;btn.textContent=isES?'Procesando...':'Processing...';
+
+  const {error}=await _stripe.confirmPayment({
+    elements:_stripeElements,
+    confirmParams:{
+      return_url:window.location.href,
+      receipt_email:document.getElementById('modal-email').value,
+    },
+    redirect:'if_required',
+  });
+
+  if(error){
+    document.getElementById('payment-message').textContent=error.message;
+    btn.disabled=false;btn.textContent=isES?'Pagar y confirmar →':'Pay & confirm →';
+  }else{
+    // Payment succeeded
+    const r=window._reserveCtx||{};
+    const ref=window._intentId?.slice(-8).toUpperCase()||'LUXY'+Date.now().toString(36).toUpperCase();
+    document.getElementById('modal-confirm-title').textContent=isES?'¡Reserva confirmada!':'Reservation confirmed!';
+    document.getElementById('modal-confirm-sub').textContent=isES
+      ?`Tu curador Luxy se pondrá en contacto contigo en menos de 24 horas para confirmar cada detalle de tu estancia en ${r.hotel_name}. Hemos enviado la confirmación a tu email.`
+      :`Your Luxy curator will contact you within 24 hours to confirm every detail of your stay at ${r.hotel_name}. A confirmation has been sent to your email.`;
+    document.getElementById('modal-booking-ref').textContent=`Ref: LX-${ref}`;
+    bookingGoStep(4);
   }
 }
 
