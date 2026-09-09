@@ -1033,9 +1033,10 @@ function scoreDest(dest,profile){
   // Budget fit (0-25)
   const budgetRanges={comfort:[0,700],luxury:[200,1800],ultra:[800,99999]};
   const [minB,maxB]=budgetRanges[budget]||[0,99999];
-  if(dest.price_base>=minB&&dest.price_base<=maxB){
+  const p=dest.price_base||dest.price||0;
+  if(p>=minB&&p<=maxB){
     const mid=(minB+maxB)/2,spread=(maxB-minB)||1;
-    score+=25-Math.abs(dest.price_base-mid)/spread*15;
+    score+=25-Math.abs(p-mid)/spread*15;
   }else score-=20;
   // Exp type match (0-30)
   exps.forEach(exp=>{if((dest.tags||[]).includes(exp))score+=15;});
@@ -1094,7 +1095,7 @@ async function callAI(){
         {time:isES?'Día 2 · 17:00':'Day 2 · 17:00',activity:isES?'Tarde libre o experiencia exclusiva bajo petición':'Exclusive afternoon experience on request',category:'afternoon'},
         {time:isES?`Día ${ans.nights||4} · 11:00`:`Day ${ans.nights||4} · 11:00`,activity:isES?'Check-out tardío y traslado privado al aeropuerto':'Late check-out and private airport transfer',category:'departure'},
       ],
-      price_per_night:dest.price_base,
+      price_per_night:dest.price_base||dest.price,
       included:isES?['Desayuno gourmet incluido','Traslado privado aeropuerto','Concierge Luxy 24h','Acceso VIP instalaciones']:['Gourmet breakfast included','Private airport transfer','Luxy concierge 24/7','VIP facility access'],
       add_ons:isES?['Cena romántica privada (+250€)','Masaje en pareja (+180€)','Experiencia privada exclusiva (+320€)']:['Private romantic dinner (+€250)','Couples massage (+€180)','Exclusive bespoke experience (+€320)'],
       ai_insight:isES?`Luxy seleccionó ${dest.name} porque encaja con tu perfil de forma excepcional. ${dest.desc}`:`Luxy selected ${dest.name} as your exceptional match. ${dest.desc}`,
