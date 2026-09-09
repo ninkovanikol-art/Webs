@@ -499,7 +499,7 @@ const CAT={
     {name:'Capri Palace Jumeirah',chain:'Jumeirah Hotels',loc:'Capri, Italy',type:'Island Luxury Hotel',dest:'Capri',dest_img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'White Mediterranean palace at 300m above sea level. L\'Olivo: 2 Michelin stars. The Mediterranean Clinic spa.',price:1300,book:'https://www.jumeirah.com/en/stay/capri/capri-palace-jumeirah'},
   ],
   'immersive':[
-    {name:'Natur-Lux Hideaway',chain:'[NOMBRE STARTUP]',loc:'Finestrat, Alicante, Spain',type:'Immersive Natural Resort',dest:'Alicante',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',desc:'The first AI-powered eco-resort on the Mediterranean coast. Geodesic domes, sky bubbles, infinity pool villas. Only Adults.',price:346,featured:true,book:'https://natur-lux-hideaway.netlify.app'},
+    {name:'Natur-Lux Hideaway',chain:'Luxy',loc:'Finestrat, Alicante, Spain',type:'Immersive Natural Resort',dest:'Alicante',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',desc:'The first AI-powered eco-resort on the Mediterranean coast. Geodesic domes, sky bubbles, infinity pool villas. Only Adults.',price:346,featured:true,book:'https://natur-lux-hideaway.netlify.app'},
     {name:'Whitepod Eco Luxury Resort',chain:'Whitepod',loc:'Swiss Alps, Switzerland',type:'Immersive Natural Resort',dest:'Swiss Alps',dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1504474000021-d4b7e83f5481?w=800&q=80',desc:'15 geodesic pods on a private ski slope at 1,400m altitude. Fine dining igloo. Zero-carbon skiing.',price:550,book:'https://www.whitepod.com/'},
     {name:'Casas na Areia',chain:'Relais & Châteaux',loc:'Comporta, Portugal',type:'Immersive Natural Resort',dest:'Portugal',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',desc:'Stilted whitewashed casas among the rice paddies and dunes of Comporta. Absolute silence. Wild horses.',price:480,book:'https://www.casasnaareia.com/'},
     {name:'Monte da Bravura Green Resort',chain:'Small Luxury Hotels',loc:'Lagos, Algarve, Portugal',type:'Immersive Natural Resort',dest:'Portugal',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1504474000021-d4b7e83f5481?w=800&q=80',desc:'Off-grid private villas among Algarve countryside. Natural pool, organic gardens, vineyards, stargazing.',price:420,book:'https://www.canopyandstars.co.uk/'},
@@ -568,7 +568,7 @@ const PKGS=[
    dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',
    tags:['Immersive Natural','AI-Powered','Only Adults'],badge:'Our Signature Property',
-   hotel:{name:'Natur-Lux Hideaway',chain:'[NOMBRE STARTUP]',stars:5,desc:'Geodesic dome with private jacuzzi · Mediterranean views · AI concierge'},
+   hotel:{name:'Natur-Lux Hideaway',chain:'Luxy',stars:5,desc:'Geodesic dome with private jacuzzi · Mediterranean views · AI concierge'},
    restaurants:['Degustación in your private dome — local chef, seasonal products DO Alicante','Wine tasting at Bodegas Enrique Mendoza — DO Alicante grand cru','Private breakfast with Guadalest valley produce, served in your dome'],
    experiences:['Astrophotography night with professional telescope in your dome','Guided private hike in Sierra Cortina at dawn — endemic flora','Infinity pool yoga at sunrise with mountain and sea views','Truffle & olive oil tasting tour in the Marina Baixa comarca'],
    price_night:346,price_total:1380,
@@ -1023,71 +1023,63 @@ function runLoad(){
   },700);
 }
 
+// ── Scoring engine v2 (multi-variable, replaces random selection) ──
+function scoreDest(dest,profile){
+  let score=50;
+  const exps=(Array.isArray(profile.expType)?profile.expType:[profile.expType]).filter(Boolean);
+  const regions=(Array.isArray(profile.region)?profile.region:[profile.region]).filter(Boolean);
+  const budget=profile.budget||'luxury';
+  const tripType=profile.tripType||'';
+  // Budget fit (0-25)
+  const budgetRanges={comfort:[0,700],luxury:[200,1800],ultra:[800,99999]};
+  const [minB,maxB]=budgetRanges[budget]||[0,99999];
+  if(dest.price_base>=minB&&dest.price_base<=maxB){
+    const mid=(minB+maxB)/2,spread=(maxB-minB)||1;
+    score+=25-Math.abs(dest.price_base-mid)/spread*15;
+  }else score-=20;
+  // Exp type match (0-30)
+  exps.forEach(exp=>{if((dest.tags||[]).includes(exp))score+=15;});
+  // Trip type affinity (0-21)
+  const tripTagMap={romantic:['romantic'],wellness:['wellness','detox'],adventure:['adventure'],cultural:['cultural'],celebration:['celebration','romantic','5star'],detox:['detox','immersive','wellness']};
+  (tripTagMap[tripType]||[]).forEach(tag=>{if((dest.tags||[]).includes(tag))score+=7;});
+  // Region match (0-15)
+  if(regions.length){
+    const hit=regions.some(r=>(dest.regions||[]).some(dr=>dr.toLowerCase().includes(r.toLowerCase())||r.toLowerCase().includes(dr.toLowerCase())));
+    if(hit)score+=15;
+  }else score+=5;
+  // Signature property boost
+  if(dest.featured&&exps.includes('immersive'))score+=20;
+  // Penalise mismatch
+  if(exps.length>0&&!exps.some(e=>(dest.tags||[]).includes(e)))score-=15;
+  return Math.min(100,Math.max(0,score));
+}
+
 function selectDest(){
-  const exps=(Array.isArray(ans.expType)?ans.expType:[ans.expType]).filter(Boolean);
-  const budget=ans.budget||'luxury';
-  const maxP={comfort:700,luxury:2000,ultra:99999};
-  let pool=[];
-  exps.forEach(t=>{if(CAT[t])pool=[...pool,...CAT[t]];});
-  if(!pool.length)pool=[...CAT['5star'],...CAT['immersive']];
-  const filtered=pool.filter(d=>d.price_base<=maxP[budget]);
-  const avail=filtered.length?filtered:pool;
-  if(exps.includes('immersive')&&Math.random()>.2){const nl=CAT.immersive.find(d=>d.featured);if(nl)return nl;}
-  return avail[Math.floor(Math.random()*avail.length)];
+  const allDests=Object.values(CAT).flat();
+  const scored=allDests.map(d=>({d,s:scoreDest(d,ans)}));
+  scored.sort((a,b)=>b.s-a.s);
+  // Weighted random among top 3 for variety
+  const top3=scored.slice(0,3);
+  const total=top3.reduce((s,x)=>s+x.s,0);
+  let rand=Math.random()*total;
+  for(const {d,s} of top3){rand-=s;if(rand<=0)return d;}
+  return top3[0].d;
 }
 
 async function callAI(){
-  const dest=selectDest();
   const isES=LANG==='es';
-  const ttMap={romantic:'romantic escape for a couple',wellness:'wellness and personal transformation',adventure:'premium adventure',cultural:'cultural and gastronomic immersion',celebration:'private celebration (anniversary/birthday/milestone)',detox:'complete digital detox and nature immersion'};
-  const bdgMap={comfort:'premium (200-500 EUR/night)',luxury:'luxury (500-1500 EUR/night)',ultra:'ultra-luxury (1500+ EUR/night)'};
-
-  const prompt=`You are Luxy, an elite AI Experience Agent for [NOMBRE STARTUP], a premium TravelTech platform. You curate extraordinary European journeys with the depth of Black Tomato but powered by artificial intelligence.
-
-TRAVELER PROFILE:
-- Trip type: ${ttMap[ans.tripType]||'premium journey'}
-- Travelers: ${ans.travelers||'2'}  
-- Nights: ${ans.nights||4}
-- Stay preference: ${(Array.isArray(ans.expType)?ans.expType:[ans.expType]).filter(Boolean).join(', ')||'luxury hotel'}
-- Region preference: ${(Array.isArray(ans.region)?ans.region:[ans.region]).filter(Boolean).join(', ')||'Europe'}
-- Budget tier: ${bdgMap[ans.budget]||'luxury'}
-- Special occasion: ${ans.special||'none stated'}
-
-SELECTED PROPERTY BY LUXY: ${dest.name} (${dest.chain})
-Location: ${dest.loc}
-Description: ${dest.desc}
-
-Design an extraordinary, fully personalized experience. Use REAL names for ALL restaurants (with Michelin star count if applicable), experiences (with real provider names) and suppliers near this exact destination. Be specific and use genuine places that actually exist.
-
-Respond ONLY in ${isES?'Spanish':'English'}. Return valid JSON only, no backticks or markdown:
-{
-  "title": "Poetic, evocative title for this specific journey — max 6 words",
-  "subtitle": "2 vivid sentences capturing the essence of this unrepeatable experience",
-  "destination_name": "${dest.name}",
-  "destination_location": "${dest.loc}",
-  "itinerary": [
-    {"time":"Day 1 · 15:00","activity":"Specific arrival experience with real details at ${dest.name}","category":"arrival"},
-    {"time":"Day 1 · 20:00","activity":"REAL Michelin restaurant with star count and dish or menu highlight","category":"dining"},
-    {"time":"Day 2 · 09:00","activity":"REAL morning experience with actual provider/place name and unique detail","category":"experience"},
-    {"time":"Day 2 · 13:30","activity":"REAL lunch spot with location detail and signature dish","category":"dining"},
-    {"time":"Day 2 · 17:00","activity":"REAL exclusive or unusual afternoon experience","category":"afternoon"},
-    {"time":"Day ${ans.nights||4} · 11:00","activity":"Memorable final experience or scene before departure","category":"departure"}
-  ],
-  "price_per_night": ${dest.price_base},
-  "included": ["Specific real inclusion 1","Real inclusion 2","Real inclusion 3","Real inclusion 4"],
-  "add_ons": ["Real premium add-on with provider name and indicative price","Real add-on 2 with details","Real add-on 3"],
-  "ai_insight": "3 sentences explaining precisely WHY this specific property and these experiences are the perfect match for THIS traveler's profile. Mention specific details from their answers. Use 'you' and be warmly personal.",
-  "is_natur_lux": ${dest.featured?'true':'false'}
-}`;
-
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1300,messages:[{role:'user',content:prompt}]})});
+    const r=await fetch('/.netlify/functions/generate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({profile:ans,lang:LANG})
+    });
     if(!r.ok)throw new Error('HTTP '+r.status);
-    const d=await r.json();
-    const txt=(d?.content||[]).find(c=>c.type==='text')?.text||'';
-    window._R={...JSON.parse(txt.replace(/```json|```/g,'').trim()),dest,dest_img:dest.dest_img,hotel_img:dest.hotel_img,hotel_name:dest.name,book_url:dest.book};
+    const data=await r.json();
+    if(data.error)throw new Error(data.error);
+    window._R=data;
   }catch(e){
+    const dest=selectDest();
     window._R={
       title:isES?`${dest.loc.split(',')[0]}: Irrepetible`:`${dest.loc.split(',')[0]}: Unrepeatable`,
       subtitle:isES?`Una experiencia diseñada por Luxy en ${dest.loc} para tu perfil exacto.`:`An experience designed by Luxy in ${dest.loc} for your exact profile.`,
@@ -1133,7 +1125,7 @@ function renderResult(r){
   document.getElementById('btn-red').textContent=t.btnRed;
   document.getElementById('btn-res').onclick=()=>window.open(r.book_url||'#','_blank');
 
-  document.getElementById('r-nl').innerHTML=r.is_natur_lux?`<div class="nlbox"><div class="nlbdg">✦ NATUR-LUX HIDEAWAY · LUXY SIGNATURE PROPERTY · FINESTRAT, ALICANTE, SPAIN</div><div class="nltitle">The first AI-powered Mediterranean eco-resort — trained by Luxy</div><div class="nltxt">Natur-Lux Hideaway is our own property and the laboratory where Luxy was trained on real guest data. Geodesic domes, panoramic sky bubbles and private infinity pool villas. Only Adults. Powered by [NOMBRE STARTUP].</div></div>`:'';
+  document.getElementById('r-nl').innerHTML=r.is_natur_lux?`<div class="nlbox"><div class="nlbdg">✦ NATUR-LUX HIDEAWAY · LUXY SIGNATURE PROPERTY · FINESTRAT, ALICANTE, SPAIN</div><div class="nltitle">The first AI-powered Mediterranean eco-resort — trained by Luxy</div><div class="nltxt">Natur-Lux Hideaway is our own property and the laboratory where Luxy was trained on real guest data. Geodesic domes, panoramic sky bubbles and private infinity pool villas. Only Adults. Powered by Luxy.</div></div>`:'';
 
   document.getElementById('r-grid').innerHTML=`
     <div class="rcard">
