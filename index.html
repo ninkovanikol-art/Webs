@@ -1079,23 +1079,25 @@ async function callAI(){
     if(data.error)throw new Error(data.error);
     window._R=data;
   }catch(e){
+    // Network-level failure only (function always returns 200 with data or fallback)
+    // Use local scoring engine to build minimal result
     const dest=selectDest();
     window._R={
       title:isES?`${dest.loc.split(',')[0]}: Irrepetible`:`${dest.loc.split(',')[0]}: Unrepeatable`,
       subtitle:isES?`Una experiencia diseñada por Luxy en ${dest.loc} para tu perfil exacto.`:`An experience designed by Luxy in ${dest.loc} for your exact profile.`,
       destination_name:dest.name,destination_location:dest.loc,
       itinerary:[
-        {time:isES?'Día 1 · 15:00':'Day 1 · 15:00',activity:isES?`Llegada y bienvenida en ${dest.name}`:`Arrival and private welcome at ${dest.name}`,category:'arrival'},
-        {time:isES?'Día 1 · 20:00':'Day 1 · 20:00',activity:isES?'Cena degustación en el restaurante de referencia local':'Signature tasting menu at the destination\'s finest restaurant',category:'dining'},
+        {time:isES?'Día 1 · 15:00':'Day 1 · 15:00',activity:isES?`Llegada y bienvenida privada en ${dest.name}`:`Private arrival and welcome at ${dest.name}`,category:'arrival'},
+        {time:isES?'Día 1 · 20:00':'Day 1 · 20:00',activity:isES?'Cena degustación con el mejor restaurante local':'Signature tasting menu at the finest local table',category:'dining'},
         {time:isES?'Día 2 · 09:00':'Day 2 · 09:00',activity:isES?'Experiencia matinal exclusiva curada por Luxy':'Exclusive morning experience curated by Luxy',category:'experience'},
         {time:isES?'Día 2 · 14:00':'Day 2 · 14:00',activity:isES?'Almuerzo privado con vistas panorámicas':'Private lunch with panoramic views',category:'dining'},
-        {time:isES?'Día 2 · 17:00':'Day 2 · 17:00',activity:isES?'Tarde libre o experiencia bajo petición':'Free afternoon or bespoke experience on request',category:'afternoon'},
-        {time:isES?`Día ${ans.nights||4} · 11:00`:`Day ${ans.nights||4} · 11:00`,activity:isES?'Check-out tardío y traslado privado':'Late check-out and private transfer',category:'departure'},
+        {time:isES?'Día 2 · 17:00':'Day 2 · 17:00',activity:isES?'Tarde libre o experiencia exclusiva bajo petición':'Exclusive afternoon experience on request',category:'afternoon'},
+        {time:isES?`Día ${ans.nights||4} · 11:00`:`Day ${ans.nights||4} · 11:00`,activity:isES?'Check-out tardío y traslado privado al aeropuerto':'Late check-out and private airport transfer',category:'departure'},
       ],
       price_per_night:dest.price_base,
-      included:isES?['Desayuno gourmet incluido','Traslado privado aeropuerto','Concierge Luxy 24h','Acceso VIP instalaciones']:['Gourmet breakfast','Private airport transfer','Luxy concierge 24/7','VIP access all facilities'],
-      add_ons:isES?['Cena romántica privada (+250€)','Masaje en pareja (+180€)','Experiencia privada exclusiva (+320€)']:['Private romantic dinner (+250€)','Couples massage (+180€)','Exclusive private experience (+320€)'],
-      ai_insight:isES?`Luxy seleccionó ${dest.name} porque ${dest.desc} Esta es la experiencia diseñada específicamente para ti.`:`Luxy selected ${dest.name} because ${dest.desc} This experience was designed specifically for you.`,
+      included:isES?['Desayuno gourmet incluido','Traslado privado aeropuerto','Concierge Luxy 24h','Acceso VIP instalaciones']:['Gourmet breakfast included','Private airport transfer','Luxy concierge 24/7','VIP facility access'],
+      add_ons:isES?['Cena romántica privada (+250€)','Masaje en pareja (+180€)','Experiencia privada exclusiva (+320€)']:['Private romantic dinner (+€250)','Couples massage (+€180)','Exclusive bespoke experience (+€320)'],
+      ai_insight:isES?`Luxy seleccionó ${dest.name} porque encaja con tu perfil de forma excepcional. ${dest.desc}`:`Luxy selected ${dest.name} as your exceptional match. ${dest.desc}`,
       is_natur_lux:dest.featured||false,
       dest,dest_img:dest.dest_img,hotel_img:dest.hotel_img,hotel_name:dest.name,book_url:dest.book,
     };

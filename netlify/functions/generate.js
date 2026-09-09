@@ -1,8 +1,57 @@
 // Luxy AI — Secure backend proxy for Anthropic API
-// Keeps API key server-side, adds scoring, rate limiting and prompt engineering
+// Keeps API key server-side; adds scoring, rate limiting, validation, logging
 
 const RATE_LIMIT = new Map(); // ip -> {count, resetAt}
 const MAX_RPM = 10;
+
+// ── Input validation ────────────────────────────────────────────────────────
+const VALID_TRIP_TYPES = new Set(['romantic','wellness','adventure','cultural','celebration','detox']);
+const VALID_BUDGETS = new Set(['comfort','luxury','ultra']);
+const VALID_EXP_TYPES = new Set(['5star','wellness','immersive','adventure','cultural']);
+const VALID_REGIONS = new Set(['Spain','France','Italy','Portugal','Greece','Switzerland','Ireland','Turkey','Europe','Mediterranean']);
+
+function sanitizeString(val, maxLen = 200) {
+  if (typeof val !== 'string') return '';
+  return val.slice(0, maxLen).replace(/[<>"'`]/g, '');
+}
+
+function validateProfile(profile) {
+  const p = {};
+  p.tripType = VALID_TRIP_TYPES.has(profile.tripType) ? profile.tripType : 'romantic';
+  p.budget = VALID_BUDGETS.has(profile.budget) ? profile.budget : 'luxury';
+  const rawExp = Array.isArray(profile.expType) ? profile.expType : [profile.expType];
+  p.expType = rawExp.filter(e => VALID_EXP_TYPES.has(e)).slice(0, 3);
+  const rawRegion = Array.isArray(profile.region) ? profile.region : [profile.region];
+  p.region = rawRegion.filter(r => VALID_REGIONS.has(r)).slice(0, 3);
+  const nights = parseInt(profile.nights, 10);
+  p.nights = (nights >= 1 && nights <= 30) ? nights : 4;
+  const travelers = parseInt(profile.travelers, 10);
+  p.travelers = (travelers >= 1 && travelers <= 20) ? travelers : 2;
+  p.special = sanitizeString(profile.special || '', 300);
+  return p;
+}
+
+// ── Structured logging (Day 8: eval dataset) ────────────────────────────────
+function logGeneration({ ip, profile, dest, score, latencyMs, success, tokenUsage, error }) {
+  const entry = {
+    ts: new Date().toISOString(),
+    ip: ip?.slice(0, 15), // partial IP for privacy
+    profile_trip: profile.tripType,
+    profile_budget: profile.budget,
+    profile_exp: profile.expType,
+    profile_region: profile.region,
+    dest_id: dest?.id,
+    dest_name: dest?.name,
+    score,
+    latency_ms: latencyMs,
+    success,
+    tokens_in: tokenUsage?.input_tokens,
+    tokens_out: tokenUsage?.output_tokens,
+    error: error?.slice(0, 200),
+  };
+  // Netlify captures console.log as structured function logs — queryable in dashboard
+  console.log(JSON.stringify({ type: 'luxy_generation', ...entry }));
+}
 
 // ── Destination catalogue (server-side authoritative copy) ──
 const CATALOGUE = {
@@ -199,11 +248,16 @@ function checkRateLimit(ip) {
 
 // ── Netlify Function handler ────────────────────────────────────────────────
 exports.handler = async (event) => {
+  const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://ask-luxy.com';
+  const origin = event.headers['origin'] || '';
+  const corsOrigin = (origin === allowedOrigin || origin.endsWith('.netlify.app')) ? origin : allowedOrigin;
+
   const headers = {
-    'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || '*',
+    'Access-Control-Allow-Origin': corsOrigin,
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json',
+    'Vary': 'Origin',
   };
 
   if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
@@ -218,18 +272,21 @@ exports.handler = async (event) => {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Service temporarily unavailable.' }) };
   }
 
-  let profile, lang;
+  let rawProfile, lang;
   try {
     const body = JSON.parse(event.body || '{}');
-    profile = body.profile || {};
-    lang = body.lang || 'en';
-    if (typeof profile !== 'object') throw new Error('Invalid profile');
+    rawProfile = body.profile;
+    lang = body.lang === 'es' ? 'es' : 'en';
+    if (!rawProfile || typeof rawProfile !== 'object') throw new Error('Missing profile');
   } catch {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid request body' }) };
   }
 
+  const profile = validateProfile(rawProfile);
   const dest = selectDestination(profile);
+  const score = Math.round(scoreDest(dest, profile));
   const prompt = buildPrompt(profile, dest, lang);
+  const t0 = Date.now();
 
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -249,14 +306,15 @@ exports.handler = async (event) => {
 
     if (!res.ok) {
       const errText = await res.text();
-      console.error('Anthropic error:', res.status, errText);
-      throw new Error(`Anthropic ${res.status}`);
+      throw new Error(`Anthropic ${res.status}: ${errText.slice(0, 200)}`);
     }
 
     const data = await res.json();
     const text = (data?.content || []).find(c => c.type === 'text')?.text || '';
     const clean = text.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
+
+    logGeneration({ ip, profile, dest, score, latencyMs: Date.now() - t0, success: true, tokenUsage: data.usage });
 
     return {
       statusCode: 200,
@@ -269,12 +327,12 @@ exports.handler = async (event) => {
         hotel_name: dest.name,
         book_url: dest.book,
         is_natur_lux: dest.featured || false,
-        _scoring_score: Math.round(scoreDest(dest, profile)),
+        _scoring_score: score,
       }),
     };
   } catch (err) {
-    console.error('Generate error:', err.message);
-    // Return structured fallback so the UI still renders gracefully
+    logGeneration({ ip, profile, dest, score, latencyMs: Date.now() - t0, success: false, error: err.message });
+
     return {
       statusCode: 200,
       headers,
@@ -286,13 +344,27 @@ exports.handler = async (event) => {
           : `An experience designed by Luxy in ${dest.loc} for your exact profile.`,
         destination_name: dest.name,
         destination_location: dest.loc,
-        itinerary: [],
+        itinerary: [
+          {time: lang==='es'?'Día 1 · 15:00':'Day 1 · 15:00', activity: lang==='es'?`Llegada y bienvenida privada en ${dest.name}`:`Private arrival and welcome at ${dest.name}`, category:'arrival'},
+          {time: lang==='es'?'Día 1 · 20:00':'Day 1 · 20:00', activity: lang==='es'?'Cena degustación con el mejor chef local':'Signature tasting menu at the destination\'s finest table', category:'dining'},
+          {time: lang==='es'?'Día 2 · 09:00':'Day 2 · 09:00', activity: lang==='es'?'Experiencia matinal exclusiva curada por Luxy':'Exclusive morning experience curated by Luxy', category:'experience'},
+          {time: lang==='es'?'Día 2 · 14:00':'Day 2 · 14:00', activity: lang==='es'?'Almuerzo privado con vistas panorámicas':'Private lunch with panoramic views', category:'dining'},
+          {time: lang==='es'?'Día 2 · 17:00':'Day 2 · 17:00', activity: lang==='es'?'Tarde de actividad exclusiva bajo petición':'Exclusive afternoon experience on request', category:'afternoon'},
+          {time: lang==='es'?`Día ${profile.nights} · 11:00`:`Day ${profile.nights} · 11:00`, activity: lang==='es'?'Check-out tardío y traslado privado al aeropuerto':'Late check-out and private airport transfer', category:'departure'},
+        ],
         price_per_night: dest.price_base,
-        included: ['Premium experience included', 'Private transfers', 'Luxy concierge 24/7', 'VIP access'],
-        add_ons: ['Exclusive private experience on request', 'Private dining experience', 'Bespoke day activity'],
-        ai_insight: dest.desc,
+        included: lang === 'es'
+          ? ['Desayuno gourmet incluido','Traslado privado aeropuerto','Concierge Luxy 24h','Acceso VIP instalaciones']
+          : ['Gourmet breakfast included','Private airport transfer','Luxy concierge 24/7','VIP facility access'],
+        add_ons: lang === 'es'
+          ? ['Cena romántica privada (+250€)','Masaje en pareja (+180€)','Experiencia privada exclusiva (+320€)']
+          : ['Private romantic dinner (+€250)','Couples massage (+€180)','Exclusive bespoke experience (+€320)'],
+        ai_insight: lang === 'es'
+          ? `Luxy seleccionó ${dest.name} porque encaja con tu perfil de forma excepcional. ${dest.desc} Esta experiencia ha sido diseñada específicamente para ti.`
+          : `Luxy selected ${dest.name} as your exceptional match. ${dest.desc} This experience was designed specifically for your profile.`,
         dest, dest_img: dest.dest_img, hotel_img: dest.hotel_img, hotel_name: dest.name, book_url: dest.book,
         is_natur_lux: dest.featured || false,
+        _scoring_score: score,
       }),
     };
   }
