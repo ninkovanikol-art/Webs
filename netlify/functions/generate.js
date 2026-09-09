@@ -7,12 +7,34 @@ const MAX_RPM = 10;
 // ── Input validation ────────────────────────────────────────────────────────
 const VALID_TRIP_TYPES = new Set(['romantic','wellness','adventure','cultural','celebration','detox']);
 const VALID_BUDGETS = new Set(['comfort','luxury','ultra']);
-const VALID_EXP_TYPES = new Set(['5star','wellness','immersive','adventure','cultural']);
-const VALID_REGIONS = new Set(['Spain','France','Italy','Portugal','Greece','Switzerland','Ireland','Turkey','Europe','Mediterranean']);
+const VALID_EXP_TYPES = new Set(['5star','wellness','immersive','adventure','cultural','villa']);
+// Maps frontend region keys (lowercase) → canonical region strings used in dest.regions[]
+const REGION_MAP = {
+  spain: ['Spain','Mediterranean'],
+  italy: ['Italy','Mediterranean'],
+  france: ['France','Mediterranean'],
+  greece: ['Greece','Turkey','Mediterranean'],
+  portugal: ['Portugal'],
+  alps: ['Switzerland','Ireland','Europe'],
+  // Also accept canonical names directly
+  spain_c: ['Spain'], france_c: ['France'], italy_c: ['Italy'],
+  portugal_c: ['Portugal'], greece_c: ['Greece'], switzerland_c: ['Switzerland'],
+};
 
 function sanitizeString(val, maxLen = 200) {
   if (typeof val !== 'string') return '';
   return val.slice(0, maxLen).replace(/[<>"'`]/g, '');
+}
+
+function normalizeRegions(rawRegions) {
+  const out = new Set();
+  rawRegions.filter(Boolean).slice(0, 3).forEach(r => {
+    const key = r.toLowerCase().replace(/[^a-z]/g,'');
+    const mapped = REGION_MAP[key];
+    if (mapped) { mapped.forEach(m => out.add(m)); }
+    else { out.add(r); } // pass through canonical names
+  });
+  return [...out];
 }
 
 function validateProfile(profile) {
@@ -22,7 +44,7 @@ function validateProfile(profile) {
   const rawExp = Array.isArray(profile.expType) ? profile.expType : [profile.expType];
   p.expType = rawExp.filter(e => VALID_EXP_TYPES.has(e)).slice(0, 3);
   const rawRegion = Array.isArray(profile.region) ? profile.region : [profile.region];
-  p.region = rawRegion.filter(r => VALID_REGIONS.has(r)).slice(0, 3);
+  p.region = normalizeRegions(rawRegion);
   const nights = parseInt(profile.nights, 10);
   p.nights = (nights >= 1 && nights <= 30) ? nights : 4;
   const travelers = parseInt(profile.travelers, 10);
@@ -114,9 +136,11 @@ function scoreDest(dest, profile) {
     score -= 20; // out of budget
   }
 
-  // Experience type match (0–30 pts)
+  // Experience type match (0–30 pts) — 'villa' maps to 'immersive' tags
+  const expTagMap = { villa: ['immersive', 'romantic', '5star'] };
   expTypes.forEach(exp => {
-    if (dest.tags.includes(exp)) score += 15;
+    const checkTags = expTagMap[exp] ? [exp, ...expTagMap[exp]] : [exp];
+    if (checkTags.some(t => dest.tags.includes(t))) score += 15;
   });
 
   // Trip type → tag affinity map (0–20 pts)
