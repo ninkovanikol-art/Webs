@@ -7,12 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#12110f;--mid:#4a4640;--light:#8a8478;
-  --gold:#b8953a;--goldl:#d4b05a;--goldf:#f0d070;
-  --cream:#f7f2e8;--creamd:#e8e0ce;--creame:#efe8d8;
-  --forest:#162416;--sage:#3d6b48;--sagel:#5a8c68;
-  --dark:#090808;--darkm:#0e0d0b;--darkl:#161410;
-  --white:#fdfaf5;--sand:#c8b890;
+  --ink:#1C1510;--mid:#4a4640;--light:#8a8478;
+  --gold:#B8A05A;--goldl:#cdb870;--goldf:#e8d490;
+  --cream:#E8E4D8;--creamd:#d4cfc0;--creame:#ddd8c8;
+  --stone:#CFC8B8;
+  --forest:#101C12;--sage:#3d6b48;--sagel:#5a8c68;
+  --dark:#101C12;--darkm:#0e180f;--darkl:#0b1509;
+  --white:#F5F1E8;--sand:#c8b890;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -40,7 +41,7 @@ body{font-family:'Jost',sans-serif;background:var(--dark);color:var(--cream);min
 
 .land-inner{position:relative;z-index:2;max-width:820px;margin:0 auto;}
 
-.luxy-badge{display:inline-flex;align-items:center;gap:9px;background:rgba(184,149,58,.08);border:1px solid rgba(184,149,58,.2);color:var(--goldl);font-size:9px;letter-spacing:4px;text-transform:uppercase;padding:9px 24px;border-radius:100px;margin-bottom:36px;backdrop-filter:blur(12px);}
+.luxy-badge{display:inline-flex;align-items:center;gap:9px;background:rgba(184,160,90,.11);border:1px solid rgba(184,160,90,.38);color:rgba(184,160,90,.78);font-size:9px;letter-spacing:4px;text-transform:uppercase;padding:9px 24px;border-radius:100px;margin-bottom:36px;backdrop-filter:blur(12px);}
 .luxy-bdot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:bpulse 2.2s infinite;}
 @keyframes bpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.8)}}
 
@@ -227,7 +228,7 @@ textarea:focus{border-color:var(--gold);}
 .pbf{height:100%;background:linear-gradient(90deg,var(--sage),var(--gold));border-radius:1px;width:0%;transition:width .55s ease;}
 
 /* ══ RESULT ══ */
-#s-result{background:var(--cream);color:var(--ink);}
+#s-result{background:var(--stone);color:var(--ink);}
 .rhero{position:relative;overflow:hidden;}
 .rhero-imgs{display:grid;grid-template-columns:1fr 1fr;height:420px;}
 .rhero-img-main{position:relative;overflow:hidden;}
@@ -280,7 +281,7 @@ textarea:focus{border-color:var(--gold);}
 .incl-t{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
 .incl-ps{display:flex;flex-wrap:wrap;gap:6px;}
 .incl-p{background:rgba(184,149,58,.1);color:var(--mid);font-size:10.5px;padding:4px 13px;border-radius:100px;border:1px solid rgba(184,149,58,.13);}
-.price-box{background:linear-gradient(135deg,var(--forest),#243824);border-radius:16px;padding:28px 34px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:16px;}
+.price-box{background:linear-gradient(135deg,var(--forest),#243824);border:1px solid rgba(184,160,90,.28);border-radius:16px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:16px;}
 .pt{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sage);margin-bottom:5px;}
 .pa{font-family:'Playfair Display',serif;font-size:50px;font-weight:300;color:var(--cream);line-height:1;}
 .pa span{font-size:16px;color:var(--sand);}
@@ -391,6 +392,7 @@ textarea:focus{border-color:var(--gold);}
       <button class="btn-gold" id="btn-ai" onclick="startQ()">Design my experience →</button>
       <button class="btn-ghost" id="btn-pkgs" onclick="showPkgs()">Browse signature packages</button>
     </div>
+    <div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:1px;color:rgba(232,228,216,.25);text-align:center;margin-top:10px;" id="cta-micro">No credit card · Cancel anytime · 72h refundable</div>
     <div class="ltog">
       <button class="lbtn" id="lb-es" onclick="setL('es')">ES</button>
       <button class="lbtn on" id="lb-en" onclick="setL('en')">EN</button>
@@ -618,60 +620,60 @@ function setL(l){
 // ══ CATALOGUE (60+ properties) ══
 const CAT={
   '5star':[
-    {name:'Aman Venice',chain:'Aman Resorts',loc:'Venice, Italy',type:'Palace Hotel',dest:'Venice',dest_img:'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'A 16th-century palazzo on the Grand Canal. Murano glass chandeliers, private gondola, 24 intimate rooms.',price:1800,book:'https://www.aman.com/hotels/aman-venice'},
-    {name:'Four Seasons Hotel George V',chain:'Four Seasons',loc:'Paris, France',type:'Palace Hotel',dest:'Paris',dest_img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',desc:'The iconic address on Avenue George V. Three Michelin stars. Legendary flower arrangements by Jeff Leatham.',price:1500,book:'https://www.fourseasons.com/paris/'},
-    {name:'Le Bristol Paris',chain:'Oetker Collection',loc:'Paris, France',type:'Palace Hotel',dest:'Paris',dest_img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'On Rue du Faubourg Saint-Honoré. Épicure by Eric Frechon: 3 Michelin stars. The largest hotel pool in Paris.',price:1400,book:'https://www.oetkercollection.com/hotels/le-bristol-paris/'},
-    {name:"Badrutt's Palace Hotel",chain:'Independent',loc:'St. Moritz, Switzerland',type:'Alpine Palace',dest:'St. Moritz',dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'Alpine institution since 1896. Ski-in/ski-out access. The legendary King\'s Club. Quintessential St. Moritz.',price:1200,book:'https://www.badruttspalace.com/'},
-    {name:'Hotel Arts Barcelona',chain:'Ritz-Carlton',loc:'Barcelona, Spain',type:'Urban Luxury Hotel',dest:'Barcelona',dest_img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'44-storey tower over Barceloneta beach. Rooftop pool. Frank Gehry\'s golden fish sculpture below.',price:650,book:'https://www.hotelartsbarcelona.com/'},
+    {name:'Aman Venice',chain:'Aman Resorts',loc:'Venice, Italy',type:'Palace Hotel',dest:'Venice',dest_img:'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'A 16th-century palazzo on the Grand Canal. Murano glass chandeliers, private gondola, 24 intimate rooms.',price:1800,book:'https://www.aman.com/hotels/aman-venice'},
+    {name:'Four Seasons Hotel George V',chain:'Four Seasons',loc:'Paris, France',type:'Palace Hotel',dest:'Paris',dest_img:'https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',desc:'The iconic address on Avenue George V. Three Michelin stars. Legendary flower arrangements by Jeff Leatham.',price:1500,book:'https://www.fourseasons.com/paris/'},
+    {name:'Le Bristol Paris',chain:'Oetker Collection',loc:'Paris, France',type:'Palace Hotel',dest:'Paris',dest_img:'https://images.unsplash.com/photo-1431274172761-fcdab704a114?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'On Rue du Faubourg Saint-Honoré. Épicure by Eric Frechon: 3 Michelin stars. The largest hotel pool in Paris.',price:1400,book:'https://www.oetkercollection.com/hotels/le-bristol-paris/'},
+    {name:"Badrutt's Palace Hotel",chain:'Independent',loc:'St. Moritz, Switzerland',type:'Alpine Palace',dest:'St. Moritz',dest_img:'https://images.unsplash.com/photo-1531310197839-ccf54634509e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'Alpine institution since 1896. Ski-in/ski-out access. The legendary King\'s Club. Quintessential St. Moritz.',price:1200,book:'https://www.badruttspalace.com/'},
+    {name:'Hotel Arts Barcelona',chain:'Ritz-Carlton',loc:'Barcelona, Spain',type:'Urban Luxury Hotel',dest:'Barcelona',dest_img:'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'44-storey tower over Barceloneta beach. Rooftop pool. Frank Gehry\'s golden fish sculpture below.',price:650,book:'https://www.hotelartsbarcelona.com/'},
     {name:'Hotel de Russie',chain:'Rocco Forte Hotels',loc:'Rome, Italy',type:'City Palace',dest:'Rome',dest_img:'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'Near Piazza del Popolo. The legendary Jardin Russe secret garden. La Stravinskij bar.',price:900,book:'https://www.roccofortehotels.com/hotels-and-resorts/hotel-de-russie/'},
-    {name:'Mandarin Oriental Bodrum',chain:'Mandarin Oriental',loc:'Bodrum, Turkey',type:'Seaside Resort',dest:'Bodrum',dest_img:'https://images.unsplash.com/photo-1469796466635-455ede028aca?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'Perched on a peninsula in the Aegean. Private beach. Award-winning spa. Sensational Aegean vistas.',price:1100,book:'https://www.mandarinoriental.com/en/bodrum'},
-    {name:'Mandarin Oriental Barcelona',chain:'Mandarin Oriental',loc:'Barcelona, Spain',type:'Urban Luxury Hotel',dest:'Barcelona',dest_img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',desc:'On Passeig de Gràcia, the most elegant boulevard in Spain. Blanc restaurant by Carme Ruscalleda.',price:800,book:'https://www.mandarinoriental.com/en/barcelona/passeig-de-gracia'},
-    {name:'Rosewood Villa Magna',chain:'Rosewood Hotels',loc:'Madrid, Spain',type:'Urban Palace',dest:'Madrid',dest_img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'On Paseo de la Castellana, heart of luxury Madrid. Bibo Madrid by Dani García. World-class art collection.',price:950,book:'https://www.rosewoodhotels.com/en/villa-magna'},
-    {name:'Belmond Hotel Cipriani',chain:'Belmond',loc:'Venice, Italy',type:'Island Hotel',dest:'Venice',dest_img:'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'On its own island in the Venetian lagoon. Olympic pool. The legendary Cip\'s Club on the water.',price:1600,book:'https://www.belmond.com/hotels/europe/italy/venice/belmond-hotel-cipriani/'},
-    {name:'Belmond Grand Hotel Timeo',chain:'Belmond',loc:'Taormina, Sicily',type:'Clifftop Hotel',dest:'Sicily',dest_img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'Perched above Taormina with views of Etna and the Ionian Sea. Otto Geleng restaurant. 1873.',price:900,book:'https://www.belmond.com/hotels/europe/italy/sicily/taormina/belmond-grand-hotel-timeo/'},
+    {name:'Mandarin Oriental Bodrum',chain:'Mandarin Oriental',loc:'Bodrum, Turkey',type:'Seaside Resort',dest:'Bodrum',dest_img:'https://images.unsplash.com/photo-1589561454226-796a8aa89b05?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'Perched on a peninsula in the Aegean. Private beach. Award-winning spa. Sensational Aegean vistas.',price:1100,book:'https://www.mandarinoriental.com/en/bodrum'},
+    {name:'Mandarin Oriental Barcelona',chain:'Mandarin Oriental',loc:'Barcelona, Spain',type:'Urban Luxury Hotel',dest:'Barcelona',dest_img:'https://images.unsplash.com/photo-1559561853-08451507cbe7?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',desc:'On Passeig de Gràcia, the most elegant boulevard in Spain. Blanc restaurant by Carme Ruscalleda.',price:800,book:'https://www.mandarinoriental.com/en/barcelona/passeig-de-gracia'},
+    {name:'Rosewood Villa Magna',chain:'Rosewood Hotels',loc:'Madrid, Spain',type:'Urban Palace',dest:'Madrid',dest_img:'https://images.unsplash.com/photo-1543785734-4b6e564642f8?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'On Paseo de la Castellana, heart of luxury Madrid. Bibo Madrid by Dani García. World-class art collection.',price:950,book:'https://www.rosewoodhotels.com/en/villa-magna'},
+    {name:'Belmond Hotel Cipriani',chain:'Belmond',loc:'Venice, Italy',type:'Island Hotel',dest:'Venice',dest_img:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'On its own island in the Venetian lagoon. Olympic pool. The legendary Cip\'s Club on the water.',price:1600,book:'https://www.belmond.com/hotels/europe/italy/venice/belmond-hotel-cipriani/'},
+    {name:'Belmond Grand Hotel Timeo',chain:'Belmond',loc:'Taormina, Sicily',type:'Clifftop Hotel',dest:'Sicily',dest_img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'Perched above Taormina with views of Etna and the Ionian Sea. Otto Geleng restaurant. 1873.',price:900,book:'https://www.belmond.com/hotels/europe/italy/sicily/taormina/belmond-grand-hotel-timeo/'},
     {name:'Melia Palacio de Los Duques',chain:'Meliá Hotels',loc:'Madrid, Spain',type:'Historic Palace Hotel',dest:'Madrid',dest_img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'19th-century ducal palace near the Royal Palace of Madrid. Iconic Level THE ONLY ONE. Roof Garden.',price:550,book:'https://www.melia.com/en/hotels/spain/madrid/melia-palacio-de-los-duques'},
-    {name:'Gran Melia Don Pepe',chain:'Meliá Hotels',loc:'Marbella, Spain',type:'Beach Resort',dest:'Marbella',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'On the famous Golden Mile of Marbella. Seven pools, private beach, THE BEACH restaurant.',price:720,book:'https://www.melia.com/en/hotels/spain/marbella/gran-melia-don-pepe'},
-    {name:'Barcelo Royal Hideaway Sancti Petri',chain:'Barceló Hotels',loc:'Chiclana, Cádiz, Spain',type:'Beachfront Resort',dest:'Cadiz',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'Luxury adults-only beachfront resort on Sancti Petri beach, Cádiz. Hammam, spa, Atlanterra restaurant.',price:480,book:'https://www.barcelo.com/en-gb/barcelo-sancti-petri/'},
-    {name:'NH Collection Gran Hotel de Zaragoza',chain:'NH Collection',loc:'Zaragoza, Spain',type:'City Grand Hotel',dest:'Zaragoza',dest_img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'Flagship NH Collection in the heart of Aragon. Steps from the Basilica del Pilar.',price:320,book:'https://www.nhcollection.com/'},
-    {name:'Six Senses Ibiza',chain:'Six Senses',loc:'Ibiza, Spain',type:'Wellness Resort',dest:'Ibiza',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',desc:'North Ibiza cliffside. Adults and families. Holistic wellness, organic farm-to-table, sleep programme.',price:1100,book:'https://www.sixsenses.com/en/resorts/ibiza'},
-    {name:'Six Senses Rome',chain:'Six Senses',loc:'Rome, Italy',type:'Urban Wellness Hotel',dest:'Rome',dest_img:'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'A neoclassical palace in the Ludovisi district. Underground spa. Noûs rooftop bar with Forum views.',price:1000,book:'https://www.sixsenses.com/en/resorts/rome'},
-    {name:'Hotel du Cap-Eden-Roc',chain:'Oetker Collection',loc:"Cap d'Antibes, French Riviera",type:'Riviera Legend',dest:'French Riviera',dest_img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',desc:'The ultimate Riviera legend since 1870. Cliff-edge pool carved from rock. The favorite of Picasso and Fitzgerald.',price:2200,book:'https://www.oetkercollection.com/hotels/hotel-du-cap-eden-roc/'},
-    {name:'The Ashford Castle',chain:'Red Carnation Hotels',loc:'County Mayo, Ireland',type:'Medieval Castle Hotel',dest:'Ireland',dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'A 13th-century castle on the shores of Lough Corrib. Falconry school. George V dining room.',price:900,book:'https://www.ashfordcastle.com/'},
-    {name:'Anantara Villa Padierna Palace',chain:'Anantara Hotels',loc:'Marbella, Spain',type:'Palace Resort',dest:'Marbella',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'An Italianate palace in the Benahavís hills. Three championship golf courses. Thalgó Thalasso spa.',price:850,book:'https://www.anantara.com/en/villa-padierna-marbella'},
-    {name:'Capri Palace Jumeirah',chain:'Jumeirah Hotels',loc:'Capri, Italy',type:'Island Luxury Hotel',dest:'Capri',dest_img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'White Mediterranean palace at 300m above sea level. L\'Olivo: 2 Michelin stars. The Mediterranean Clinic spa.',price:1300,book:'https://www.jumeirah.com/en/stay/capri/capri-palace-jumeirah'},
+    {name:'Gran Melia Don Pepe',chain:'Meliá Hotels',loc:'Marbella, Spain',type:'Beach Resort',dest:'Marbella',dest_img:'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'On the famous Golden Mile of Marbella. Seven pools, private beach, THE BEACH restaurant.',price:720,book:'https://www.melia.com/en/hotels/spain/marbella/gran-melia-don-pepe'},
+    {name:'Barcelo Royal Hideaway Sancti Petri',chain:'Barceló Hotels',loc:'Chiclana, Cádiz, Spain',type:'Beachfront Resort',dest:'Cadiz',dest_img:'https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'Luxury adults-only beachfront resort on Sancti Petri beach, Cádiz. Hammam, spa, Atlanterra restaurant.',price:480,book:'https://www.barcelo.com/en-gb/barcelo-sancti-petri/'},
+    {name:'NH Collection Gran Hotel de Zaragoza',chain:'NH Collection',loc:'Zaragoza, Spain',type:'City Grand Hotel',dest:'Zaragoza',dest_img:'https://images.unsplash.com/photo-1520637836862-4d197d17c91a?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'Flagship NH Collection in the heart of Aragon. Steps from the Basilica del Pilar.',price:320,book:'https://www.nhcollection.com/'},
+    {name:'Six Senses Ibiza',chain:'Six Senses',loc:'Ibiza, Spain',type:'Wellness Resort',dest:'Ibiza',dest_img:'https://images.unsplash.com/photo-1601999109332-542b18dbec55?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',desc:'North Ibiza cliffside. Adults and families. Holistic wellness, organic farm-to-table, sleep programme.',price:1100,book:'https://www.sixsenses.com/en/resorts/ibiza'},
+    {name:'Six Senses Rome',chain:'Six Senses',loc:'Rome, Italy',type:'Urban Wellness Hotel',dest:'Rome',dest_img:'https://images.unsplash.com/photo-1555992336-03a23c7b20ee?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'A neoclassical palace in the Ludovisi district. Underground spa. Noûs rooftop bar with Forum views.',price:1000,book:'https://www.sixsenses.com/en/resorts/rome'},
+    {name:'Hotel du Cap-Eden-Roc',chain:'Oetker Collection',loc:"Cap d'Antibes, French Riviera",type:'Riviera Legend',dest:'French Riviera',dest_img:'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',desc:'The ultimate Riviera legend since 1870. Cliff-edge pool carved from rock. The favorite of Picasso and Fitzgerald.',price:2200,book:'https://www.oetkercollection.com/hotels/hotel-du-cap-eden-roc/'},
+    {name:'The Ashford Castle',chain:'Red Carnation Hotels',loc:'County Mayo, Ireland',type:'Medieval Castle Hotel',dest:'Ireland',dest_img:'https://images.unsplash.com/photo-1564415315949-7a0c4c73aab4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'A 13th-century castle on the shores of Lough Corrib. Falconry school. George V dining room.',price:900,book:'https://www.ashfordcastle.com/'},
+    {name:'Anantara Villa Padierna Palace',chain:'Anantara Hotels',loc:'Marbella, Spain',type:'Palace Resort',dest:'Marbella',dest_img:'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'An Italianate palace in the Benahavís hills. Three championship golf courses. Thalgó Thalasso spa.',price:850,book:'https://www.anantara.com/en/villa-padierna-marbella'},
+    {name:'Capri Palace Jumeirah',chain:'Jumeirah Hotels',loc:'Capri, Italy',type:'Island Luxury Hotel',dest:'Capri',dest_img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'White Mediterranean palace at 300m above sea level. L\'Olivo: 2 Michelin stars. The Mediterranean Clinic spa.',price:1300,book:'https://www.jumeirah.com/en/stay/capri/capri-palace-jumeirah'},
   ],
   'immersive':[
-    {name:'Natur-Lux Hideaway',chain:'Luxy',loc:'Finestrat, Alicante, Spain',type:'Immersive Natural Resort',dest:'Alicante',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',desc:'The first AI-powered eco-resort on the Mediterranean coast. Geodesic domes, sky bubbles, infinity pool villas. Only Adults.',price:346,featured:true,book:'https://natur-lux-hideaway.netlify.app'},
-    {name:'Whitepod Eco Luxury Resort',chain:'Whitepod',loc:'Swiss Alps, Switzerland',type:'Immersive Natural Resort',dest:'Swiss Alps',dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1504474000021-d4b7e83f5481?w=800&q=80',desc:'15 geodesic pods on a private ski slope at 1,400m altitude. Fine dining igloo. Zero-carbon skiing.',price:550,book:'https://www.whitepod.com/'},
-    {name:'Casas na Areia',chain:'Relais & Châteaux',loc:'Comporta, Portugal',type:'Immersive Natural Resort',dest:'Portugal',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',desc:'Stilted whitewashed casas among the rice paddies and dunes of Comporta. Absolute silence. Wild horses.',price:480,book:'https://www.casasnaareia.com/'},
-    {name:'Monte da Bravura Green Resort',chain:'Small Luxury Hotels',loc:'Lagos, Algarve, Portugal',type:'Immersive Natural Resort',dest:'Portugal',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1504474000021-d4b7e83f5481?w=800&q=80',desc:'Off-grid private villas among Algarve countryside. Natural pool, organic gardens, vineyards, stargazing.',price:420,book:'https://www.canopyandstars.co.uk/'},
+    {name:'Natur-Lux Hideaway',chain:'Luxy',loc:'Finestrat, Alicante, Spain',type:'Immersive Natural Resort',dest:'Alicante',dest_img:'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',desc:'The first AI-powered eco-resort on the Mediterranean coast. Geodesic domes, sky bubbles, infinity pool villas. Only Adults.',price:346,featured:true,book:'https://natur-lux-hideaway.netlify.app'},
+    {name:'Whitepod Eco Luxury Resort',chain:'Whitepod',loc:'Swiss Alps, Switzerland',type:'Immersive Natural Resort',dest:'Swiss Alps',dest_img:'https://images.unsplash.com/photo-1531310197839-ccf54634509e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1504474000021-d4b7e83f5481?w=800&q=80',desc:'15 geodesic pods on a private ski slope at 1,400m altitude. Fine dining igloo. Zero-carbon skiing.',price:550,book:'https://www.whitepod.com/'},
+    {name:'Casas na Areia',chain:'Relais & Châteaux',loc:'Comporta, Portugal',type:'Immersive Natural Resort',dest:'Portugal',dest_img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',desc:'Stilted whitewashed casas among the rice paddies and dunes of Comporta. Absolute silence. Wild horses.',price:480,book:'https://www.casasnaareia.com/'},
+    {name:'Monte da Bravura Green Resort',chain:'Small Luxury Hotels',loc:'Lagos, Algarve, Portugal',type:'Immersive Natural Resort',dest:'Portugal',dest_img:'https://images.unsplash.com/photo-1548534317-d5e77bdb2228?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1504474000021-d4b7e83f5481?w=800&q=80',desc:'Off-grid private villas among Algarve countryside. Natural pool, organic gardens, vineyards, stargazing.',price:420,book:'https://www.canopyandstars.co.uk/'},
   ],
   'villa':[
-    {name:'Villa Astor',chain:'Private Estate',loc:'Sorrento, Amalfi Coast, Italy',type:'Historic Private Villa',dest:'Amalfi Coast',dest_img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'Former residence of the Duke of Astor overlooking the Bay of Naples. Infinity pool, private chef.',price:2200,book:'https://villaastor.com/'},
-    {name:'Can Lluc Boutique Hotel & Villas',chain:'Small Luxury Hotels',loc:'Ibiza, Spain',type:'Adults-Only Villa Hotel',dest:'Ibiza',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'Rural adults-only estate in the Ibiza countryside. Organic vegetable gardens. Intimate farm-to-table dining.',price:480,book:'https://www.canlluc.com/'},
-    {name:'Elounda Gulf Villas',chain:'Small Luxury Hotels',loc:'Crete, Greece',type:'Private Villa Complex',dest:'Crete',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'21 private villas on Mirabello Bay. The largest spans 700m². Private beach and helipad. Total privacy.',price:1800,book:'https://www.eloundagulfvillas.com/'},
-    {name:'Castiglion del Bosco',chain:'Rosewood Hotels',loc:"Val d'Orcia, Tuscany, Italy",type:'Private Medieval Estate',dest:'Tuscany',dest_img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'A private medieval borgo and 5,000-acre estate in the UNESCO Val d\'Orcia. Organic winery. Reds among cypress.',price:1500,book:'https://www.castigliondelbosco.com/'},
-    {name:'Canaves Oia Epitome',chain:'Small Luxury Hotels',loc:'Oia, Santorini, Greece',type:'Cliff-edge Villa Hotel',dest:'Santorini',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'Cliff-edge infinity pool villa above the caldera with private butler. The most spectacular sunset in Europe.',price:1400,book:'https://www.canavesoia.com/'},
-    {name:"D-Resort Sibenik",chain:'D-Hotels',loc:'Sibenik, Dalmatia, Croatia',type:'Coastal Villa Resort',dest:'Dalmatia',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'Terraced villa complex above the Šibenik bay. Dalmatian stone architecture. Private beach access.',price:680,book:'https://www.dhotelsresorts.com/'},
+    {name:'Villa Astor',chain:'Private Estate',loc:'Sorrento, Amalfi Coast, Italy',type:'Historic Private Villa',dest:'Amalfi Coast',dest_img:'https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'Former residence of the Duke of Astor overlooking the Bay of Naples. Infinity pool, private chef.',price:2200,book:'https://villaastor.com/'},
+    {name:'Can Lluc Boutique Hotel & Villas',chain:'Small Luxury Hotels',loc:'Ibiza, Spain',type:'Adults-Only Villa Hotel',dest:'Ibiza',dest_img:'https://images.unsplash.com/photo-1601999109332-542b18dbec55?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'Rural adults-only estate in the Ibiza countryside. Organic vegetable gardens. Intimate farm-to-table dining.',price:480,book:'https://www.canlluc.com/'},
+    {name:'Elounda Gulf Villas',chain:'Small Luxury Hotels',loc:'Crete, Greece',type:'Private Villa Complex',dest:'Crete',dest_img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'21 private villas on Mirabello Bay. The largest spans 700m². Private beach and helipad. Total privacy.',price:1800,book:'https://www.eloundagulfvillas.com/'},
+    {name:'Castiglion del Bosco',chain:'Rosewood Hotels',loc:"Val d'Orcia, Tuscany, Italy",type:'Private Medieval Estate',dest:'Tuscany',dest_img:'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'A private medieval borgo and 5,000-acre estate in the UNESCO Val d\'Orcia. Organic winery. Reds among cypress.',price:1500,book:'https://www.castigliondelbosco.com/'},
+    {name:'Canaves Oia Epitome',chain:'Small Luxury Hotels',loc:'Oia, Santorini, Greece',type:'Cliff-edge Villa Hotel',dest:'Santorini',dest_img:'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',desc:'Cliff-edge infinity pool villa above the caldera with private butler. The most spectacular sunset in Europe.',price:1400,book:'https://www.canavesoia.com/'},
+    {name:"D-Resort Sibenik",chain:'D-Hotels',loc:'Sibenik, Dalmatia, Croatia',type:'Coastal Villa Resort',dest:'Dalmatia',dest_img:'https://images.unsplash.com/photo-1555993539-1732b0258235?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',desc:'Terraced villa complex above the Šibenik bay. Dalmatian stone architecture. Private beach access.',price:680,book:'https://www.dhotelsresorts.com/'},
   ],
   'wellness':[
-    {name:'SHA Wellness Clinic',chain:'SHA',loc:'Sierra Helada, Alicante, Spain',type:'Medical Wellness Resort',dest:'Alicante',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',desc:"Europe's most acclaimed medical wellness clinic. Eastern medicine meets Western science on a Mediterranean cliff.",price:1200,book:'https://shawellness.com/sha-wellness-clinic/'},
-    {name:'Euphoria Retreat',chain:'Relais & Châteaux',loc:'Mystras, Greece',type:'Holistic Wellness Sanctuary',dest:'Greece',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',desc:'A transformational wellness sanctuary in a neoclassical Peloponnesian mansion. Greek philosophy meets wellness.',price:800,book:'https://www.euphoriaretreat.com/'},
-    {name:'Bürgenstock Resort Lake Lucerne',chain:'Bürgenstock Hotels',loc:'Lake Lucerne, Switzerland',type:'Alpine Wellness Resort',dest:'Switzerland',dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80',desc:'Floating above Lake Lucerne. Cliff-edge infinity pool. Alpine Spa 10,000m². Legendary since 1873.',price:950,book:'https://www.buergenstock.ch/'},
-    {name:'Chiva-Som International Health Resort',chain:'Chiva-Som',loc:'Hua Hin (European partner resort)',type:'Destination Spa',dest:'Portugal',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80',desc:'European health resort based on the legendary Chiva-Som methodology. Integrated healing programmes.',price:1100,book:'https://www.chivasom.com/'},
+    {name:'SHA Wellness Clinic',chain:'SHA',loc:'Sierra Helada, Alicante, Spain',type:'Medical Wellness Resort',dest:'Alicante',dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',desc:"Europe's most acclaimed medical wellness clinic. Eastern medicine meets Western science on a Mediterranean cliff.",price:1200,book:'https://shawellness.com/sha-wellness-clinic/'},
+    {name:'Euphoria Retreat',chain:'Relais & Châteaux',loc:'Mystras, Greece',type:'Holistic Wellness Sanctuary',dest:'Greece',dest_img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',desc:'A transformational wellness sanctuary in a neoclassical Peloponnesian mansion. Greek philosophy meets wellness.',price:800,book:'https://www.euphoriaretreat.com/'},
+    {name:'Bürgenstock Resort Lake Lucerne',chain:'Bürgenstock Hotels',loc:'Lake Lucerne, Switzerland',type:'Alpine Wellness Resort',dest:'Switzerland',dest_img:'https://images.unsplash.com/photo-1527549993586-dff825b37782?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80',desc:'Floating above Lake Lucerne. Cliff-edge infinity pool. Alpine Spa 10,000m². Legendary since 1873.',price:950,book:'https://www.buergenstock.ch/'},
+    {name:'Chiva-Som International Health Resort',chain:'Chiva-Som',loc:'Hua Hin (European partner resort)',type:'Destination Spa',dest:'Portugal',dest_img:'https://images.unsplash.com/photo-1548534317-d5e77bdb2228?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80',desc:'European health resort based on the legendary Chiva-Som methodology. Integrated healing programmes.',price:1100,book:'https://www.chivasom.com/'},
   ],
   'adventure':[
-    {name:'Finca Cortesín',chain:'Leading Hotels of the World',loc:'Casares, Costa del Sol, Spain',type:'Golf & Adventure Estate',dest:'Andalucia',dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:"215-hectare private estate. Europe's No.1 ranked golf course. Helipad, private beach club, Scheria restaurant.",price:750,book:'https://www.fincacortesin.com/'},
-    {name:'Col Raiser Mountain Lodge',chain:'Relais & Châteaux',loc:'Dolomites, Italy',type:'Mountain Adventure Lodge',dest:'Dolomites',dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'Accessible only by private cable car in the UNESCO Dolomites. Via ferrata, heli-skiing, Ladin cuisine.',price:600,book:'https://www.colraiser.com/'},
-    {name:'Dromoland Castle',chain:'Leading Hotels of the World',loc:'County Clare, Ireland',type:'Castle Estate',dest:'Ireland',dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'A 16th-century castle in County Clare. Falconry, archery, golf, clay shooting. Irish heritage at its finest.',price:700,book:'https://www.dromoland.ie/'},
+    {name:'Finca Cortesín',chain:'Leading Hotels of the World',loc:'Casares, Costa del Sol, Spain',type:'Golf & Adventure Estate',dest:'Andalucia',dest_img:'https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:"215-hectare private estate. Europe's No.1 ranked golf course. Helipad, private beach club, Scheria restaurant.",price:750,book:'https://www.fincacortesin.com/'},
+    {name:'Col Raiser Mountain Lodge',chain:'Relais & Châteaux',loc:'Dolomites, Italy',type:'Mountain Adventure Lodge',dest:'Dolomites',dest_img:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'Accessible only by private cable car in the UNESCO Dolomites. Via ferrata, heli-skiing, Ladin cuisine.',price:600,book:'https://www.colraiser.com/'},
+    {name:'Dromoland Castle',chain:'Leading Hotels of the World',loc:'County Clare, Ireland',type:'Castle Estate',dest:'Ireland',dest_img:'https://images.unsplash.com/photo-1564415315949-7a0c4c73aab4?w=1200&q=85',hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',desc:'A 16th-century castle in County Clare. Falconry, archery, golf, clay shooting. Irish heritage at its finest.',price:700,book:'https://www.dromoland.ie/'},
   ],
 };
 
 // ══ PACKAGES (18) ══
 const PKGS=[
   {id:'paris-romance',title:'Paris, Mon Amour',loc:'Paris, France',nights:4,cat:'romantic',
-   img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',
    tags:['Romantic','Michelin','Cultural'],badge:'Most Popular',
    hotel:{name:'Four Seasons Hotel George V',chain:'Four Seasons',stars:5,desc:'Palace hotel · Avenue George V · 3 Michelin stars'},
@@ -682,8 +684,8 @@ const PKGS=[
    book:'https://www.fourseasons.com/paris/'},
 
   {id:'venice-exclusive',title:'La Serenissima Esclusiva',loc:'Venice, Italy',nights:3,cat:'romantic',
-   img:'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
    tags:['Romantic','Historic','Exclusive'],badge:"Editor's Pick",
    hotel:{name:'Aman Venice',chain:'Aman Resorts',stars:5,desc:'16th-century palazzo · Grand Canal · Private gondola'},
@@ -694,8 +696,8 @@ const PKGS=[
    book:'https://www.aman.com/hotels/aman-venice'},
 
   {id:'amalfi-coast',title:'Amalfi Senza Confini',loc:'Amalfi Coast, Italy',nights:5,cat:'romantic',
-   img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',
    tags:['Private Villa','Gastronomy','Nautical'],badge:'',
    hotel:{name:'Villa Astor',chain:'Private Estate',stars:5,desc:'Historic ducal estate · Bay of Naples · Private chef'},
@@ -706,8 +708,8 @@ const PKGS=[
    book:'https://villaastor.com/'},
 
   {id:'natur-lux',title:'Mediterranean Immersion',loc:'Finestrat, Alicante, Spain',nights:3,cat:'immersive',
-   img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1473625247510-8ceb1760943f?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',
    tags:['Immersive Natural','AI-Powered','Only Adults'],badge:'Our Signature Property',
    hotel:{name:'Natur-Lux Hideaway',chain:'Luxy',stars:5,desc:'Geodesic dome with private jacuzzi · Mediterranean views · AI concierge'},
@@ -718,8 +720,8 @@ const PKGS=[
    book:'https://natur-lux-hideaway.netlify.app'},
 
   {id:'swiss-alpine',title:'Alpine Elevation',loc:'St. Moritz & Engadin, Switzerland',nights:6,cat:'adventure',
-   img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1531310197839-ccf54634509e?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1531310197839-ccf54634509e?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
    tags:['Adventure','Skiing','Alpine'],badge:'',
    hotel:{name:"Badrutt's Palace Hotel",chain:'Independent',stars:5,desc:"Alpine institution 1896 · Ski-in/ski-out · King's Club"},
@@ -730,8 +732,8 @@ const PKGS=[
    book:'https://www.badruttspalace.com/'},
 
   {id:'santorini',title:'Caldera di Sogno',loc:'Oia, Santorini, Greece',nights:5,cat:'romantic',
-   img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
    tags:['Romantic','Sunset','Mediterranean'],badge:'',
    hotel:{name:'Canaves Oia Epitome',chain:'Small Luxury Hotels',stars:5,desc:'Cliff-edge infinity pool villa · Private butler · Caldera views'},
@@ -742,8 +744,8 @@ const PKGS=[
    book:'https://www.canavesoia.com/'},
 
   {id:'tuscany',title:"Toscana nell'Anima",loc:"Val d'Orcia & Chianti, Italy",nights:5,cat:'cultural',
-   img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
    tags:['Gastronomy','Wine','Cultural'],badge:'',
    hotel:{name:'Castiglion del Bosco',chain:'Rosewood Hotels',stars:5,desc:"Private medieval borgo · 5,000-acre estate · UNESCO Val d'Orcia"},
@@ -754,8 +756,8 @@ const PKGS=[
    book:'https://www.castigliondelbosco.com/'},
 
   {id:'ibiza',title:'Ibiza Adulta',loc:'Ibiza, Balearic Islands, Spain',nights:4,cat:'romantic',
-   img:'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1601999109332-542b18dbec55?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1601999109332-542b18dbec55?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
    tags:['Adults Only','Yacht','Gourmet'],badge:'',
    hotel:{name:'Six Senses Ibiza',chain:'Six Senses',stars:5,desc:'North Ibiza cliffside · Holistic wellness · Organic farm-to-table'},
@@ -766,8 +768,8 @@ const PKGS=[
    book:'https://www.sixsenses.com/en/resorts/ibiza'},
 
   {id:'marbella',title:'La Costa Dorada',loc:'Marbella, Costa del Sol, Spain',nights:5,cat:'luxury',
-   img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
    tags:['Beach','Golf','Gastronomy'],badge:'',
    hotel:{name:'Anantara Villa Padierna Palace',chain:'Anantara Hotels',stars:5,desc:"Italianate palace in Benahavís hills · Three golf courses · Thalassotherapy spa"},
@@ -778,8 +780,8 @@ const PKGS=[
    book:'https://www.anantara.com/en/villa-padierna-marbella'},
 
   {id:'capri',title:'Capri Assoluta',loc:'Capri, Gulf of Naples, Italy',nights:4,cat:'luxury',
-   img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',
    tags:['Island','Luxury','Gastronomy'],badge:'',
    hotel:{name:'Capri Palace Jumeirah',chain:'Jumeirah Hotels',stars:5,desc:"White palace at 300m above sea · L'Olivo 2★ Michelin · The Mediterranean Clinic spa"},
@@ -790,8 +792,8 @@ const PKGS=[
    book:'https://www.jumeirah.com/en/stay/capri/capri-palace-jumeirah'},
 
   {id:'bodrum',title:'Aegean Blue',loc:'Bodrum Peninsula, Turkey',nights:6,cat:'luxury',
-   img:'https://images.unsplash.com/photo-1469796466635-455ede028aca?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1469796466635-455ede028aca?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1589561454226-796a8aa89b05?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1589561454226-796a8aa89b05?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80',
    tags:['Mediterranean','Wellness','Yachting'],badge:'',
    hotel:{name:'Mandarin Oriental Bodrum',chain:'Mandarin Oriental',stars:5,desc:'Peninsula setting · Private beach · Award-winning spa · Aegean views'},
@@ -802,8 +804,8 @@ const PKGS=[
    book:'https://www.mandarinoriental.com/en/bodrum'},
 
   {id:'dubrovnik',title:'The Pearl of the Adriatic',loc:'Dubrovnik & Hvar, Croatia',nights:5,cat:'cultural',
-   img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1555993539-1732b0258235?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80',
    tags:['Cultural','Sailing','Historic'],badge:'',
    hotel:{name:'Villa Dubrovnik',chain:'Leading Hotels of the World',stars:5,desc:"Clifftop villa hotel overlooking the old walled city · Private boat · Bowa restaurant"},
@@ -814,8 +816,8 @@ const PKGS=[
    book:'https://www.villa-dubrovnik.hr/'},
 
   {id:'monaco',title:'La Belle Époque Monégasque',loc:'Monaco & the French Riviera',nights:4,cat:'luxury',
-   img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',
    tags:['Ultra-Luxury','Yachting','Casino'],badge:'Ultra-Luxury',
    hotel:{name:'Hotel Hermitage Monte-Carlo',chain:'Monte-Carlo SBM',stars:5,desc:'Belle Époque palace · Garnier atrium · Carré d\'Or location'},
@@ -826,8 +828,8 @@ const PKGS=[
    book:'https://www.hotelhermitagemontecarlo.com/'},
 
   {id:'portugal-alentejo',title:'Silêncio de Portugal',loc:'Alentejo & Comporta, Portugal',nights:5,cat:'immersive',
-   img:'https://images.unsplash.com/photo-1504474000021-d4b7e83f5481?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1548534317-d5e77bdb2228?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1548534317-d5e77bdb2228?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?w=800&q=80',
    tags:['Immersive Natural','Wine','Silence'],badge:'',
    hotel:{name:'Casas na Areia',chain:'Relais & Châteaux',stars:5,desc:'Stilted whitewashed casas · Rice paddy dunes · Wild horses · Absolute silence'},
@@ -838,8 +840,8 @@ const PKGS=[
    book:'https://www.casasnaareia.com/'},
 
   {id:'sicily',title:'Sicilia Profonda',loc:'Taormina & Val di Noto, Sicily',nights:6,cat:'cultural',
-   img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
    tags:['Cultural','Gastronomy','Historic'],badge:'',
    hotel:{name:'Belmond Grand Hotel Timeo',chain:'Belmond',stars:5,desc:'1873 clifftop hotel · Views of Etna and Ionian Sea · Otto Geleng restaurant'},
@@ -850,8 +852,8 @@ const PKGS=[
    book:'https://www.belmond.com/hotels/europe/italy/sicily/taormina/belmond-grand-hotel-timeo/'},
 
   {id:'madrid-art',title:'Madrid de Altura',loc:'Madrid, Spain',nights:4,cat:'cultural',
-   img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1543785734-4b6e564642f8?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1543785734-4b6e564642f8?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1578774296842-c45e472b3028?w=800&q=80',
    tags:['Cultural','Art','Michelin'],badge:'',
    hotel:{name:'Rosewood Villa Magna',chain:'Rosewood Hotels',stars:5,desc:'Paseo de la Castellana · Bibo Madrid · World-class art collection'},
@@ -862,8 +864,8 @@ const PKGS=[
    book:'https://www.rosewoodhotels.com/en/villa-magna'},
 
   {id:'ireland-castle',title:'The Emerald Throne',loc:'County Clare & County Mayo, Ireland',nights:5,cat:'adventure',
-   img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1564415315949-7a0c4c73aab4?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1564415315949-7a0c4c73aab4?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
    tags:['Castle','Adventure','Heritage'],badge:'',
    hotel:{name:'Ashford Castle',chain:'Red Carnation Hotels',stars:5,desc:"13th-century castle · Lough Corrib · Falconry school · George V dining room"},
@@ -874,8 +876,8 @@ const PKGS=[
    book:'https://www.ashfordcastle.com/'},
 
   {id:'riviera-cap',title:'La Dolce Riviera',loc:"Cap d'Antibes & Côte d'Azur, France",nights:5,cat:'luxury',
-   img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80',
-   dest_img:'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=85',
+   img:'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800&q=80',
+   dest_img:'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1200&q=85',
    hotel_img:'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80',
    tags:['Ultra-Luxury','Riviera','Beach'],badge:'Legendary',
    hotel:{name:'Hotel du Cap-Eden-Roc',chain:'Oetker Collection',stars:5,desc:"The ultimate Riviera legend 1870 · Cliff pool carved from rock · Picasso's favourite"},
